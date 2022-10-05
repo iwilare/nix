@@ -4,39 +4,75 @@
     (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-22.05.tar.gz}/nixos")
   ];
 
-  nixpkgs.config.allowUnfree = true;
-  system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 3;
+  #security.pam.services.andrea.enableGnomeKeyring = true;
+  #networking.interfaces.wlp2s0.useDHCP = false;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 3;
+  boot.loader.systemd-boot.enable = true;
   boot.loader.timeout = 1;
-  networking.hostName = "iwilare";
-  networking.networkmanager.enable = true;
-  networking.useDHCP = false;
-  programs.nm-applet.enable = true;
-  time.timeZone = "Europe/Rome";
+  console.font = "Lat2-Terminus16";
+  console.useXkbConfig = true;
+  environment.pathsToLink = [ "/share/agda" ];
+  fonts.fontconfig.enable = true;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.opengl.enable = true;
+  hardware.pulseaudio.enable = true;
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.inputMethod.enabled = "fcitx";
   i18n.inputMethod.fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
-  console.font = "Lat2-Terminus16";
-  console.useXkbConfig = true;
-  hardware.pulseaudio.enable = true;
-  sound.mediaKeys.enable = true;
-  sound.mediaKeys.volumeStep = "5%";
+  networking.hostName = "iwilare";
+  networking.networkmanager.enable = true;
+  networking.useDHCP = false;
+  nixpkgs.config.allowUnfree = true;
   programs.dconf.enable = true; # https://www.reddit.com/r/NixOS/comments/b255k5/home_manager_cannot_set_gnome_themes/
-  time.hardwareClockInLocalTime = true;
-  services.printing.enable = true;
-  services.illum.enable = true;
+  programs.nm-applet.enable = true;
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
-  services.printing.drivers = [ pkgs.gutenprint ];
-
   services.gnome.gnome-keyring.enable = true;
-  # security.pam.services.andrea.enableGnomeKeyring = true;
-  #networking.interfaces.wlp2s0.useDHCP = false;
+  services.illum.enable = true;
+  services.printing.drivers = [ pkgs.gutenprint ];
+  services.printing.enable = true;
+  sound.mediaKeys.enable = true;
+  sound.mediaKeys.volumeStep = "5%";
+  system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
+  system.stateVersion = "20.03";
+  time = {
+    hardwareClockInLocalTime = true;
+    timeZone = "Europe/Rome";
+  };
+  users.users = {
+    root = {
+      shell = pkgs.fish;
+    };
+    andrea = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+      shell = pkgs.fish;
+    };
+  };
+  services.xserver = {
+    autoRepeatDelay = 325;
+    autoRepeatInterval = 30;
+    desktopManager.wallpaper.mode = "fill";
+    desktopManager.xterm.enable = false;
+    displayManager.autoLogin.enable = true;
+    displayManager.autoLogin.user = "andrea";
+    displayManager.defaultSession = "none+i3";
+    displayManager.lightdm.enable = true;
+    dpi = 96;
+    enable = true;
+    layout = "it";
+    libinput.enable = true;
+    libinput.mouse.scrollMethod = "button";
+    libinput.mouse.accelSpeed = "30";
+    videoDrivers = [ "nvidia" ];
+    windowManager.i3.enable = true;
+    xkbOptions = "caps:ctrl_modifier;eurosign:e";
+    screenSection = ''
+      Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
+    '';
+  };
 
-  #set $composite     picom -f -D 5 -cz -o 1.0 -r 10 -e 0 --backend glx --vsync
   services.picom = {
     enable = true;
     fade = true;
@@ -50,31 +86,7 @@
       frame-opacity = 0;
     };
   };
-  
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.opengl.enable = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-  services.xserver.autoRepeatDelay = 325;
-  services.xserver.autoRepeatInterval = 30;
-  services.xserver.enable = true;
-  services.xserver.layout = "it";
-  services.xserver.xkbOptions = "caps:ctrl_modifier;eurosign:e";
-  services.xserver.windowManager.i3.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.defaultSession = "none+i3";
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "andrea";
-  services.xserver.desktopManager.xterm.enable = false;
-  services.xserver.desktopManager.wallpaper.mode = "fill";
-  services.xserver.libinput.enable = true;
-  services.xserver.libinput.mouse.accelSpeed = "30";
-  users.users.root.shell = pkgs.fish;
-  users.users.andrea = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    shell = pkgs.fish;
-  };
   environment.variables.TERMINAL = "xfce4-terminal";
   fonts.fonts = [
     pkgs.dejavu_fonts
@@ -83,8 +95,6 @@
     pkgs.fira-code
     #(pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
-  services.xserver.dpi = 96;
-  fonts.fontconfig.enable = true;
   fonts.fontconfig.defaultFonts = {
     monospace = [
       "DejaVu Sans Mono"
@@ -102,13 +112,12 @@
       "IPAPMincho"
     ];
   };
-  system.stateVersion = "20.03";
   environment.systemPackages = with pkgs; [
     (agda.withPackages
-       [ 
+       [
          agdaPackages.standard-library
          #agdaPackages.agda-categories
-         (agdaPackages.mkDerivation {
+         /*(agdaPackages.mkDerivation {
            version="1.7.1";
            meta.broken = false;
            pname = "agda-categories";
@@ -117,14 +126,14 @@
              agdaPackages.standard-library
            ];
            buildPhase = '''';
-         })
+         })*/
        ])
     texlive.combined.scheme-full
     /*ghc
-    rustup
     stack
     emacs
     vim*/
+    rustup
     dropbox-cli
     tdesktop
     vscode
@@ -145,7 +154,6 @@
     git
   ];
 
-  environment.pathsToLink = [ "/share/agda" ];
 
   networking.firewall = {
     allowedTCPPorts = [ 17500 ];
@@ -168,95 +176,6 @@
       Nice = 10;
     };
   };
-/*
-  services.xserver.extraConfig = ''
-    Section "ServerLayout"
-        Identifier     "Layout0"
-        Screen      0  "Screen0" 0 0
-        InputDevice    "Keyboard0" "CoreKeyboard"
-        InputDevice    "Mouse0" "CorePointer"
-        Option         "Xinerama" "0"
-    EndSection
-
-    Section "Files"
-    EndSection
-
-    Section "InputDevice"
-        # generated from default
-        Identifier     "Mouse0"
-        Driver         "mouse"
-        Option         "Protocol" "auto"
-        Option         "Device" "/dev/input/mice"
-        Option         "Emulate3Buttons" "no"
-        Option         "ZAxisMapping" "4 5"
-    EndSection
-
-    Section "InputDevice"
-        # generated from default
-        Identifier     "Keyboard0"
-        Driver         "kbd"
-    EndSection
-
-    Section "Monitor"
-        # HorizSync source: edid, VertRefresh source: edid
-        Identifier     "Monitor0"
-        VendorName     "Unknown"
-        ModelName      "AUS VG279"
-        HorizSync       162.0 - 162.0
-        VertRefresh     40.0 - 144.0
-        Option         "DPMS"
-    EndSection
-
-    Section "Device"
-        Identifier     "Device0"
-        Driver         "nvidia"
-        VendorName     "NVIDIA Corporation"
-        BoardName      "NVIDIA GeForce RTX 3060"
-    EndSection
-
-    Section "Screen"
-        Identifier     "Screen0"
-        Device         "Device0"
-        Monitor        "Monitor0"
-        DefaultDepth    24
-        Option         "Stereo" "0"
-        Option         "nvidiaXineramaInfoOrder" "DFP-0"
-        Option         "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
-        Option         "SLI" "Off"
-        Option         "MultiGPU" "Off"
-        Option         "BaseMosaic" "off"
-        SubSection     "Display"
-            Depth       24
-        EndSubSection
-    EndSection
-  '';
-
-
-        Option "RightOf" "HDMI-1"
-        Option "RightOf" "DP-2"
-*/
-/*
-  services.xserver.monitorSection = ''
-    Section "Monitor"
-        # HorizSync source: edid, VertRefresh source: edid
-        Identifier     "Monitor0"
-        VendorName     "Unknown"
-        ModelName      "AUS VG279"
-        HorizSync       162.0 - 162.0
-        VertRefresh     40.0 - 144.0
-        Option         "DPMS"
-    EndSection
-  '';
-  services.xserver.deviceSection = ''
-      Identifier     "Device0"
-      Driver         "nvidia"
-      VendorName     "NVIDIA Corporation"
-      BoardName      "NVIDIA GeForce RTX 3060"
-  '';
-  */
-  services.xserver.screenSection = ''
-      Option         "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
-  '';
 
   # -------------------------------------
   # home-manager
@@ -312,14 +231,14 @@
         size = 10.0;
         color = {
           normal = {
-            black  = "#000000"; 
-            red    = "#4e9a06"; 
-            green  = "#3465a4"; 
-            yellow = "#06989a"; 
-            blue = "#555753"; 
-            magenta = "#8ae234"; 
-            cyan = "#739fcf"; 
-            white = "#34e2e2"; 
+            black  = "#000000";
+            red    = "#4e9a06";
+            green  = "#3465a4";
+            yellow = "#06989a";
+            blue = "#555753";
+            magenta = "#8ae234";
+            cyan = "#739fcf";
+            white = "#34e2e2";
           };
           bright = {
             black = "#cc0000";
