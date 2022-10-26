@@ -4,15 +4,14 @@
     (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-22.05.tar.gz}/nixos")
   ];
 
-  #security.pam.services.andrea.enableGnomeKeyring = true;
   #networking.interfaces.wlp2s0.useDHCP = false;
+  security.pam.services.andrea.enableGnomeKeyring = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 3;
+  boot.loader.systemd-boot.configurationLimit = 2;
   boot.loader.systemd-boot.enable = true;
   boot.loader.timeout = 1;
   console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
-  environment.pathsToLink = [ "/share/agda" ];
   fonts.fontconfig.enable = true;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.opengl.enable = true;
@@ -32,6 +31,7 @@
   services.illum.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
   services.printing.enable = true;
+  services.tumbler.enable = true;
   sound.mediaKeys.enable = true;
   sound.mediaKeys.volumeStep = "5%";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
@@ -93,6 +93,8 @@
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk
     pkgs.fira-code
+    pkgs.ipafont
+    pkgs.font-awesome
     #(pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
   fonts.fontconfig.defaultFonts = {
@@ -116,7 +118,7 @@
     (agda.withPackages
        [
          agdaPackages.standard-library
-         #agdaPackages.agda-categories
+         agdaPackages.agda-categories
          /*(agdaPackages.mkDerivation {
            version="1.7.1";
            meta.broken = false;
@@ -188,7 +190,7 @@
       enable = true;
       font.name = "Sans 10";
       cursorTheme = {
-        name = "Breeze_Snow";
+        name = "Breeze";
         package = pkgs.breeze-gtk;
         size = 24;
       };
@@ -254,6 +256,38 @@
         cursor.style = "beam";
         cursor.blinking = "on";
         #cursor.blink_interval = "750";
+      };
+    };
+    programs.i3status-rust = {
+      enable = true;
+      bars.bar = {
+        icons = "awesome5";
+        theme = "modern";
+        blocks = [
+          {
+            block = "disk_space";
+            path = "/";
+            alias = "/";
+            info_type = "available";
+            unit = "GB";
+            interval = 60;
+            warning = 20.0;
+            alert = 10.0;
+          }
+          {
+            block = "custom";
+            on_click = "code /etc/nixos/configuration.nix";
+          }
+          {
+            block = "sound";
+          }
+          {
+            block = "time";
+            interval = 1;
+            format = "%F %a %T";
+            locale = "ja_JP";
+          }
+        ];
       };
     };
     xdg.configFile."xfce4/terminal/terminalrc".text = ''
@@ -390,54 +424,6 @@ bindsym $Mod+Control+Down resize grow height 10 px or 5 ppt
 bindsym $Mod+Control+Up resize shrink height 10 px or 5 ppt
 bindsym $Mod+Control+Right resize grow width 10 px or 5 ppt
     '';
-    programs.i3status-rust = {
-      enable = true;
-      bars.bar = {
-        blocks = [
-          {
-            block = "disk_space";
-            path = "/";
-            alias = "/";
-            info_type = "available";
-            unit = "GB";
-            interval = 60;
-            warning = 20.0;
-            alert = 10.0;
-          }
-          {
-            block = "memory";
-            display_type = "memory";
-            format_mem = "{mem_used}% / {mem_total}%";
-          }
-          {
-            block = "cpu";
-            interval = 1;
-          }
-          {
-            block = "load";
-            interval = 1;
-            format = "{1m}";
-          }
-          { block = "sound"; }
-          {
-            block = "time";
-            interval = 60;
-            format = "%a %d/%m %R";
-          }
-        ];
-        settings = {
-          theme =  {
-            name = "solarized-dark";
-            overrides = {
-              idle_bg = "#123456";
-              idle_fg = "#abcdef";
-            };
-          };
-        };
-        icons = "awesome5";
-        theme = "gruvbox-dark";
-      };
-    };
     xdg.configFile."i3status/config".text = ''
 general {
   output_format = "i3bar"
