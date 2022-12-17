@@ -5,15 +5,15 @@
   ];
 
   #networking.interfaces.wlp2s0.useDHCP = false;
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   security.pam.services.andrea.enableGnomeKeyring = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 2;
+  boot.loader.systemd-boot.configurationLimit = 1;
   boot.loader.systemd-boot.enable = true;
-  boot.loader.timeout = 1;
+  boot.loader.timeout = 0;
   console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
   fonts.fontconfig.enable = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.opengl.enable = true;
   hardware.pulseaudio.enable = true;
   i18n.defaultLocale = "en_US.UTF-8";
@@ -28,17 +28,20 @@
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
   services.gnome.gnome-keyring.enable = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
   services.illum.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
   services.printing.enable = true;
   services.tumbler.enable = true;
+  services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
   sound.mediaKeys.enable = true;
-  sound.mediaKeys.volumeStep = "5%";
+  sound.mediaKeys.volumeStep = "10%";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
   system.stateVersion = "20.03";
   time = {
     hardwareClockInLocalTime = true;
-    timeZone = "Europe/Rome";
+    timeZone = "Europe/Tallinn";
   };
   users.users = {
     root = {
@@ -65,12 +68,12 @@
     libinput.enable = true;
     libinput.mouse.scrollMethod = "button";
     libinput.mouse.accelSpeed = "30";
-    videoDrivers = [ "nvidia" ];
     windowManager.i3.enable = true;
-    xkbOptions = "caps:ctrl_modifier;eurosign:e";
-    screenSection = ''
-      Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
-    '';
+    xkbOptions = "caps:ctrl_modifier,eurosign:e";
+    #videoDrivers = [ "nvidia" ];
+    #screenSection = ''
+    #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
+    #'';
   };
 
   services.picom = {
@@ -130,13 +133,14 @@
            buildPhase = '''';
          })*/
        ])
-    texlive.combined.scheme-full
+    #texlive.combined.scheme-full
     /*ghc
     stack
     emacs
     vim*/
-    rustup
-    dropbox-cli
+    #rustup
+    #dropbox-cli
+    spotify
     tdesktop
     vscode
     discord
@@ -146,7 +150,6 @@
     pcmanfm
     xfce.xfce4-terminal
     xfce.thunar
-    flameshot
     zip
     pavucontrol
     unzip
@@ -185,7 +188,7 @@
 
   home-manager.users.andrea = {
     nixpkgs.config.allowUnfree = true;
-    #home.file.".background-image".source = "background.png";
+    home.file.".background-image".source = "/etc/nixos/background.png";
     gtk = {
       enable = true;
       font.name = "Sans 10";
@@ -205,12 +208,19 @@
     };
     programs.vscode = {
       enable = true;
-      extensions = [
-        pkgs.vscode-extensions.haskell.haskell
-        pkgs.vscode-extensions.bbenoist.nix
-        pkgs.vscode-extensions.james-yu.latex-workshop
-        #pkgs.vscode-extensions.banacorn.agda-mode
-      ];
+    };
+    services.flameshot = {
+      enable = true;
+      settings = {
+        General = {
+          disabledTrayIcon = true;
+          showStartupLaunchMessage = false;
+          uiColor = "#e0e0e0";
+          showHelp = false;
+          showSidePanelButton = false;
+          autoCloseIdleDaemon = false;
+        };
+      };
     };
     programs.git = {
       enable = true;
@@ -233,24 +243,24 @@
         size = 10.0;
         color = {
           normal = {
-            black  = "#000000";
-            red    = "#4e9a06";
-            green  = "#3465a4";
-            yellow = "#06989a";
-            blue = "#555753";
+            black   = "#000000";
+            red     = "#4e9a06";
+            green   = "#3465a4";
+            yellow  = "#06989a";
+            blue    = "#555753";
             magenta = "#8ae234";
-            cyan = "#739fcf";
-            white = "#34e2e2";
+            cyan    = "#739fcf";
+            white   = "#34e2e2";
           };
           bright = {
-            black = "#cc0000";
-            red = "#c4a000";
-            green = "#75507b";
-            yellow = "#d3d7cf";
-            blue = "#ef2929";
+            black   = "#cc0000";
+            red     = "#c4a000";
+            green   = "#75507b";
+            yellow  = "#d3d7cf";
+            blue    = "#ef2929";
             magenta = "#fce94f";
-            cyan = "#ad7fa8";
-            white = "#eeeeec";
+            cyan    = "#ad7fa8";
+            white   = "#eeeeec";
           };
         };
         cursor.style = "beam";
@@ -261,9 +271,19 @@
     programs.i3status-rust = {
       enable = true;
       bars.bar = {
-        icons = "awesome5";
+        icons = "awesome6";
         theme = "modern";
         blocks = [
+          {
+            block = "custom";
+            on_click = "code /etc/nixos/configuration.nix";
+            command = "echo ";
+          }
+          {
+            block = "custom";
+            on_click = "xfce4-terminal -e 'sudo nixos-rebuild switch'";
+            command = "echo ";
+          }
           {
             block = "disk_space";
             path = "/";
@@ -275,11 +295,10 @@
             alert = 10.0;
           }
           {
-            block = "custom";
-            on_click = "code /etc/nixos/configuration.nix";
-          }
-          {
             block = "sound";
+            on_click = "amixer set Master toggle";
+            show_volume_when_muted = true;
+            max_vol = 150;
           }
           {
             block = "time";
@@ -344,8 +363,8 @@ set $WS8 "8"
 set $WS9 "9"
 set $WS10 "10"
 
-#set $Win Mod4
 #set $Alt Mod1
+set $Win Mod4
 set $Mod Mod1
 floating_Modifier Mod1
 hide_edge_borders both
@@ -366,6 +385,7 @@ bindsym $Mod+Shift+f exec $filemanager
 bindsym $Mod+less    exec $run
 bindsym $Mod+b       exec $audio
 bindsym Print        exec $screenshooter
+bindsym $Win+Shift+s exec $screenshooter
 
 bindsym $Mod+q kill
 bindsym $Mod+Shift+p border toggle
@@ -487,79 +507,5 @@ tztime local {
   format_time = " %a %-d %b %I:%M %p"
 }
     '';
-    programs.vim = {
-      enable = true;
-      extraConfig = ''
-set autoread
-set clipboard=unnamedplus
-set enc=utf-8
-set encoding=utf-8
-set expandtab
-set fileencoding=utf-8
-set fileencodings=ucs-bom,utf8,prc
-set fileformats=unix
-set gdefault
-set go=rL
-set guifont=Consolas:h10
-set hlsearch
-set incsearch
-set modelines=0
-set nocompatible
-set noswapfile
-set number
-set pheader=
-set ruler
-set scrolloff=999
-set shiftwidth=4
-set shortmess+=I
-set showcmd
-set showmatch
-set showmode
-set smartcase
-set smartindent
-set smarttab
-set softtabstop=4
-set tabstop=4
-set wildmenu
-
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-
-nnoremap j gj
-nnoremap k gk
-
-nnoremap <tab> <esc>
-vnoremap <tab> <esc>
-inoremap <tab> <esc>
-
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-nnoremap ; :
-
-au FocusLost * :wa
-
-let mapleader=""
-
-syntax on
-
-if has("gui_running")
-  colorscheme desert
-else
-  colorscheme darkblue
-endif
-
-nmap <c-s> :w<CR>
-imap <c-s> <Esc>:w<CR>a
-      '';
-    };
   };
 }
