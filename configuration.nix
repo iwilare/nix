@@ -53,6 +53,9 @@
       shell = pkgs.fish;
     };
   };
+  security.sudo.extraConfig = ''
+    Defaults timestamp_timeout=7200
+  '';
   services.xserver = {
     autoRepeatDelay = 325;
     autoRepeatInterval = 30;
@@ -80,7 +83,7 @@
     enable = true;
     fade = true;
     fadeDelta = 5;
-    shadow = true;
+    shadow = false;
     backend = "glx";
     vSync = true;
     shadowOpacity = 1.0;
@@ -281,7 +284,7 @@
           }
           {
             block = "custom";
-            on_click = "xfce4-terminal -e 'sudo nixos-rebuild switch'";
+            on_click = "xfce4-terminal -T 'NixOS rebuild' -x sudo nixos-rebuild switch";
             command = "echo ";
           }
           {
@@ -343,10 +346,11 @@ exec code
 
 bar {
   colors {
-    background #0B0B0B22
+    background #000000CC
     statusline #000000
     separator  #0B0B0B
   }
+  i3bar_command i3bar --transparency
 	font pango:DejaVu Sans Mono 9
   status_command i3status-rs ~/.config/i3status-rust/config-bar.toml
 }
@@ -370,6 +374,7 @@ floating_Modifier Mod1
 hide_edge_borders both
 new_window pixel 2
 new_float pixel 2
+#border_radius 5
 
 workspace 1 output DP-2
 workspace 2 output HDMI-0
@@ -443,7 +448,13 @@ bindsym $Mod+Control+Left resize shrink width 10 px or 5 ppt
 bindsym $Mod+Control+Down resize grow height 10 px or 5 ppt
 bindsym $Mod+Control+Up resize shrink height 10 px or 5 ppt
 bindsym $Mod+Control+Right resize grow width 10 px or 5 ppt
-    '';
+
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +10%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -10%
+bindsym XF86AudioMute        exec pactl set-sink-mute 0 toggle
+
+for_window [title="NixOS rebuild"] floating enable
+'';
     xdg.configFile."i3status/config".text = ''
 general {
   output_format = "i3bar"
