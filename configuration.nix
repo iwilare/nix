@@ -43,6 +43,10 @@
     hardwareClockInLocalTime = true;
     timeZone = "Europe/Tallinn";
   };
+  nixpkgs.config.permittedInsecurePackages = [
+    "python-2.7.18.6"
+  ];
+
   users.users = {
     root = {
       shell = pkgs.fish;
@@ -136,7 +140,7 @@
            buildPhase = '''';
          })*/
        ])
-    #texlive.combined.scheme-full
+    /*texlive.combined.scheme-full*/
     /*ghc
     stack
     emacs
@@ -157,11 +161,12 @@
     pavucontrol
     unzip
     tree
+    teamviewer
     neofetch
     ncdu
     git
   ];
-
+  services.teamviewer.enable = true;
 
   networking.firewall = {
     allowedTCPPorts = [ 17500 ];
@@ -198,7 +203,6 @@
       cursorTheme = {
         name = "Breeze";
         package = pkgs.breeze-gtk;
-        size = 24;
       };
       iconTheme = {
         name = "elementary-xfce";
@@ -277,6 +281,11 @@
         icons = "awesome6";
         theme = "modern";
         blocks = [
+          {
+            block = "battery";
+            interval = 10;
+            format = "{percentage} {time} {power}";
+          }
           {
             block = "custom";
             on_click = "code /etc/nixos/configuration.nix";
