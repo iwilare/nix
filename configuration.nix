@@ -5,11 +5,12 @@
   ];
 
   #networking.interfaces.wlp2s0.useDHCP = false;
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   security.pam.services.andrea.enableGnomeKeyring = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.configurationLimit = 1;
   boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.loader.timeout = 0;
   console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
@@ -43,10 +44,6 @@
     hardwareClockInLocalTime = true;
     timeZone = "Europe/Tallinn";
   };
-  nixpkgs.config.permittedInsecurePackages = [
-    "python-2.7.18.6"
-  ];
-
   users.users = {
     root = {
       shell = pkgs.fish;
@@ -61,8 +58,8 @@
     Defaults timestamp_timeout=7200
   '';
   services.xserver = {
-    autoRepeatDelay = 325;
-    autoRepeatInterval = 30;
+    autoRepeatDelay = 200;
+    autoRepeatInterval = 20;
     desktopManager.wallpaper.mode = "fill";
     desktopManager.xterm.enable = false;
     displayManager.autoLogin.enable = true;
@@ -76,8 +73,9 @@
     libinput.mouse.scrollMethod = "button";
     libinput.mouse.accelSpeed = "30";
     windowManager.i3.enable = true;
-    xkbOptions = "caps:ctrl_modifier,eurosign:e";
-    #videoDrivers = [ "nvidia" ];
+    #xkbOptions = "caps:ctrl_modifier,eurosign:e";
+    xkbOptions = "caps:esc,eurosign:e";
+    videoDrivers = [ "nvidia" ];
     #screenSection = ''
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
     #'';
@@ -97,30 +95,24 @@
     };
   };
 
-  environment.variables.TERMINAL = "xfce4-terminal";
+  environment.variables.TERMINAL = "alacritty";
   fonts.fonts = [
-    pkgs.dejavu_fonts
+    pkgs.ipafont
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk
-    pkgs.fira-code
-    pkgs.ipafont
-    pkgs.font-awesome
-    #(pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
+    (pkgs.nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
   ];
   fonts.fontconfig.defaultFonts = {
     monospace = [
-      "DejaVu Sans Mono"
+      "DejaVuSansMono Nerd Font"
       "IPAGothic"
     ];
     sansSerif = [
       "Noto Sans"
-      "DejaVu Sans"
-      "Noto Sans CJK"
       "IPAPGothic"
     ];
     serif = [
       "Noto Serif"
-      "DejaVu Serif"
       "IPAPMincho"
     ];
   };
@@ -140,33 +132,42 @@
            buildPhase = '''';
          })*/
        ])
-    /*texlive.combined.scheme-full*/
-    /*ghc
-    stack
-    emacs
-    vim*/
+    #texlive.combined.scheme-full
+    #ghc
     #rustup
-    #dropbox-cli
+    #stack
+
+    dropbox
     spotify
     tdesktop
     vscode
     discord
     google-chrome
-    fish
-    rofi
+
     pcmanfm
-    xfce.xfce4-terminal
     xfce.thunar
-    zip
+
+    rofi
     pavucontrol
+
+    zip
     unzip
-    tree
-    teamviewer
     neofetch
-    ncdu
     git
+    bat
+    btop
+    dua        # Disk usage analyzer
+    gource     # SVC visualization
+    hyperfine  # Command-line benchmarking tool
+    pv         # Monitor the progress of data through a pipe
+    exa
+    teamviewer
   ];
   services.teamviewer.enable = true;
+
+  programs.noisetorch = {
+    enable = true;
+  };
 
   networking.firewall = {
     allowedTCPPorts = [ 17500 ];
@@ -201,8 +202,9 @@
       enable = true;
       font.name = "Sans 10";
       cursorTheme = {
-        name = "Breeze";
+        name = "Breeze_Snow";
         package = pkgs.breeze-gtk;
+        #size = 24;
       };
       iconTheme = {
         name = "elementary-xfce";
@@ -237,42 +239,75 @@
     programs.fish = {
       enable = true;
       functions = {
-        l.body = "ls -CSGLho --color --group-directories-first --si $argv | sed 's/andrea//'";
         fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
+      };
+      shellAliases = {
+        cat = "bat -p";
+        ls  = "exa";
+        l   = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
+        la  = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
+        t   = "exa --icons --tree -s=type --all";
+        ta  = "exa --icons --tree -s=type";
+        where = "ack -il";
       };
       shellInit = ''set fish_greeting'';
     };
     programs.alacritty = {
       enable = true;
       settings = {
-        window.opacity = 0.8;
-        font.normal.family = "Monospace";
-        size = 10.0;
-        color = {
-          normal = {
-            black   = "#000000";
-            red     = "#4e9a06";
-            green   = "#3465a4";
-            yellow  = "#06989a";
-            blue    = "#555753";
-            magenta = "#8ae234";
-            cyan    = "#739fcf";
-            white   = "#34e2e2";
-          };
+        colors = {
           bright = {
-            black   = "#cc0000";
-            red     = "#c4a000";
-            green   = "#75507b";
-            yellow  = "#d3d7cf";
-            blue    = "#ef2929";
-            magenta = "#fce94f";
-            cyan    = "#ad7fa8";
+            black   = "#555753";
+            blue    = "#739fcf";
+            cyan    = "#34e2e2";
+            green   = "#8ae234";
+            magenta = "#ad7fa8";
+            red     = "#ef2929";
             white   = "#eeeeec";
+            yellow  = "#fce94f";
+          };
+          normal = {
+            black   = "#2e3436";
+            blue    = "#3465a4";
+            cyan    = "#06989a";
+            green   = "#4e9a06";
+            magenta = "#75507b";
+            red     = "#cc0000";
+            white   = "#d3d7cf";
+            yellow  = "#c4a000";
+          };
+          primary = {
+            background = "#000000";
+            foreground = "#ffffff";
           };
         };
-        cursor.style = "beam";
-        cursor.blinking = "on";
-        #cursor.blink_interval = "750";
+        cursor.blink_interval = 650;
+        cursor.style = {
+          shape = "beam";
+          blinking = "always";
+        };
+        font.normal.family = "DejaVuSansMono Nerd Font";
+        font.size = 9;
+        selection.save_to_clipboard = true;
+        window.opacity = 0.8;
+        mouse_bindings = [
+          {
+            mouse = "Right";
+            action = "PasteSelection";
+          }
+        ];
+        key_bindings = [
+          {
+            key = "Return";
+            mods = "Control|Shift";
+            action = "SpawnNewInstance";
+          }
+          {
+            key = "Z";
+            mods = "Control|Shift";
+            action = "SpawnNewInstance";
+          }
+        ];
       };
     };
     programs.i3status-rust = {
@@ -282,19 +317,19 @@
         theme = "modern";
         blocks = [
           {
-            block = "battery";
-            interval = 10;
-            format = "{percentage} {time} {power}";
-          }
-          {
             block = "custom";
             on_click = "code /etc/nixos/configuration.nix";
             command = "echo ";
           }
           {
             block = "custom";
-            on_click = "xfce4-terminal -T 'NixOS rebuild' -x sudo nixos-rebuild switch";
+            on_click = "$TERMINAL -T 'NixOS rebuild' -x sudo nixos-rebuild switch";
             command = "echo ";
+          }
+          {
+            block = "battery";
+            interval = 10;
+            format = "{percentage} {time} {power}";
           }
           {
             block = "disk_space";
@@ -321,28 +356,22 @@
         ];
       };
     };
-    xdg.configFile."xfce4/terminal/terminalrc".text = ''
-[Configuration]
-BackgroundDarkness=0.800000
-BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
-FontName=Monospace 10
-MiscConfirmClose=FALSE
-MiscCopyOnSelect=TRUE
-MiscCursorBlinks=TRUE
-MiscCursorShape=TERMINAL_CURSOR_SHAPE_IBEAM
-MiscHighlightUrls=TRUE
-MiscMenubarDefault=FALSE
-MiscRewrapOnResize=TRUE
-MiscShowUnsafePasteDialog=FALSE
-MiscToolbarDefault=FALSE
-ScrollingBar=TERMINAL_SCROLLBAR_NONE
-ScrollingOnOutput=FALSE
-ScrollingUnlimited=TRUE
-MiscRightClickAction=TERMINAL_RIGHT_CLICK_ACTION_PASTE_CLIPBOARD
-ColorPalette=#000000;#cc0000;#4e9a06;#c4a000;#3465a4;#75507b;#06989a;#d3d7cf;#555753;#ef2929;#8ae234;#fce94f;#739fcf;#ad7fa8;#34e2e2;#eeeeec
+    home.file.".icons/default/index.theme".text = ''
+[Icon Theme]
+Name=Default
+Inherits=Breeze_Snow
+    '';
+    xdg.configFile."noisetorch/config.toml".text = ''
+Threshold = 95
+DisplayMonitorSources = false
+EnableUpdates = true
+FilterInput = true
+FilterOutput = false
+LastUsedInput = "alsa_input.usb-Generic_Blue_Microphones_LT_2103170103279D0305B1_111000-00.analog-stereo"
+LastUsedOutput = ""
     '';
     xdg.configFile."i3/config".text = ''
-set $terminal      xfce4-terminal
+set $terminal      alacritty
 set $browser       google-chrome-stable
 set $run           rofi -show drun -columns 2 -hide-scrollbar -show-icons -icon-theme elementary-xfce-dark -theme paper-float
 set $filemanager   thunar
@@ -352,6 +381,7 @@ set $screenshooter flameshot gui
 
 exec $browser
 exec code
+exec noisetorch -i
 
 bar {
   colors {
@@ -360,10 +390,10 @@ bar {
     separator  #0B0B0B
   }
   i3bar_command i3bar --transparency
-	font pango:DejaVu Sans Mono 9
-  status_command i3status-rs ~/.config/i3status-rust/config-bar.toml
+	status_command i3status-rs ~/.config/i3status-rust/config-bar.toml
+  font pango:DejaVuSansMono Nerd Font 9
 }
-font pango:DejaVu Sans Mono 9
+font pango:DejaVuSansMono Nerd Font 9
 
 set $WS1 "1"
 set $WS2 "2"
@@ -385,9 +415,9 @@ new_window pixel 2
 new_float pixel 2
 #border_radius 5
 
-workspace 1 output DP-2
-workspace 2 output HDMI-0
-workspace 3 output DP-0
+#workspace 1 output DP-2
+#workspace 2 output HDMI-0
+#workspace 3 output DP-0
 
 default_orientation horizontal
 popup_during_fullscreen smart
@@ -528,4 +558,24 @@ tztime local {
 }
     '';
   };
+  /*xdg.configFile."xfce4/terminal/terminalrc".text = ''
+[Configuration]
+BackgroundDarkness=0.800000
+BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
+FontName=DejaVuSansMono Nerd Font 10
+MiscConfirmClose=FALSE
+MiscCopyOnSelect=TRUE
+MiscCursorBlinks=TRUE
+MiscCursorShape=TERMINAL_CURSOR_SHAPE_IBEAM
+MiscHighlightUrls=TRUE
+MiscMenubarDefault=FALSE
+MiscRewrapOnResize=TRUE
+MiscShowUnsafePasteDialog=FALSE
+MiscToolbarDefault=FALSE
+ScrollingBar=TERMINAL_SCROLLBAR_NONE
+ScrollingOnOutput=FALSE
+ScrollingUnlimited=TRUE
+MiscRightClickAction=TERMINAL_RIGHT_CLICK_ACTION_PASTE_CLIPBOARD
+ColorPalette=#000000;#cc0000;#4e9a06;#c4a000;#3465a4;#75507b;#06989a;#d3d7cf;#555753;#ef2929;#8ae234;#fce94f;#739fcf;#ad7fa8;#34e2e2;#eeeeec
+  '';*/
 }
