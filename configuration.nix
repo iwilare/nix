@@ -75,7 +75,7 @@
     windowManager.i3.enable = true;
     #xkbOptions = "caps:ctrl_modifier,eurosign:e";
     xkbOptions = "caps:esc,eurosign:e";
-    videoDrivers = [ "nvidia" ];
+    #videoDrivers = [ "nvidia" ];
     #screenSection = ''
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
     #'';
@@ -145,6 +145,7 @@
     google-chrome
 
     pcmanfm
+    xfce.xfce4-terminal
     xfce.thunar
 
     rofi
@@ -255,6 +256,9 @@
     programs.alacritty = {
       enable = true;
       settings = {
+        env = {
+          WINIT_X11_SCALE_FACTOR = "1";
+        };
         colors = {
           bright = {
             black   = "#555753";
@@ -558,25 +562,25 @@ tztime local {
   format_time = " %a %-d %b %I:%M %p"
 }
     '';
+    xdg.configFile."xfce4/terminal/terminalrc".text = ''
+  [Configuration]
+  BackgroundDarkness=0.800000
+  BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
+  FontName=DejaVuSansMono Nerd Font 10
+  MiscConfirmClose=FALSE
+  MiscCopyOnSelect=TRUE
+  MiscCursorBlinks=TRUE
+  MiscCursorShape=TERMINAL_CURSOR_SHAPE_IBEAM
+  MiscHighlightUrls=TRUE
+  MiscMenubarDefault=FALSE
+  MiscRewrapOnResize=TRUE
+  MiscShowUnsafePasteDialog=FALSE
+  MiscToolbarDefault=FALSE
+  ScrollingBar=TERMINAL_SCROLLBAR_NONE
+  ScrollingOnOutput=FALSE
+  ScrollingUnlimited=TRUE
+  MiscRightClickAction=TERMINAL_RIGHT_CLICK_ACTION_PASTE_CLIPBOARD
+  ColorPalette=#000000;#cc0000;#4e9a06;#c4a000;#3465a4;#75507b;#06989a;#d3d7cf;#555753;#ef2929;#8ae234;#fce94f;#739fcf;#ad7fa8;#34e2e2;#eeeeec
+    '';
   };
-  /*xdg.configFile."xfce4/terminal/terminalrc".text = ''
-[Configuration]
-BackgroundDarkness=0.800000
-BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
-FontName=DejaVuSansMono Nerd Font 10
-MiscConfirmClose=FALSE
-MiscCopyOnSelect=TRUE
-MiscCursorBlinks=TRUE
-MiscCursorShape=TERMINAL_CURSOR_SHAPE_IBEAM
-MiscHighlightUrls=TRUE
-MiscMenubarDefault=FALSE
-MiscRewrapOnResize=TRUE
-MiscShowUnsafePasteDialog=FALSE
-MiscToolbarDefault=FALSE
-ScrollingBar=TERMINAL_SCROLLBAR_NONE
-ScrollingOnOutput=FALSE
-ScrollingUnlimited=TRUE
-MiscRightClickAction=TERMINAL_RIGHT_CLICK_ACTION_PASTE_CLIPBOARD
-ColorPalette=#000000;#cc0000;#4e9a06;#c4a000;#3465a4;#75507b;#06989a;#d3d7cf;#555753;#ef2929;#8ae234;#fce94f;#739fcf;#ad7fa8;#34e2e2;#eeeeec
-  '';*/
 }
