@@ -75,7 +75,7 @@
     windowManager.i3.enable = true;
     #xkbOptions = "caps:ctrl_modifier,eurosign:e";
     xkbOptions = "caps:esc,eurosign:e";
-    #videoDrivers = [ "nvidia" ];
+    videoDrivers = [ "nvidia" ];
     #screenSection = ''
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
     #'';
@@ -292,7 +292,7 @@
         };
         draw_bold_text_with_bright_colors = true;
         font.normal.family = "DejaVuSansMono Nerd Font";
-        font.size = 9;
+        font.size = 10;
         selection.save_to_clipboard = true;
         window.opacity = 0.8;
         mouse_bindings = [
