@@ -262,6 +262,22 @@
         { "key" = "ctrl+a ctrl+e";     "command" = "agda-mode.compute-normal-form[DefaultCompute]";                 "when" = "editorTextFocus && !editorHasSelection"; }
         { "key" = "ctrl+a ctrl+v";     "command" = "agda-mode.show-constraints";                                    "when" = "editorTextFocus && !editorHasSelection"; }
       ];
+      extensions = [
+        #pkgs.vscode-extensions.banacorn.agda-mode
+        pkgs.vscode-extensions.bbenoist.nix
+        pkgs.vscode-extensions.dart-code.dart-code
+        pkgs.vscode-extensions.denoland.vscode-deno
+        pkgs.vscode-extensions.github.copilot
+        pkgs.vscode-extensions.haskell.haskell
+        pkgs.vscode-extensions.james-yu.latex-workshop
+        pkgs.vscode-extensions.jnoortheen.nix-ide
+        #pkgs.vscode-extensions.leanprover.lean4
+        #pkgs.vscode-extensions.ms-vscode-remote.remote-wsl
+        #pkgs.vscode-extensions.ms-vscode.wordcount
+        pkgs.vscode-extensions.ms-vsliveshare.vsliveshare
+        #pkgs.vscode-extensions.ms-vsliveshare.vsliveshare-audio
+        pkgs.vscode-extensions.rust-lang.rust-analyzer
+      ];
     };
     services.flameshot = {
       enable = true;
