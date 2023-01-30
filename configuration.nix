@@ -143,6 +143,7 @@
     vscode
     discord
     google-chrome
+    teamviewer
 
     pcmanfm
     xfce.xfce4-terminal
@@ -155,14 +156,15 @@
     unzip
     neofetch
     git
+
+    exa
     bat
-    btop
+    ack
     dua        # Disk usage analyzer
     gource     # SVC visualization
     hyperfine  # Command-line benchmarking tool
     pv         # Monitor the progress of data through a pipe
-    exa
-    teamviewer
+    btop
   ];
   services.teamviewer.enable = true;
 
@@ -178,8 +180,8 @@
     description = "Dropbox";
     wantedBy = [ "graphical-session.target" ];
     environment = {
-      QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
-      QML2_IMPORT_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
+      QT_PLUGIN_PATH = "/run/current-system/sw/${pkgs.qt5.qtbase.qtPluginPrefix}";
+      QML2_IMPORT_PATH = "/run/current-system/sw/${pkgs.qt5.qtbase.qtQmlPrefix}";
     };
     serviceConfig = {
       ExecStart = "${pkgs.dropbox.out}/bin/dropbox";
@@ -263,7 +265,6 @@
         { "key" = "ctrl+a ctrl+v";     "command" = "agda-mode.show-constraints";                                    "when" = "editorTextFocus && !editorHasSelection"; }
       ];
       extensions = [
-        #pkgs.vscode-extensions.banacorn.agda-mode
         pkgs.vscode-extensions.bbenoist.nix
         pkgs.vscode-extensions.dart-code.dart-code
         pkgs.vscode-extensions.denoland.vscode-deno
@@ -271,12 +272,15 @@
         pkgs.vscode-extensions.haskell.haskell
         pkgs.vscode-extensions.james-yu.latex-workshop
         pkgs.vscode-extensions.jnoortheen.nix-ide
+        pkgs.vscode-extensions.ms-vsliveshare.vsliveshare
+        pkgs.vscode-extensions.rust-lang.rust-analyzer
+
+        pkgs.vscode-extensions.vscodevim.vim
         #pkgs.vscode-extensions.leanprover.lean4
         #pkgs.vscode-extensions.ms-vscode-remote.remote-wsl
         #pkgs.vscode-extensions.ms-vscode.wordcount
-        pkgs.vscode-extensions.ms-vsliveshare.vsliveshare
         #pkgs.vscode-extensions.ms-vsliveshare.vsliveshare-audio
-        pkgs.vscode-extensions.rust-lang.rust-analyzer
+        #pkgs.vscode-extensions.banacorn.agda-mode
       ];
     };
     services.flameshot = {
@@ -447,6 +451,7 @@ set $screenshooter flameshot gui
 exec $browser
 exec code
 exec noisetorch -i
+exec telegram-desktop
 
 bar {
   colors {
