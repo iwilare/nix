@@ -59,7 +59,7 @@
   '';
   services.xserver = {
     autoRepeatDelay = 200;
-    autoRepeatInterval = 20;
+    autoRepeatInterval = 30;
     desktopManager.wallpaper.mode = "fill";
     desktopManager.xterm.enable = false;
     displayManager.autoLogin.enable = true;
@@ -74,7 +74,7 @@
     libinput.mouse.accelSpeed = "30";
     windowManager.i3.enable = true;
     #xkbOptions = "caps:ctrl_modifier,eurosign:e";
-    xkbOptions = "caps:esc,eurosign:e";
+    xkbOptions = "caps:escape,eurosign:e";
     videoDrivers = [ "nvidia" ];
     #screenSection = ''
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
@@ -218,6 +218,50 @@
     };
     programs.vscode = {
       enable = true;
+      userSettings = {
+        "editor.fontFamily" = "'DejaVuSansMono Nerd Font'";
+        "editor.fontSize" = 13.16;
+        "editor.letterSpacing" = -0.1;
+        "editor.unicodeHighlight.ambiguousCharacters" = false;
+        "explorer.confirmDragAndDrop" = false;
+        "explorer.sortOrder" = "type";
+        "files.insertFinalNewline" = true;
+        "files.restoreUndoStack" = true;
+        "files.trimFinalNewlines" = true;
+        "files.trimTrailingWhitespace" = true;
+        "security.workspace.trust.enabled" = false;
+        "telemetry.telemetryLevel" = "off";
+        "files.associations" = {
+            "*.tikz" = "latex";
+            "*.tikzstyles" = "latex";
+        };
+        "workbench.activityBar.visible" = false;
+        "[dart]" = {
+            "editor.formatOnSave" = true;
+            "editor.formatOnType" = true;
+            "editor.rulers" = [80];
+            "editor.selectionHighlight" = false;
+            "editor.suggest.snippetsPreventQuickSuggestions" = false;
+            "editor.suggestSelection" = "first";
+            "editor.tabCompletion" = "onlySnippets";
+            "editor.wordBasedSuggestions" = false;
+        };
+      };
+      keybindings = [
+        { "key" = "ctrl+a ctrl+q";     "command" = "agda-mode.auto";                                                "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+c";     "command" = "agda-mode.case";                                                "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+space"; "command" = "agda-mode.give";                                                "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+s";     "command" = "agda-mode.goal-type-context-and-inferred-type[Normalised]";     "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+f";     "command" = "agda-mode.goal-type-context-and-inferred-type[Simplified]";     "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+g";     "command" = "agda-mode.goal-type-context-and-inferred-type[Instantiated]";   "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+d";     "command" = "agda-mode.load";                                                "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+z";     "command" = "agda-mode.next-goal";                                           "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+w";     "command" = "agda-mode.previous-goal";                                       "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+r";     "command" = "agda-mode.refine";                                              "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+t";     "command" = "agda-mode.restart";                                             "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+e";     "command" = "agda-mode.compute-normal-form[DefaultCompute]";                 "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+v";     "command" = "agda-mode.show-constraints";                                    "when" = "editorTextFocus && !editorHasSelection"; }
+      ];
     };
     services.flameshot = {
       enable = true;
