@@ -39,7 +39,7 @@
   sound.mediaKeys.enable = true;
   sound.mediaKeys.volumeStep = "10%";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
-  system.stateVersion = "20.03";
+  system.stateVersion = "23.05";
   time = {
     hardwareClockInLocalTime = true;
     timeZone = "Europe/Tallinn";
@@ -244,15 +244,14 @@
               statusCommand = "i3status-rs ~/.config/i3status-rust/config-bar.toml";
             }
            ];
-          #default_orientation horizontal
-          #popup_during_fullscreen smart
-          #workspace 1 output DP-2
-          #workspace 2 output HDMI-0
-          #workspace 3 output DP-0
+          workspaceOutputAssign = [
+            { workspace = "1"; output = "DP-2"; }
+            { workspace = "2"; output = "HDMI-0"; }
+            { workspace = "3"; output = "DP-0"; }
+          ];
           fonts = { names = [ "DejaVuSansMono Nerd Font" ]; size = 9.0; };
-          menu = run;
-          terminal = terminal;
           focus.newWindow = "smart";
+          workspaceAutoBackAndForth = true;
           #focus.wrapping = "workspace";
           startup = [
             { command = browser; }
@@ -337,6 +336,9 @@
             "XF86AudioMute"        = "exec pactl set-sink-mute 0 toggle";
           };
       };
+      extraConfig = ''
+        popup_during_fullscreen smart
+      '';
     };
     programs.vscode = {
       enable = true;
