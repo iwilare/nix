@@ -75,7 +75,7 @@
     windowManager.i3.enable = true;
     #xkbOptions = "caps:ctrl_modifier,eurosign:e";
     xkbOptions = "caps:escape,eurosign:e";
-    #videoDrivers = [ "nvidia" ];
+    videoDrivers = [ "nvidia" ];
     #screenSection = ''
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
     #'';
@@ -216,6 +216,124 @@
       theme = {
         name = "Adwaita-dark";
         package = pkgs.gnome.adwaita-icon-theme;
+      };
+    };
+    xsession.windowManager.i3 = {
+      enable = true;
+      config = let
+        Mod           = "Mod1";
+        Win           = "Mod4";
+        terminal      = "alacritty";
+        browser       = "google-chrome-stable";
+        run           = "rofi -show drun -columns 2 -hide-scrollbar -show-icons -icon-theme elementary-xfce-dark -theme paper-float";
+        filemanager   = "thunar";
+        editor        = "code";
+        audio         = "pavucontrol";
+        screenshooter = "flameshot gui"; in {
+          bars = [
+            {
+              colors = {
+                background = "#000000CC";
+                statusline = "#000000";
+                separator  = "#0B0B0B";
+              };
+              fonts = { names = [ "DejaVuSansMono Nerd Font" ]; size = 9.0; };
+              command = "i3bar --transparency";
+              statusCommand = "i3status-rs ~/.config/i3status-rust/config-bar.toml";
+            }
+           ];
+          #default_orientation horizontal
+          #popup_during_fullscreen smart
+          #workspace 1 output DP-2
+          #workspace 2 output HDMI-0
+          #workspace 3 output DP-0
+          fonts = { names = [ "DejaVuSansMono Nerd Font" ]; size = 9.0; };
+          menu = run;
+          terminal = terminal;
+          focus.newWindow = "smart";
+          #focus.wrapping = "workspace";
+          startup = [
+            { command = browser; }
+            { command = editor;  }
+            { command = "noisetorch -i"; }
+            { command = "telegram-desktop"; }
+          ];
+          window = {
+            titlebar = false;
+            hideEdgeBorders = "both";
+            border = 2;
+          };
+          floating = {
+            modifier = Mod;
+            border = 2;
+            titlebar = false;
+            criteria = [
+              { title = "NixOS rebuild"; }
+              { class = "Pavucontrol"; }
+            ];
+          };
+          keybindings = {
+            "${Mod}+r"             = "exec ${browser}";
+            "${Mod}+z"             = "exec ${terminal}";
+            "${Mod}+Return"        = "exec ${terminal}";
+            "${Mod}+Shift+f"       = "exec ${filemanager}";
+            "${Mod}+less"          = "exec ${run}";
+            "${Mod}+b"             = "exec ${audio}";
+            "Print"                = "exec ${screenshooter}";
+            "$Win+Shift+s"         = "exec ${screenshooter}";
+            "${Mod}+q"             = "kill";
+            "${Mod}+Shift+p"       = "border toggle";
+            "${Mod}+Shift+c"       = "reload; restart;";
+            "${Mod}+v"             = "split h";
+            "${Mod}+c"             = "split v";
+            "${Mod}+x"             = "focus parent";
+            "${Mod}+f"             = "fullscreen";
+            "${Mod}+e"             = "layout toggle split";
+            "${Mod}+t"             = "layout tabbed";
+            "${Mod}+p"             = "focus parent";
+            "${Mod}+l"             = "focus child";
+            "${Mod}+space"         = "floating toggle";
+            "${Mod}+Control+space" = "focus Mode_toggle";
+            "${Mod}+a"             = "focus left";
+            "${Mod}+s"             = "focus down";
+            "${Mod}+w"             = "focus up";
+            "${Mod}+d"             = "focus right";
+            "${Mod}+Shift+a"       = "move left";
+            "${Mod}+Shift+s"       = "move down";
+            "${Mod}+Shift+w"       = "move up";
+            "${Mod}+Shift+d"       = "move right";
+            "${Mod}+1"             = "workspace 1";
+            "${Mod}+2"             = "workspace 2";
+            "${Mod}+3"             = "workspace 3";
+            "${Mod}+4"             = "workspace 4";
+            "${Mod}+5"             = "workspace 5";
+            "${Mod}+6"             = "workspace 6";
+            "${Mod}+7"             = "workspace 7";
+            "${Mod}+8"             = "workspace 8";
+            "${Mod}+9"             = "workspace 9";
+            "${Mod}+0"             = "workspace 10";
+            "${Mod}+Shift+1"       = "move container to workspace 1";
+            "${Mod}+Shift+2"       = "move container to workspace 2";
+            "${Mod}+Shift+3"       = "move container to workspace 3";
+            "${Mod}+Shift+4"       = "move container to workspace 4";
+            "${Mod}+Shift+5"       = "move container to workspace 5";
+            "${Mod}+Shift+6"       = "move container to workspace 6";
+            "${Mod}+Shift+7"       = "move container to workspace 7";
+            "${Mod}+Shift+8"       = "move container to workspace 8";
+            "${Mod}+Shift+9"       = "move container to workspace 9";
+            "${Mod}+Shift+0"       = "move container to workspace 10";
+            "${Mod}+Control+a"     = "resize shrink width 10 px or 5 ppt";
+            "${Mod}+Control+s"     = "resize grow height 10 px or 5 ppt";
+            "${Mod}+Control+w"     = "resize shrink height 10 px or 5 ppt";
+            "${Mod}+Control+d"     = "resize grow width 10 px or 5 ppt";
+            "${Mod}+Control+Left"  = "resize shrink width 10 px or 5 ppt";
+            "${Mod}+Control+Down"  = "resize grow height 10 px or 5 ppt";
+            "${Mod}+Control+Up"    = "resize shrink height 10 px or 5 ppt";
+            "${Mod}+Control+Right" = "resize grow width 10 px or 5 ppt";
+            "XF86AudioRaiseVolume" = "exec pactl set-sink-volume 0 +10%";
+            "XF86AudioLowerVolume" = "exec pactl set-sink-volume 0 -10%";
+            "XF86AudioMute"        = "exec pactl set-sink-mute 0 toggle";
+          };
       };
     };
     programs.vscode = {
@@ -438,214 +556,6 @@ FilterInput = true
 FilterOutput = false
 LastUsedInput = "alsa_input.usb-Generic_Blue_Microphones_LT_2103170103279D0305B1_111000-00.analog-stereo"
 LastUsedOutput = ""
-    '';
-    xdg.configFile."i3/config".text = ''
-set $terminal      alacritty
-set $browser       google-chrome-stable
-set $run           rofi -show drun -columns 2 -hide-scrollbar -show-icons -icon-theme elementary-xfce-dark -theme paper-float
-set $filemanager   thunar
-set $editor        code
-set $audio         pavucontrol
-set $screenshooter flameshot gui
-
-exec $browser
-exec code
-exec noisetorch -i
-exec telegram-desktop
-
-bar {
-  colors {
-    background #000000CC
-    statusline #000000
-    separator  #0B0B0B
-  }
-  i3bar_command i3bar --transparency
-	status_command i3status-rs ~/.config/i3status-rust/config-bar.toml
-  font pango:DejaVuSansMono Nerd Font 9
-}
-font pango:DejaVuSansMono Nerd Font 9
-
-set $WS1 "1"
-set $WS2 "2"
-set $WS3 "3"
-set $WS4 "4"
-set $WS5 "5"
-set $WS6 "6"
-set $WS7 "7"
-set $WS8 "8"
-set $WS9 "9"
-set $WS10 "10"
-
-#set $Alt Mod1
-set $Win Mod4
-set $Mod Mod1
-floating_Modifier Mod1
-hide_edge_borders both
-new_window pixel 2
-new_float pixel 2
-#border_radius 5
-
-#workspace 1 output DP-2
-#workspace 2 output HDMI-0
-#workspace 3 output DP-0
-
-default_orientation horizontal
-popup_during_fullscreen smart
-
-bindsym $Mod+r       exec $browser
-bindsym $Mod+z       exec $terminal
-bindsym $Mod+Return  exec $terminal
-bindsym $Mod+Shift+f exec $filemanager
-bindsym $Mod+less    exec $run
-bindsym $Mod+b       exec $audio
-bindsym Print        exec $screenshooter
-bindsym $Win+Shift+s exec $screenshooter
-
-bindsym $Mod+q kill
-bindsym $Mod+Shift+p border toggle
-bindsym $Mod+Shift+c reload; restart;
-
-bindsym $Mod+v split h
-bindsym $Mod+c split v
-bindsym $Mod+x focus parent
-bindsym $Mod+f fullscreen
-bindsym $Mod+e layout toggle split
-bindsym $Mod+t layout tabbed
-
-bindsym $Mod+p focus parent
-bindsym $Mod+l focus child
-bindsym $Mod+space floating toggle
-bindsym $Mod+Control+space focus Mode_toggle
-
-bindsym $Mod+a     focus left
-bindsym $Mod+s     focus down
-bindsym $Mod+w     focus up
-bindsym $Mod+d     focus right
-
-bindsym $Mod+Shift+a     move left
-bindsym $Mod+Shift+s     move down
-bindsym $Mod+Shift+w     move up
-bindsym $Mod+Shift+d     move right
-
-bindsym $Mod+1 workspace $WS1
-bindsym $Mod+2 workspace $WS2
-bindsym $Mod+3 workspace $WS3
-bindsym $Mod+4 workspace $WS4
-bindsym $Mod+5 workspace $WS5
-bindsym $Mod+6 workspace $WS6
-bindsym $Mod+7 workspace $WS7
-bindsym $Mod+8 workspace $WS8
-bindsym $Mod+9 workspace $WS9
-bindsym $Mod+0 workspace $WS10
-
-bindsym $Mod+Shift+1 move container to workspace $WS1
-bindsym $Mod+Shift+2 move container to workspace $WS2
-bindsym $Mod+Shift+3 move container to workspace $WS3
-bindsym $Mod+Shift+4 move container to workspace $WS4
-bindsym $Mod+Shift+5 move container to workspace $WS5
-bindsym $Mod+Shift+6 move container to workspace $WS6
-bindsym $Mod+Shift+7 move container to workspace $WS7
-bindsym $Mod+Shift+8 move container to workspace $WS8
-bindsym $Mod+Shift+9 move container to workspace $WS9
-bindsym $Mod+Shift+0 move container to workspace $WS10
-
-bindsym $Mod+Control+a resize shrink width 10 px or 5 ppt
-bindsym $Mod+Control+s resize grow height 10 px or 5 ppt
-bindsym $Mod+Control+w resize shrink height 10 px or 5 ppt
-bindsym $Mod+Control+d resize grow width 10 px or 5 ppt
-bindsym $Mod+Control+Left resize shrink width 10 px or 5 ppt
-bindsym $Mod+Control+Down resize grow height 10 px or 5 ppt
-bindsym $Mod+Control+Up resize shrink height 10 px or 5 ppt
-bindsym $Mod+Control+Right resize grow width 10 px or 5 ppt
-
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +10%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -10%
-bindsym XF86AudioMute        exec pactl set-sink-mute 0 toggle
-
-for_window [title="NixOS rebuild"] floating enable
-'';
-    xdg.configFile."i3status/config".text = ''
-general {
-  output_format = "i3bar"
-  colors = false
-  markup = pango
-  interval = 5
-  color_good = '#2f343f'
-  color_degraded = '#ebcb8b'
-  color_bad = '#ba5e57'
-}
-order += "disk /"
-order += "disk /home"
-order += "load"
-order += "ethernet _first_"
-order += "wireless _first_"
-order += "battery all"
-order += "cpu_temperature 0"
-order += "volume master"
-order += "tztime local"
-load {
-        format = "<span background='#50fa7b'>  </span><span background='#e5e9f0'> %5min Load </span>"
-}
-cpu_temperature 0 {
-        format = "<span background='#bf616a'>  </span><span background='#e5e9f0'> %degrees °C </span>"
-        path = "/sys/class/thermal/thermal_zone0/temp"
-}
-disk "/" {
-        format = "<span background='#fec7cd'>   </span><span background='#e5e9f0'> %free Left </span>"
-}
-disk "/home" {
-        format = "<span background='#a1d569'>  %free Free </span>"
-}
-ethernet _first_ {
-        format_up = "<span background='#88c0d0'>  </span><span background='#e5e9f0'> %ip </span>"
-        format_down = "<span background='#88c0d0'>  </span><span background='#e5e9f0'> Disconnected </span>"
-}
-wireless _first_ {
-        format_up = "<span background='#bd93f9'>  </span><span background='#e5e9f0'> %essid </span>"
-        format_down = "<span background='#bd93f9'>  </span><span background='#e5e9f0'> Disconnected </span>"
-}
-volume master {
-        format = "<span background='#ebcb8b'>  </span><span background='#e5e9f0'> %volume </span>"
-        format_muted = "<span background='#bf616a'>  </span><span background='#e5e9f0'> Muted </span>"
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
-}
-battery all {
-        last_full_capacity = true
-        format = "<span background='#a3be8c'>  </span><span background='#e5e9f0'>%percentage [%status] </span>"
-        format_down = "No Battery"
-        status_chr = " Charging "
-        status_bat = ""
-        status_unk = " Unknown "
-        status_full = " Charged "
-        path = "/sys/class/power_supply/BAT%d/uevent"
-        low_threshold = 10
-}
-tztime local {
-  format = "<span background='#81a1c1'> %time </span>"
-  format_time = " %a %-d %b %I:%M %p"
-}
-    '';
-    xdg.configFile."xfce4/terminal/terminalrc".text = ''
-  [Configuration]
-  BackgroundDarkness=0.800000
-  BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
-  FontName=DejaVuSansMono Nerd Font 10
-  MiscConfirmClose=FALSE
-  MiscCopyOnSelect=TRUE
-  MiscCursorBlinks=TRUE
-  MiscCursorShape=TERMINAL_CURSOR_SHAPE_IBEAM
-  MiscHighlightUrls=TRUE
-  MiscMenubarDefault=FALSE
-  MiscRewrapOnResize=TRUE
-  MiscShowUnsafePasteDialog=FALSE
-  MiscToolbarDefault=FALSE
-  ScrollingBar=TERMINAL_SCROLLBAR_NONE
-  ScrollingOnOutput=FALSE
-  ScrollingUnlimited=TRUE
-  MiscRightClickAction=TERMINAL_RIGHT_CLICK_ACTION_PASTE_CLIPBOARD
-  ColorPalette=#000000;#cc0000;#4e9a06;#c4a000;#3465a4;#75507b;#06989a;#d3d7cf;#555753;#ef2929;#8ae234;#fce94f;#739fcf;#ad7fa8;#34e2e2;#eeeeec
     '';
   };
 }
