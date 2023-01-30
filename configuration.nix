@@ -59,7 +59,7 @@
   '';
   services.xserver = {
     autoRepeatDelay = 200;
-    autoRepeatInterval = 20;
+    autoRepeatInterval = 25;
     desktopManager.wallpaper.mode = "fill";
     desktopManager.xterm.enable = false;
     displayManager.autoLogin.enable = true;
@@ -74,8 +74,8 @@
     libinput.mouse.accelSpeed = "30";
     windowManager.i3.enable = true;
     #xkbOptions = "caps:ctrl_modifier,eurosign:e";
-    xkbOptions = "caps:esc,eurosign:e";
-    videoDrivers = [ "nvidia" ];
+    xkbOptions = "caps:escape,eurosign:e";
+    #videoDrivers = [ "nvidia" ];
     #screenSection = ''
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
     #'';
