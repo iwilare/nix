@@ -134,7 +134,7 @@
            buildPhase = '''';
          })*/
        ])
-    #texlive.combined.scheme-full
+    texlive.combined.scheme-full
     #ghc
     #rustup
     #stack
@@ -245,8 +245,8 @@
             }
            ];
           workspaceOutputAssign = [
-            { workspace = "1"; output = "DP-2"; }
-            { workspace = "2"; output = "HDMI-0"; }
+            { workspace = "1"; output = "HDMI-0"; }
+            { workspace = "2"; output = "DP-2"; }
             { workspace = "3"; output = "DP-0"; }
           ];
           fonts = { names = [ "DejaVuSansMono Nerd Font" ]; size = 9.0; };
@@ -274,35 +274,6 @@
             ];
           };
           keybindings = {
-            "${Mod}+r"             = "exec ${browser}";
-            "${Mod}+z"             = "exec ${terminal}";
-            "${Mod}+Return"        = "exec ${terminal}";
-            "${Mod}+Shift+f"       = "exec ${filemanager}";
-            "${Mod}+less"          = "exec ${run}";
-            "${Mod}+b"             = "exec ${audio}";
-            "Print"                = "exec ${screenshooter}";
-            "$Win+Shift+s"         = "exec ${screenshooter}";
-            "${Mod}+q"             = "kill";
-            "${Mod}+Shift+p"       = "border toggle";
-            "${Mod}+Shift+c"       = "reload; restart;";
-            "${Mod}+v"             = "split h";
-            "${Mod}+c"             = "split v";
-            "${Mod}+x"             = "focus parent";
-            "${Mod}+f"             = "fullscreen";
-            "${Mod}+e"             = "layout toggle split";
-            "${Mod}+t"             = "layout tabbed";
-            "${Mod}+p"             = "focus parent";
-            "${Mod}+l"             = "focus child";
-            "${Mod}+space"         = "floating toggle";
-            "${Mod}+Control+space" = "focus Mode_toggle";
-            "${Mod}+a"             = "focus left";
-            "${Mod}+s"             = "focus down";
-            "${Mod}+w"             = "focus up";
-            "${Mod}+d"             = "focus right";
-            "${Mod}+Shift+a"       = "move left";
-            "${Mod}+Shift+s"       = "move down";
-            "${Mod}+Shift+w"       = "move up";
-            "${Mod}+Shift+d"       = "move right";
             "${Mod}+1"             = "workspace 1";
             "${Mod}+2"             = "workspace 2";
             "${Mod}+3"             = "workspace 3";
@@ -312,7 +283,29 @@
             "${Mod}+7"             = "workspace 7";
             "${Mod}+8"             = "workspace 8";
             "${Mod}+9"             = "workspace 9";
-            "${Mod}+0"             = "workspace 10";
+            "${Mod}+a"             = "focus left";
+            "${Mod}+b"             = "exec ${audio}";
+            "${Mod}+c"             = "split v";
+            "${Mod}+Control+a"     = "resize shrink width 10 px or 5 ppt";
+            "${Mod}+Control+d"     = "resize grow width 10 px or 5 ppt";
+            "${Mod}+Control+Down"  = "resize grow height 10 px or 5 ppt";
+            "${Mod}+Control+Left"  = "resize shrink width 10 px or 5 ppt";
+            "${Mod}+Control+Right" = "resize grow width 10 px or 5 ppt";
+            "${Mod}+Control+s"     = "resize grow height 10 px or 5 ppt";
+            "${Mod}+Control+space" = "focus Mode_toggle";
+            "${Mod}+Control+Up"    = "resize shrink height 10 px or 5 ppt";
+            "${Mod}+Control+w"     = "resize shrink height 10 px or 5 ppt";
+            "${Mod}+d"             = "focus right";
+            "${Mod}+e"             = "layout toggle split";
+            "${Mod}+f"             = "fullscreen";
+            "${Mod}+l"             = "focus child";
+            "${Mod}+less"          = "exec ${run}";
+            "${Mod}+p"             = "focus parent";
+            "${Mod}+q"             = "kill";
+            "${Mod}+r"             = "exec ${browser}";
+            "${Mod}+Return"        = "exec ${terminal}";
+            "${Mod}+s"             = "focus down";
+            "${Mod}+Shift+0"       = "move container to workspace 10";
             "${Mod}+Shift+1"       = "move container to workspace 1";
             "${Mod}+Shift+2"       = "move container to workspace 2";
             "${Mod}+Shift+3"       = "move container to workspace 3";
@@ -322,18 +315,24 @@
             "${Mod}+Shift+7"       = "move container to workspace 7";
             "${Mod}+Shift+8"       = "move container to workspace 8";
             "${Mod}+Shift+9"       = "move container to workspace 9";
-            "${Mod}+Shift+0"       = "move container to workspace 10";
-            "${Mod}+Control+a"     = "resize shrink width 10 px or 5 ppt";
-            "${Mod}+Control+s"     = "resize grow height 10 px or 5 ppt";
-            "${Mod}+Control+w"     = "resize shrink height 10 px or 5 ppt";
-            "${Mod}+Control+d"     = "resize grow width 10 px or 5 ppt";
-            "${Mod}+Control+Left"  = "resize shrink width 10 px or 5 ppt";
-            "${Mod}+Control+Down"  = "resize grow height 10 px or 5 ppt";
-            "${Mod}+Control+Up"    = "resize shrink height 10 px or 5 ppt";
-            "${Mod}+Control+Right" = "resize grow width 10 px or 5 ppt";
-            "XF86AudioRaiseVolume" = "exec pactl set-sink-volume 0 +10%";
+            "${Mod}+Shift+a"       = "move left";
+            "${Mod}+Shift+c"       = "reload; restart;";
+            "${Mod}+Shift+d"       = "move right";
+            "${Mod}+Shift+f"       = "exec ${filemanager}";
+            "${Mod}+Shift+p"       = "border toggle";
+            "${Mod}+Shift+s"       = "move down";
+            "${Mod}+Shift+w"       = "move up";
+            "${Mod}+space"         = "floating toggle";
+            "${Mod}+t"             = "layout tabbed";
+            "${Mod}+v"             = "split h";
+            "${Mod}+w"             = "focus up";
+            "${Mod}+x"             = "focus parent";
+            "${Mod}+z"             = "exec ${terminal}";
+            "$Win+Shift+s"         = "exec ${screenshooter}";
+            "Print"                = "exec ${screenshooter}";
             "XF86AudioLowerVolume" = "exec pactl set-sink-volume 0 -10%";
             "XF86AudioMute"        = "exec pactl set-sink-mute 0 toggle";
+            "XF86AudioRaiseVolume" = "exec pactl set-sink-volume 0 +10%";
           };
       };
       extraConfig = ''
