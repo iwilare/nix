@@ -344,6 +344,7 @@
       userSettings = {
         "editor.fontFamily" = "'DejaVuSansMono Nerd Font'";
         "editor.fontSize" = 13.16;
+        "editor.inlineSuggest.enabled" = true;
         "editor.letterSpacing" = -0.1;
         "editor.unicodeHighlight.ambiguousCharacters" = false;
         "explorer.confirmDragAndDrop" = false;
@@ -352,13 +353,15 @@
         "files.restoreUndoStack" = true;
         "files.trimFinalNewlines" = true;
         "files.trimTrailingWhitespace" = true;
+        "idris.idris2Mode" = true;
+        "idris.idrisPath" = "idris2";
         "security.workspace.trust.enabled" = false;
         "telemetry.telemetryLevel" = "off";
+        "workbench.activityBar.visible" = false;
         "files.associations" = {
             "*.tikz" = "latex";
             "*.tikzstyles" = "latex";
         };
-        "workbench.activityBar.visible" = false;
         "[dart]" = {
             "editor.formatOnSave" = true;
             "editor.formatOnType" = true;
