@@ -58,7 +58,7 @@
     Defaults timestamp_timeout=7200
   '';
   services.xserver = {
-    autoRepeatDelay = 200;
+    autoRepeatDelay = 300;
     autoRepeatInterval = 25;
     desktopManager.wallpaper.mode = "fill";
     desktopManager.xterm.enable = false;
@@ -389,21 +389,21 @@
         { "key" = "ctrl+a ctrl+v";     "command" = "agda-mode.show-constraints";                                    "when" = "editorTextFocus && !editorHasSelection"; }
       ];
       extensions = [
-        pkgs.vscode-extensions.bbenoist.nix
-        pkgs.vscode-extensions.dart-code.dart-code
-        pkgs.vscode-extensions.denoland.vscode-deno
-        pkgs.vscode-extensions.github.copilot
-        pkgs.vscode-extensions.haskell.haskell
-        pkgs.vscode-extensions.james-yu.latex-workshop
-        pkgs.vscode-extensions.jnoortheen.nix-ide
-        pkgs.vscode-extensions.ms-vsliveshare.vsliveshare
         pkgs.vscode-extensions.rust-lang.rust-analyzer
-
-        pkgs.vscode-extensions.vscodevim.vim
-        #pkgs.vscode-extensions.leanprover.lean4
-        #pkgs.vscode-extensions.ms-vscode-remote.remote-wsl
-        #pkgs.vscode-extensions.ms-vscode.wordcount
+        pkgs.vscode-extensions.ms-vsliveshare.vsliveshare
+        pkgs.vscode-extensions.jnoortheen.nix-ide
+        pkgs.vscode-extensions.james-yu.latex-workshop
+        pkgs.vscode-extensions.haskell.haskell
+        pkgs.vscode-extensions.github.copilot
+        pkgs.vscode-extensions.denoland.vscode-deno
+        pkgs.vscode-extensions.dart-code.dart-code
+        pkgs.vscode-extensions.bbenoist.nix
+        #pkgs.vscode-extensions.vscodevim.vim
         #pkgs.vscode-extensions.ms-vsliveshare.vsliveshare-audio
+        #pkgs.vscode-extensions.ms-vscode.wordcount
+        #pkgs.vscode-extensions.ms-vscode-remote.remote-wsl
+        #pkgs.vscode-extensions.meraymond.idris-vscode
+        #pkgs.vscode-extensions.leanprover.lean4
         #pkgs.vscode-extensions.banacorn.agda-mode
       ];
     };
