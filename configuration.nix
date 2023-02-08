@@ -58,7 +58,7 @@
     Defaults timestamp_timeout=7200
   '';
   services.xserver = {
-    autoRepeatDelay = 200;
+    autoRepeatDelay = 300;
     autoRepeatInterval = 25;
     desktopManager.wallpaper.mode = "fill";
     desktopManager.xterm.enable = false;
@@ -71,7 +71,7 @@
     layout = "it";
     libinput.enable = true;
     libinput.mouse.scrollMethod = "button";
-    libinput.mouse.accelSpeed = "30";
+    libinput.mouse.accelSpeed = "25";
     windowManager.i3.enable = true;
     #xkbOptions = "caps:ctrl_modifier,eurosign:e";
     xkbOptions = "caps:escape,eurosign:e";
@@ -369,6 +369,30 @@
             "editor.tabCompletion" = "onlySnippets";
             "editor.wordBasedSuggestions" = false;
         };
+        "latex-workshop.latex.autoBuild.run" = "onSave";
+        "latex-workshop.latex.autoClean.run" = "onBuilt";
+        "latex-workshop.latex.pdfWatch.delay" = 0;
+        "latex-workshop.latex.recipe.default" = "lastUsed";
+        "latex-workshop.latex.watch.delay" = 0;
+        "latex-workshop.view.pdf.viewer" = "tab";
+        "latex-workshop.latex.recipes" = [
+            { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
+            { "name" = "latexmk";           "tools" = [ "latexmk"   ]; }
+        ];
+        "latex-workshop.latex.tools" = [
+            {
+                "name" = "xelatexmk";
+                "command" = "latexmk";
+                "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex" "-draftmode" "%DOC%" ];
+                "env" = {};
+            }
+            {
+                "name" = "latexmk";
+                "command" = "latexmk";
+                "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-pdf" "-outdir=%OUTDIR%" "-f" "-draftmode" "%DOC%" ];
+                "env" = {};
+            }
+        ];
       };
       keybindings = [
         { "key" = "ctrl+a ctrl+q";     "command" = "agda-mode.auto";                                                "when" = "editorTextFocus && !editorHasSelection"; }
@@ -421,6 +445,8 @@
       enable = true;
       userName  = "iwilare";
       userEmail = "iwilare@gmail.com";
+      extraConfig.init.defaultBranch = "main";
+      extraConfig.pull.rebase = false;
     };
     programs.fish = {
       enable = true;
