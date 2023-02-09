@@ -71,7 +71,7 @@
     layout = "it";
     libinput.enable = true;
     libinput.mouse.scrollMethod = "button";
-    libinput.mouse.accelSpeed = "25";
+    libinput.mouse.accelSpeed = "20";
     windowManager.i3.enable = true;
     #xkbOptions = "caps:ctrl_modifier,eurosign:e";
     xkbOptions = "caps:escape,eurosign:e";
@@ -353,10 +353,20 @@
         "files.restoreUndoStack" = true;
         "files.trimFinalNewlines" = true;
         "files.trimTrailingWhitespace" = true;
+        /*    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "liveshare.notebooks.allowGuestExecuteCells": true,
+    "security.workspace.trust.enabled": false,
+    "files.insertFinalNewline": true,
+    "files.eol": "\n",
+    "files.restoreUndoStack": true,
+    "editor.bracketPairColorization.enabled": true,
+ */
         "idris.idris2Mode" = true;
         "idris.idrisPath" = "idris2";
         "security.workspace.trust.enabled" = false;
         "telemetry.telemetryLevel" = "off";
+        "security.workspace.trust.untrustedFiles" = "open";
         "workbench.activityBar.visible" = false;
         "files.associations" = {
             "*.tikz" = "latex";
