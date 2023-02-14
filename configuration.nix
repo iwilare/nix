@@ -421,6 +421,7 @@
         { "key" = "ctrl+a ctrl+t";     "command" = "agda-mode.restart";                                             "when" = "editorTextFocus && !editorHasSelection"; }
         { "key" = "ctrl+a ctrl+e";     "command" = "agda-mode.compute-normal-form[DefaultCompute]";                 "when" = "editorTextFocus && !editorHasSelection"; }
         { "key" = "ctrl+a ctrl+v";     "command" = "agda-mode.show-constraints";                                    "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+shift+[Semicolon]"; "command" = "workbench.action.terminal.new";                                 "when" = "editorTextFocus && !editorHasSelection"; }
       ];
       extensions = [
         pkgs.vscode-extensions.rust-lang.rust-analyzer
