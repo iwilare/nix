@@ -553,7 +553,7 @@
           }
           {
             block = "custom";
-            on_click = "$TERMINAL -T 'NixOS rebuild' -x sudo nixos-rebuild switch";
+            on_click = "alacritty -t 'NixOS rebuild' -e sudo nixos-rebuild switch";
             command = "echo ";
           }
           {
