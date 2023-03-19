@@ -33,10 +33,11 @@
   security.pam.services.gdm.enableGnomeKeyring = true;
   services.illum.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  services.gvfs.enable = true;
   services.printing.enable = true;
   services.tumbler.enable = true;
-  services.blueman.enable = true;
-  hardware.bluetooth.enable = true;
   sound.mediaKeys.enable = true;
   sound.mediaKeys.volumeStep = "10%";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
@@ -121,20 +122,10 @@
   };
   environment.systemPackages = with pkgs; [
     (agda.withPackages
-       [
-         agdaPackages.standard-library
-         agdaPackages.agda-categories
-         /*(agdaPackages.mkDerivation {
-           version="1.7.1";
-           meta.broken = false;
-           pname = "agda-categories";
-           src = /home/andrea/agda-categories;
-           buildInputs = [
-             agdaPackages.standard-library
-           ];
-           buildPhase = '''';
-         })*/
-       ])
+      [
+        agdaPackages.standard-library
+        agdaPackages.agda-categories
+      ])
     texlive.combined.scheme-full
     #ghc
     #rustup
@@ -174,6 +165,10 @@
   programs.noisetorch = {
     enable = true;
   };
+  programs.thunar.plugins = with pkgs.xfce; [
+    thunar-archive-plugin
+    thunar-volman
+  ];
 
   networking.firewall = {
     allowedTCPPorts = [ 17500 ];
@@ -343,6 +338,7 @@
     programs.vscode = {
       enable = true;
       userSettings = {
+        "editor.bracketPairColorization.enabled" = true;
         "editor.fontFamily" = "'DejaVuSansMono Nerd Font'";
         "editor.fontSize" = 13.16;
         "editor.inlineSuggest.enabled" = true;
@@ -350,25 +346,17 @@
         "editor.unicodeHighlight.ambiguousCharacters" = false;
         "explorer.confirmDragAndDrop" = false;
         "explorer.sortOrder" = "type";
+        "files.eol" = "\n";
         "files.insertFinalNewline" = true;
         "files.restoreUndoStack" = true;
         "files.trimFinalNewlines" = true;
         "files.trimTrailingWhitespace" = true;
-        /*    "files.trimFinalNewlines": true,
-    "files.trimTrailingWhitespace": true,
-    "liveshare.notebooks.allowGuestExecuteCells": true,
-    "security.workspace.trust.enabled": false,
-    "files.insertFinalNewline": true,
-    "files.eol": "\n",
-    "files.restoreUndoStack": true,
-    "editor.bracketPairColorization.enabled": true,
- */
         "idris.idris2Mode" = true;
         "idris.idrisPath" = "idris2";
+        "liveshare.notebooks.allowGuestExecuteCells" = true;
         "security.workspace.trust.enabled" = false;
-        "telemetry.telemetryLevel" = "off";
         "security.workspace.trust.untrustedFiles" = "open";
-        "workbench.activityBar.visible" = false;
+        "telemetry.telemetryLevel" = "off";
         "files.associations" = {
             "*.tikz" = "latex";
             "*.tikzstyles" = "latex";
@@ -385,9 +373,7 @@
         };
         "latex-workshop.latex.autoBuild.run" = "onSave";
         "latex-workshop.latex.autoClean.run" = "onBuilt";
-        "latex-workshop.latex.pdfWatch.delay" = 0;
         "latex-workshop.latex.recipe.default" = "lastUsed";
-        "latex-workshop.latex.watch.delay" = 0;
         "latex-workshop.view.pdf.viewer" = "tab";
         "latex-workshop.latex.recipes" = [
             { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
@@ -409,19 +395,30 @@
         ];
       };
       keybindings = [
-        { "key" = "ctrl+a ctrl+q";     "command" = "agda-mode.auto";                                                "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+c";     "command" = "agda-mode.case";                                                "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+space"; "command" = "agda-mode.give";                                                "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+s";     "command" = "agda-mode.goal-type-context-and-inferred-type[Normalised]";     "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+f";     "command" = "agda-mode.goal-type-context-and-inferred-type[Simplified]";     "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+g";     "command" = "agda-mode.goal-type-context-and-inferred-type[Instantiated]";   "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+d";     "command" = "agda-mode.load";                                                "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+z";     "command" = "agda-mode.next-goal";                                           "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+w";     "command" = "agda-mode.previous-goal";                                       "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+r";     "command" = "agda-mode.refine";                                              "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+t";     "command" = "agda-mode.restart";                                             "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+e";     "command" = "agda-mode.compute-normal-form[DefaultCompute]";                 "when" = "editorTextFocus && !editorHasSelection"; }
-        { "key" = "ctrl+a ctrl+v";     "command" = "agda-mode.show-constraints";                                    "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+q";          "command" = "agda-mode.auto";                                                "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+c";          "command" = "agda-mode.case";                                                "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+space";      "command" = "agda-mode.give";                                                "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+s";          "command" = "agda-mode.goal-type-context-and-inferred-type[Normalised]";     "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+f";          "command" = "agda-mode.goal-type-context-and-inferred-type[Simplified]";     "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+g";          "command" = "agda-mode.goal-type-context-and-inferred-type[Instantiated]";   "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+d";          "command" = "agda-mode.load";                                                "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+z";          "command" = "agda-mode.next-goal";                                           "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+w";          "command" = "agda-mode.previous-goal";                                       "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+r";          "command" = "agda-mode.refine";                                              "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+t";          "command" = "agda-mode.restart";                                             "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+e";          "command" = "agda-mode.compute-normal-form[DefaultCompute]";                 "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+v";          "command" = "agda-mode.show-constraints";                                    "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+-";          "command" = "agda-mode.compile";                                             "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+l";          "command" = "agda-mode.lookup-symbol";                                       "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+p";          "command" = "agda-mode.restart";                                             "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+b";          "command" = "agda-mode.switch-agda-version";                                 "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+m";          "command" = "agda-mode.toggle-display-of-implicit-arguments";                "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+a ctrl+n";          "command" = "agda-mode.toggle-display-of-irrelevant-arguments";              "when" = "editorTextFocus && !editorHasSelection"; }
+        { "key" = "ctrl+e";                 "command" = "cursorLineEnd"; }
+      # { "key" = "ctrl+a";                 "command" = "cursorLineStart"; }
+        { "key" = "ctrl+o";                 "command" = "cursorLineEndSelect"; }
+        { "key" = "ctrl+i";                 "command" = "cursorLineStartSelect"; }
+      # { "key" = "ctrl+w";                 "command" = "agda-mode.toggle-display-of-irrelevant-arguments";              "when" = "editorTextFocus && !editorHasSelection"; }
         { "key" = "ctrl+shift+[Semicolon]"; "command" = "workbench.action.terminal.new";                                 "when" = "editorTextFocus && !editorHasSelection"; }
       ];
       extensions = [
@@ -434,7 +431,7 @@
         pkgs.vscode-extensions.denoland.vscode-deno
         pkgs.vscode-extensions.dart-code.dart-code
         pkgs.vscode-extensions.bbenoist.nix
-        #pkgs.vscode-extensions.vscodevim.vim
+        pkgs.vscode-extensions.vscodevim.vim
         #pkgs.vscode-extensions.ms-vsliveshare.vsliveshare-audio
         #pkgs.vscode-extensions.ms-vscode.wordcount
         #pkgs.vscode-extensions.ms-vscode-remote.remote-wsl
@@ -462,6 +459,7 @@
       userEmail = "iwilare@gmail.com";
       extraConfig.init.defaultBranch = "main";
       extraConfig.pull.rebase = false;
+      extraConfig.push.autoSetupRemote = true;
     };
     programs.fish = {
       enable = true;
@@ -471,8 +469,8 @@
       shellAliases = {
         cat = "bat -p";
         ls  = "exa";
-        l   = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
-        la  = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
+        la  = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
+        l   = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
         t   = "exa --icons --tree -s=type --all";
         ta  = "exa --icons --tree -s=type";
         where = "ack -il";
@@ -549,12 +547,12 @@
         blocks = [
           {
             block = "custom";
-            on_click = "code /etc/nixos/configuration.nix";
+            on_click = "code -n /etc/nixos/configuration.nix";
             command = "echo ";
           }
           {
             block = "custom";
-            on_click = "alacritty -t 'NixOS rebuild' -e sudo nixos-rebuild switch";
+            on_click = "alacritty --hold -t 'NixOS rebuild' -e sudo nixos-rebuild switch";
             command = "echo ";
           }
           {
