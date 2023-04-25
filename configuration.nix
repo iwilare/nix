@@ -75,8 +75,8 @@
     libinput.mouse.scrollMethod = "button";
     libinput.mouse.accelSpeed = "20";
     windowManager.i3.enable = true;
-    #xkbOptions = "caps:ctrl_modifier,eurosign:e";
-    xkbOptions = "caps:super,eurosign:e";
+    #xkbOptions = "caps:super,eurosign:e";
+    xkbOptions = "caps:ctrl_modifier,eurosign:e";
 
     #videoDrivers = [ "nvidia" ];
 
@@ -247,7 +247,7 @@
           ];
           fonts = { names = [ "DejaVuSansMono Nerd Font" ]; size = 9.0; };
           focus.newWindow = "smart";
-          workspaceAutoBackAndForth = true;
+          #workspaceAutoBackAndForth = true;
           #focus.wrapping = "workspace";
           startup = [
             { command = browser; }
