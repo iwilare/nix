@@ -475,8 +475,8 @@
         pkgs.vscode-extensions.denoland.vscode-deno
         pkgs.vscode-extensions.dart-code.dart-code
         pkgs.vscode-extensions.bbenoist.nix
-        pkgs.vscode-extensions.vscodevim.vim
         pkgs.vscode-extensions.eamodio.gitlens
+        #pkgs.vscode-extensions.vscodevim.vim
         #pkgs.vscode-extensions.ms-vsliveshare.vsliveshare-audio
         #pkgs.vscode-extensions.ms-vscode.wordcount
         #pkgs.vscode-extensions.ms-vscode-remote.remote-wsl
