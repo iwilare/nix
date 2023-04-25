@@ -19,8 +19,8 @@
   hardware.pulseaudio.enable = true;
   programs.ssh.startAgent = true;
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.inputMethod.enabled = "fcitx";
-  i18n.inputMethod.fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
+  #i18n.inputMethod.enabled = "fcitx";
+  #i18n.inputMethod.fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
   networking.hostName = "iwilare";
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
@@ -169,6 +169,9 @@
     thunar-archive-plugin
     thunar-volman
   ];
+  services.dbus.packages = with pkgs; [
+    xfce.xfconf
+  ];
 
   networking.firewall = {
     allowedTCPPorts = [ 17500 ];
@@ -281,7 +284,27 @@
             "${Mod}+9"             = "workspace 9";
             "${Mod}+a"             = "focus left";
             "${Mod}+b"             = "exec ${audio}";
-            "${Mod}+c"             = "split h";
+            "${Mod}+v"             = "split h";
+            "${Mod}+c"             = "split v";
+            "${Mod}+d"             = "focus right";
+            "${Mod}+e"             = "layout toggle split";
+            "${Mod}+f"             = "fullscreen";
+            "${Mod}+l"             = "focus child";
+            "${Mod}+p"             = "focus parent";
+            "${Mod}+q"             = "kill";
+            "${Mod}+r"             = "exec ${browser}";
+            "${Mod}+Return"        = "exec ${terminal}";
+            "${Mod}+s"             = "focus down";
+            "${Mod}+less"          = "exec ${run}";
+            "${Mod}+space"         = "floating toggle";
+            "${Mod}+t"             = "layout tabbed";
+            "${Mod}+w"             = "focus up";
+            "${Mod}+x"             = "focus parent";
+            "${Mod}+z"             = "exec ${terminal}";
+            "Print"                = "exec ${screenshooter}";
+            "XF86AudioLowerVolume" = "exec pactl set-sink-volume 0 -10%";
+            "XF86AudioMute"        = "exec pactl set-sink-mute 0 toggle";
+            "XF86AudioRaiseVolume" = "exec pactl set-sink-volume 0 +10%";
             "${Mod}+Control+a"     = "resize shrink width 10 px or 5 ppt";
             "${Mod}+Control+d"     = "resize grow width 10 px or 5 ppt";
             "${Mod}+Control+Down"  = "resize grow height 10 px or 5 ppt";
@@ -291,16 +314,6 @@
             "${Mod}+Control+space" = "focus Mode_toggle";
             "${Mod}+Control+Up"    = "resize shrink height 10 px or 5 ppt";
             "${Mod}+Control+w"     = "resize shrink height 10 px or 5 ppt";
-            "${Mod}+d"             = "focus right";
-            "${Mod}+e"             = "layout toggle split";
-            "${Mod}+f"             = "fullscreen";
-            "${Mod}+l"             = "focus child";
-            "${Mod}+less"          = "exec ${run}";
-            "${Mod}+p"             = "focus parent";
-            "${Mod}+q"             = "kill";
-            "${Mod}+r"             = "exec ${browser}";
-            "${Mod}+Return"        = "exec ${terminal}";
-            "${Mod}+s"             = "focus down";
             "${Mod}+Shift+0"       = "move container to workspace 10";
             "${Mod}+Shift+1"       = "move container to workspace 1";
             "${Mod}+Shift+2"       = "move container to workspace 2";
@@ -318,17 +331,7 @@
             "${Mod}+Shift+p"       = "border toggle";
             "${Mod}+Shift+s"       = "move down";
             "${Mod}+Shift+w"       = "move up";
-            "${Mod}+space"         = "floating toggle";
-            "${Mod}+t"             = "layout tabbed";
-            "${Mod}+v"             = "split v";
-            "${Mod}+w"             = "focus up";
-            "${Mod}+x"             = "focus parent";
-            "${Mod}+z"             = "exec ${terminal}";
-            "$Win+Shift+s"         = "exec ${screenshooter}";
-            "Print"                = "exec ${screenshooter}";
-            "XF86AudioLowerVolume" = "exec pactl set-sink-volume 0 -10%";
-            "XF86AudioMute"        = "exec pactl set-sink-mute 0 toggle";
-            "XF86AudioRaiseVolume" = "exec pactl set-sink-volume 0 +10%";
+            "Win+Shift+s"          = "exec ${screenshooter}";
           };
         };
         extraConfig = ''
