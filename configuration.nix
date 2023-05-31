@@ -1,42 +1,44 @@
 { config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
-    (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-22.05.tar.gz}/nixos")
+    (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos")
   ];
 
   #networking.interfaces.wlp2s0.useDHCP = false;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  security.pam.services.andrea.enableGnomeKeyring = true;
+  #i18n.inputMethod.enabled = "fcitx";
+  #i18n.inputMethod.fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.loader.systemd-boot.configurationLimit = 1;
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.loader.timeout = 0;
   console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
   fonts.fontconfig.enable = true;
+  hardware.bluetooth.enable = true;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.opengl.enable = true;
   hardware.pulseaudio.enable = true;
-  programs.ssh.startAgent = true;
   i18n.defaultLocale = "en_US.UTF-8";
-  #i18n.inputMethod.enabled = "fcitx";
-  #i18n.inputMethod.fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
   networking.hostName = "iwilare";
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
   nixpkgs.config.allowUnfree = true;
   programs.dconf.enable = true; # https://www.reddit.com/r/NixOS/comments/b255k5/home_manager_cannot_set_gnome_themes/
+  programs.fish.enable = true;
   programs.nm-applet.enable = true;
+  programs.ssh.startAgent = true;
+  security.pam.services.andrea.enableGnomeKeyring = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
+  services.blueman.enable = true;
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.gdm.enableGnomeKeyring = true;
+  services.gvfs.enable = true;
   services.illum.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
-  services.gvfs.enable = true;
   services.printing.enable = true;
+  services.teamviewer.enable = true;
   services.tumbler.enable = true;
   sound.mediaKeys.enable = true;
   sound.mediaKeys.volumeStep = "10%";
@@ -160,8 +162,6 @@
     pv         # Monitor the progress of data through a pipe
     btop
   ];
-  services.teamviewer.enable = true;
-
   programs.noisetorch = {
     enable = true;
   };
@@ -201,6 +201,7 @@
 
   home-manager.users.andrea = {
     nixpkgs.config.allowUnfree = true;
+    home.stateVersion = "23.05";
     home.file.".background-image".source = "/etc/nixos/background.png";
     gtk = {
       enable = true;
