@@ -502,6 +502,10 @@
         };
       };
     };
+    programs.ssh = {
+      enable = true;
+      extraConfig = "AddKeysToAgent yes";
+    };
     programs.git = {
       enable = true;
       userName  = "iwilare";
