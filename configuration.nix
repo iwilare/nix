@@ -508,11 +508,14 @@
     };
     programs.git = {
       enable = true;
+      diff-so-fancy.enable = true;
       userName  = "iwilare";
       userEmail = "iwilare@gmail.com";
       extraConfig.init.defaultBranch = "main";
       extraConfig.pull.rebase = false;
       extraConfig.push.autoSetupRemote = true;
+      extraConfig.core.fileMode = false;
+      extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
     };
     programs.fish = {
       enable = true;
