@@ -202,7 +202,10 @@
   home-manager.users.andrea = {
     nixpkgs.config.allowUnfree = true;
     home.stateVersion = "23.05";
-    home.file.".background-image".source = "/etc/nixos/background.png";
+    home.file.".background-image".source = (pkgs.fetchurl {
+      url = "https://github.com/iwilare/backgrounds/raw/main/iss.png";
+      sha256 = "/r/R1tTzvbivSepmYa2nA4Otq3CSuvqjr3J4sY0Sqxg=";
+    });
     gtk = {
       enable = true;
       font.name = "Sans 10";
@@ -469,24 +472,25 @@
       # # { "key" = "ctrl+w";                 "command" = "agda-mode.toggle-display-of-irrelevant-arguments";              "when" = "editorTextFocus && !editorHasSelection"; }
       #   { "key" = "ctrl+shift+[Semicolon]"; "command" = "workbench.action.terminal.new";                                 "when" = "editorTextFocus && !editorHasSelection"; }
       # ];
-     extensions = [
-        pkgs.vscode-extensions.rust-lang.rust-analyzer
-        pkgs.vscode-extensions.ms-vsliveshare.vsliveshare
-        pkgs.vscode-extensions.jnoortheen.nix-ide
-        pkgs.vscode-extensions.james-yu.latex-workshop
-        pkgs.vscode-extensions.haskell.haskell
-        pkgs.vscode-extensions.github.copilot
-        pkgs.vscode-extensions.denoland.vscode-deno
-        pkgs.vscode-extensions.dart-code.dart-code
-        pkgs.vscode-extensions.bbenoist.nix
-        pkgs.vscode-extensions.eamodio.gitlens
-        #pkgs.vscode-extensions.vscodevim.vim
-        #pkgs.vscode-extensions.ms-vsliveshare.vsliveshare-audio
-        #pkgs.vscode-extensions.ms-vscode.wordcount
-        #pkgs.vscode-extensions.ms-vscode-remote.remote-wsl
-        #pkgs.vscode-extensions.meraymond.idris-vscode
-        #pkgs.vscode-extensions.leanprover.lean4
-        #pkgs.vscode-extensions.banacorn.agda-mode
+      extensions = with pkgs.vscode-extensions; [
+        rust-lang.rust-analyzer
+        ms-vsliveshare.vsliveshare
+        justusadam.language-haskell
+        jnoortheen.nix-ide
+        james-yu.latex-workshop
+        haskell.haskell
+        github.copilot
+        denoland.vscode-deno
+        dart-code.dart-code
+        bbenoist.nix
+        eamodio.gitlens
+        adpyke.codesnap
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        { name = "cursor-align"; publisher = "yo1dog";           version = "1.1.0";  sha256 = "LgcMwNundAUcsRLvr+yw0+REgv7ZS+HLh3aLH2mgw00="; }
+        { name = "idris-vscode"; publisher = "meraymond";        version = "0.0.14"; sha256 = "QAzjm+8Z+4TDbM5amh3UEkSmp0n8ZlRHYpUGAewIVXk="; }
+        { name = "wordcount";    publisher = "ms-vscode";        version = "0.1.0";  sha256 = "Qb4KU3K0NsU7U2GWZscA6WAk406RbnAOpIIvvII4mpg="; }
+        { name = "agda-mode";    publisher = "banacorn";         version = "0.3.11"; sha256 = "jnH3oNqvkO/+Oi+8MM1RqooPFrQZMDWLSEnrVLnc5VI="; }
+        { name = "remote-wsl";   publisher = "ms-vscode-remote"; version = "0.79.2"; sha256 = "s9hJKgfg4g1Nf740bnmee/QNa0nq9dvwbtHvaQUBjZc="; }
       ];
     };
     services.flameshot = {
@@ -511,15 +515,19 @@
       diff-so-fancy.enable = true;
       userName  = "iwilare";
       userEmail = "iwilare@gmail.com";
+
+      extraConfig.color.ui = true;
+      extraConfig.core.askPass = "";
+      extraConfig.core.fileMode = false;
+      extraConfig.credential.helper = "store";
+      extraConfig.github.user = "iwilare";
       extraConfig.init.defaultBranch = "main";
       extraConfig.pull.rebase = false;
       extraConfig.push.autoSetupRemote = true;
-      extraConfig.core.fileMode = false;
       extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
-      #signing = {
-      #  key = "AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug";
-      #  signByDefault = true;
-      #};
+      extraConfig.commit.gpgsign = true;
+      extraConfig.gpg.format = "ssh";
+      extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug iwilare@gmail.com";
     };
     programs.fish = {
       enable = true;
