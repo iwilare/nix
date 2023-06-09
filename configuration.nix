@@ -128,7 +128,8 @@
         agdaPackages.standard-library
         agdaPackages.agda-categories
       ])
-    #texlive.combined.scheme-full
+    texlive.combined.scheme-full
+
     #ghc
     #rustup
     #stack
@@ -345,133 +346,218 @@
     programs.vscode = {
       enable = true;
       package = pkgs.vscode.overrideAttrs (oldAttrs: rec { version = "stable"; });
-      # userSettings = {
-      #   "editor.bracketPairColorization.enabled" = true;
-      #   "editor.fontFamily" = "'DejaVuSansM Nerd Font'";
-      #   "editor.fontSize" = 13.16;
-      #   "editor.inlineSuggest.enabled" = true;
-      #   "editor.letterSpacing" = -0.1;
-      #   "editor.unicodeHighlight.ambiguousCharacters" = false;
-      #   "explorer.confirmDragAndDrop" = false;
-      #   "explorer.sortOrder" = "type";
-      #   "files.eol" = "\n";
-      #   "files.insertFinalNewline" = true;
-      #   "files.restoreUndoStack" = true;
-      #   "files.trimFinalNewlines" = true;
-      #   "files.trimTrailingWhitespace" = true;
-      #   "idris.idris2Mode" = true;
-      #   "idris.idrisPath" = "idris2";
-      #   "liveshare.notebooks.allowGuestExecuteCells" = true;
-      #   "security.workspace.trust.enabled" = false;
-      #   "security.workspace.trust.untrustedFiles" = "open";
-      #   "telemetry.telemetryLevel" = "off";
-      #  "editor.formatonpaste": true,
-      #  "editor.formatontype": true,
-      #  "editor.glyphmargin": false,
-      #  "editor.guides.bracketpairs": true,
-      #  "editor.hover.delay": 100,
-      #  "editor.insertspaces": true,
-      #  "editor.linkedediting": true,
-      #  "editor.minimap.scale": 2,
-      #  "editor.minimap.maxcolumn": 60,
-      #  "editor.smoothscrolling": true,
-      #  "editor.stickyscroll.enabled": true,
-      #  "editor.suggest.localitybonus": true,
-      #  "editor.suggest.preview": true,
-      #  "editor.tabsize": 2,
-      #  "files.simpledialog.enable": true,
-      #  "latex-workshop.view.pdf.viewer": "tab",
-      #  "liveshare.notebooks.allowguestexecuteCells": true,
-      #  "security.workspace.trust.enabled": false,
-      #  "security.workspace.trust.untrustedFiles": "open",
-      #  "telemetry.telemetrylevel": "off",
-      #  "window.menubarvisibility": "hidden",
-      #  "workbench.editor.splitsizing": "split",
-      #  "workbench.editor.tabsizing": "shrink",
-      #  "workbench.list.smoothscrolling": true,
-      #  "workbench.statusbar.visible": false,
-      #  "workbench.tree.indent": 16,
-      #  "workbench.tree.renderindentguides": "always",
-      #  "workbench.editor.autolockgroups": {
-        # "latex-workshop-pdf-hook": true,
-        # "mainThreadWebview-markdown.preview": true
-      # },
-      # "explorer.compactFolders": false,
-      # "explorer.incrementalNaming": "smart",
-      # "explorer.sortOrderLexicographicOptions": "upper",
-      # "search.smartCase": true,
-      # "search.sortOrder": "fileNames",
-      # "terminal.integrated.cursorStyle": "line",
-      # "terminal.integrated.enableMultiLinePasteWarning": false,
-      # "terminal.integrated.rightClickBehavior": "copyPaste",
-      # "terminal.integrated.smoothScrolling": true,
-      # "terminal.integrated.scrollback": 10000,
-      # "update.mode": "none",
-      # "agdaMode.view.panelMountPosition": "right",
-      #   "files.associations" = {
-      #       "*.tikz" = "latex";
-      #       "*.tikzstyles" = "latex";
-      #   };
-      #   "[dart]" = {
-      #       "editor.formatOnSave" = true;
-      #       "editor.formatOnType" = true;
-      #       "editor.rulers" = [80];
-      #       "editor.selectionHighlight" = false;
-      #       "editor.suggest.snippetsPreventQuickSuggestions" = false;
-      #       "editor.suggestSelection" = "first";
-      #       "editor.tabCompletion" = "onlySnippets";
-      #       "editor.wordBasedSuggestions" = false;
-      #   };
-      #   "latex-workshop.latex.autoBuild.run" = "onSave";
-      #   "latex-workshop.latex.autoClean.run" = "onBuilt";
-      #   "latex-workshop.latex.recipe.default" = "lastUsed";
-      #   "latex-workshop.view.pdf.viewer" = "tab";
-      #   "latex-workshop.latex.recipes" = [
-      #       { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
-      #       { "name" = "latexmk";           "tools" = [ "latexmk"   ]; }
-      #   ];
-      #   "latex-workshop.latex.tools" = [
-      #       {
-      #           "name" = "xelatexmk";
-      #           "command" = "latexmk";
-      #           "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex" "-draftmode" "%DOC%" ];
-      #           "env" = {};
-      #       }
-      #       {
-      #           "name" = "latexmk";
-      #           "command" = "latexmk";
-      #           "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-pdf" "-outdir=%OUTDIR%" "-f" "-draftmode" "%DOC%" ];
-      #           "env" = {};
-      #       }
-      #   ];
-      # };
-      # keybindings = [
-      #   { "key" = "ctrl+a ctrl+q";          "command" = "agda-mode.auto";                                                "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+c";          "command" = "agda-mode.case";                                                "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+space";      "command" = "agda-mode.give";                                                "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+s";          "command" = "agda-mode.goal-type-context-and-inferred-type[Normalised]";     "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+f";          "command" = "agda-mode.goal-type-context-and-inferred-type[Simplified]";     "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+g";          "command" = "agda-mode.goal-type-context-and-inferred-type[Instantiated]";   "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+d";          "command" = "agda-mode.load";                                                "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+z";          "command" = "agda-mode.next-goal";                                           "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+w";          "command" = "agda-mode.previous-goal";                                       "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+r";          "command" = "agda-mode.refine";                                              "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+t";          "command" = "agda-mode.restart";                                             "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+e";          "command" = "agda-mode.compute-normal-form[DefaultCompute]";                 "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+v";          "command" = "agda-mode.show-constraints";                                    "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+-";          "command" = "agda-mode.compile";                                             "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+l";          "command" = "agda-mode.lookup-symbol";                                       "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+p";          "command" = "agda-mode.restart";                                             "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+b";          "command" = "agda-mode.switch-agda-version";                                 "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+m";          "command" = "agda-mode.toggle-display-of-implicit-arguments";                "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+a ctrl+n";          "command" = "agda-mode.toggle-display-of-irrelevant-arguments";              "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+e";                 "command" = "cursorLineEnd"; }
-      # # { "key" = "ctrl+a";                 "command" = "cursorLineStart"; }
-      #   { "key" = "ctrl+o";                 "command" = "cursorLineEndSelect"; }
-      #   { "key" = "ctrl+i";                 "command" = "cursorLineStartSelect"; }
-      # # { "key" = "ctrl+w";                 "command" = "agda-mode.toggle-display-of-irrelevant-arguments";              "when" = "editorTextFocus && !editorHasSelection"; }
-      #   { "key" = "ctrl+shift+[Semicolon]"; "command" = "workbench.action.terminal.new";                                 "when" = "editorTextFocus && !editorHasSelection"; }
-      # ];
+      userSettings = {
+        "editor.bracketPairColorization.enabled" = true;
+        "editor.fontFamily" = "'DejaVuSansM Nerd Font'";
+        "editor.fontSize" = 13.16;
+        "editor.glyphMargin" = false;
+        "editor.guides.bracketPairs" = true;
+        "editor.hover.delay" = 250;
+        "editor.inlineSuggest.enabled" = true;
+        "editor.insertSpaces" = true;
+        "editor.letterSpacing" = -0.3;
+        "editor.linkedEditing" = true;
+        "editor.minimap.maxColumn" = 60;
+        "editor.minimap.scale" = 2;
+        "editor.smoothScrolling" = true;
+        "editor.stickyScroll.enabled" = true;
+        "editor.suggest.localityBonus" = true;
+        "editor.suggest.preview" = true;
+        "editor.tabSize" = 2;
+        "explorer.compactFolders" = false;
+        "explorer.confirmDragAndDrop" = false;
+        "explorer.incrementalNaming" = "smart";
+        "explorer.sortOrderLexicographicOptions" = "upper";
+        "files.eol" = "\n";
+        "files.insertFinalNewline" = true;
+        "files.restoreUndoStack" = true;
+        "files.simpleDialog.enable" = true;
+        "files.trimFinalNewlines" = true;
+        "files.trimTrailingWhitespace" = true;
+        "liveshare.notebooks.allowGuestExecuteCells" = true;
+        "search.smartCase" = true;
+        "search.sortOrder" = "fileNames";
+        "security.workspace.trust.enabled" = false;
+        "security.workspace.trust.untrustedFiles" = "open";
+        "telemetry.telemetryLevel" = "off";
+        "terminal.integrated.cursorStyle" = "line";
+        "terminal.integrated.enableMultiLinePasteWarning" = false;
+        "terminal.integrated.rightClickBehavior" = "copyPaste";
+        "terminal.integrated.scrollback" = 10000;
+        "terminal.integrated.smoothScrolling" = true;
+        "update.mode" = "none";
+        "window.menuBarVisibility" = "hidden";
+        "workbench.editor.splitSizing" = "split";
+        "workbench.editor.tabSizing" = "shrink";
+        "workbench.list.smoothScrolling" = true;
+        "workbench.startupEditor" = "none";
+        "workbench.tree.indent" = 16;
+        "workbench.tree.renderIndentGuides" = "always";
+        # Idris
+        "idris.idris2Mode" = true;
+        "idris.idrisPath" = "idris2";
+        # Agda
+        "agdaMode.view.panelMountPosition" = "right";
+        "[agda]" = {
+          "editor.unicodeHighlight.ambiguousCharacters" = false;
+        };
+        "[dart]" = {
+          "editor.formatOnSave" = true;
+          "editor.formatOnType" = true;
+          "editor.rulers" = [
+            80
+          ];
+          "editor.selectionHighlight" = false;
+          "editor.suggest.snippetsPreventQuickSuggestions" = false;
+          "editor.suggestSelection" = "first";
+          "editor.tabCompletion" = "onlySnippets";
+          "editor.wordBasedSuggestions" = false;
+        };
+        # LaTeX
+        "files.associations" = {
+          "*.tikz" = "latex";
+          "*.tikzstyles" = "latex";
+        };
+        "latex-workshop.latex.autoBuild.run" = "onSave";
+        "latex-workshop.latex.autoClean.run" = "onBuilt";
+        "latex-workshop.latex.recipe.default" = "lastUsed";
+        "latex-workshop.view.pdf.viewer" = "tab";
+        "latex-workshop.latex.recipes" = [
+          { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
+          { "name" = "latexmk";           "tools" = [ "latexmk"   ]; }
+        ];
+        "latex-workshop.latex.tools" = [
+          { "command" = "latexmk"; "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "-draftmode" "%DOC%" ]; }
+          { "command" = "latexmk"; "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "-draftmode" "%DOC%" ]; }
+        ];
+        "workbench.editor.autoLockGroups" = {
+          "latex-workshop-pdf-hook" = true;
+          "mainThreadWebview-markdown.preview" = true;
+        };
+      };
+      keybindings = [
+
+        # Movement
+
+        { "command" = "cursorDown";                "key" = "ctrl+k";                 }
+        { "command" = "cursorDownSelect";          "key" = "ctrl+shift+k";           }
+        { "command" = "cursorLeft";                "key" = "ctrl+alt+j";             }
+        { "command" = "cursorLeftSelect";          "key" = "ctrl+shift+j";           }
+        { "command" = "cursorRight";               "key" = "ctrl+alt+l";             }
+        { "command" = "cursorRightSelect";         "key" = "ctrl+shift+l";           }
+        { "command" = "cursorUp";                  "key" = "ctrl+i";                 }
+        { "command" = "cursorUpSelect";            "key" = "ctrl+shift+i";           }
+
+        { "command" = "cursorWordPartLeft";        "key" = "ctrl+j";                 }
+        { "command" = "cursorWordPartLeftSelect";  "key" = "ctrl+alt+shift+j";       }
+        { "command" = "cursorWordPartRight";       "key" = "ctrl+l";                 }
+        { "command" = "cursorWordPartRightSelect"; "key" = "ctrl+alt+shift+l";       }
+
+        { "command" = "deleteLeft";                "key" = "ctrl+alt+h";             }
+        { "command" = "deleteRight";               "key" = "ctrl+alt+[semicolon]";   }
+        { "command" = "deleteWordLeft";            "key" = "ctrl+h";                 }
+        { "command" = "deleteWordPartLeft";        "key" = "ctrl+shift+h";           }
+        { "command" = "deleteWordPartRight";       "key" = "ctrl+shift+[semicolon]"; }
+        { "command" = "deleteWordRight";           "key" = "ctrl+[semicolon]";       }
+
+        { "command" = "cursorHome";                "key" = "ctrl+q";                 }
+        { "command" = "cursorHomeSelect";          "key" = "ctrl+alt+q";             }
+        { "command" = "cursorLineEnd";             "key" = "ctrl+e";                 }
+        { "command" = "cursorLineEndSelect";       "key" = "ctrl+alt+e";             }
+
+        # Selection
+
+        { "command" = "expandLineSelection";                       "key" = "ctrl+m";                                           }
+        { "command" = "editor.action.smartSelect.expand";          "key" = "ctrl+r";                                           }
+        { "command" = "editor.action.smartSelect.shrink";          "key" = "ctrl+shift+r";      "when" = "editorHasSelection"; }
+        { "command" = "editor.action.moveLinesUpAction";           "key" = "ctrl+alt+i";        "when" = "editorHasSelection"; }
+        { "command" = "editor.action.moveLinesDownAction";         "key" = "ctrl+alt+k";        "when" = "editorHasSelection"; }
+        { "command" = "cancelSelection";                           "key" = "ctrl+w";            "when" = "editorHasSelection"; }
+        { "command" = "editor.action.selectHighlights";            "key" = "ctrl+space ctrl+d";                                }
+        { "command" = "editor.action.selectAll";                   "key" = "ctrl+space ctrl+a";                                }
+
+        # Clipboard and undoing
+
+        { "command" = "editor.action.clipboardCutAction";          "key" = "ctrl+x";            "when" = "editorHasSelection"; }
+        { "command" = "editor.action.clipboardCopyAction";         "key" = "ctrl+c";            "when" = "editorHasSelection"; }
+        { "command" = "editor.action.clipboardPasteAction";        "key" = "ctrl+v";                                           }
+        { "command" = "redo";                                      "key" = "ctrl+alt+z";                                       }
+        { "command" = "undo";                                      "key" = "ctrl+z";                                           }
+        { "command" = "cursorRedo";                                "key" = "ctrl+space ctrl+u";                                }
+
+        # Multi cursor
+
+        { "command" = "yo1dog.cursor-align.alignCursors";          "key" = "ctrl+t";                                                }
+        { "command" = "editor.action.insertCursorAbove";           "key" = "ctrl+alt+i";            "when" = "!editorHasSelection"; }
+        { "command" = "editor.action.insertCursorBelow";           "key" = "ctrl+alt+k";            "when" = "!editorHasSelection"; }
+        { "command" = "editor.action.insertLineBefore";            "key" = "ctrl+alt+enter";                                        }
+        { "command" = "editor.action.insertLineAfter";             "key" = "ctrl+enter";                                            }
+        { "command" = "editor.action.copyLinesDownAction";         "key" = "ctrl+alt+c";                                            }
+        { "command" = "editor.action.selectHighlights";            "key" = "ctrl+shift+d";                                          }
+        { "command" = "editor.action.startFindReplaceAction";      "key" = "ctrl+alt+f";                                            }
+        { "command" = "editor.action.joinLines";                   "key" = "ctrl+g";                "when" = "!editorHasSelection"; }
+        { "command" = "editor.action.commentLine";                 "key" = "ctrl+b";                                                }
+        { "command" = "editor.action.triggerSuggest";              "key" = "ctrl+y";                "when" = "!editorHasSelection"; }
+        { "command" = "removeSecondaryCursors";                    "key" = "ctrl+;";                "when" = "multiCursorModifier"; }
+        { "command" = "editor.action.startFindReplaceAction";      "key" = "ctrl+space ctrl+f";     "when" = "!editorHasSelection"; }
+        { "command" = "editor.action.triggerSuggest";              "key" = "ctrl+space ctrl+space"; "when" = "!editorHasSelection"; }
+
+        { "command" = "removeSecondaryCursors";                    "key" = "ctrl+;";                "when" = "multiCursorModifier"; }
+
+        # { "command" = "editor.action.deleteLines";                 "key" = "ctrl+n";                                              }
+        # { "command" = "editor.action.indentLines";                 "key" = "tab";                "when" = "editorHasSelection";   }
+        # { "command" = "editor.action.outdentLines";                "key" = "shift+tab";          "when" = "editorHasSelection";   }
+
+        # Windows
+
+        { "command" = "workbench.action.closeActiveEditor";        "key" = "ctrl+space ctrl+w";     "when" = "!editorHasSelection"; }
+        { "command" = "workbench.action.closeActiveEditor";        "key" = "ctrl+w";                "when" = "multiCursorModifier"; }
+        { "command" = "workbench.action.files.newUntitledFile";    "key" = "ctrl+space ctrl+s";     "when" = "!editorHasSelection"; }
+        { "command" = "workbench.action.files.openFile";           "key" = "ctrl+o";                                                }
+        { "command" = "workbench.action.files.openFileFolder";     "key" = "ctrl+space ctrl+o";                                     }
+        { "command" = "workbench.action.previousEditor";           "key" = "ctrl+space ctrl+1";                                     }
+        { "command" = "workbench.action.nextEditor";               "key" = "ctrl+space ctrl+2";                                     }
+        { "command" = "workbench.action.openEditorAtIndex1";       "key" = "ctrl+1";                "when" = "";                    }
+        { "command" = "workbench.action.openEditorAtIndex2";       "key" = "ctrl+2";                "when" = "";                    }
+        { "command" = "workbench.action.openEditorAtIndex3";       "key" = "ctrl+3";                "when" = "";                    }
+        { "command" = "workbench.action.openEditorAtIndex4";       "key" = "ctrl+4";                "when" = "";                    }
+        { "command" = "workbench.action.openEditorAtIndex5";       "key" = "ctrl+5";                "when" = "";                    }
+        { "command" = "workbench.action.openEditorAtIndex6";       "key" = "ctrl+6";                "when" = "";                    }
+        { "command" = "workbench.action.openEditorAtIndex7";       "key" = "ctrl+7";                "when" = "";                    }
+        { "command" = "workbench.action.openEditorAtIndex8";       "key" = "ctrl+8";                "when" = "";                    }
+        { "command" = "workbench.action.openEditorAtIndex9";       "key" = "ctrl+9";                "when" = "";                    }
+        { "command" = "workbench.action.quickOpen";                "key" = "ctrl+p";                                                }
+        { "command" = "workbench.action.togglePanel";              "key" = "ctrl+space ctrl+q";     "when" = "!editorHasSelection"; }
+        { "command" = "workbench.action.toggleSidebarVisibility";  "key" = "ctrl+space ctrl+e";     "when" = "!editorHasSelection"; }
+        { "command" = "workbench.files.action.focusFilesExplorer"; "key" = "ctrl+space ctrl+d";     "when" = "!editorHasSelection"; }
+
+        # Menus
+
+        { "command" = "selectNextSuggestion"; "key" = "ctrl+k"; "when" = "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"; }
+        { "command" = "selectPrevSuggestion"; "key" = "ctrl+i"; "when" = "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"; }
+
+        # Agda mode
+
+        { "command" = "agda-mode.auto";                                              "key" = "ctrl+a ctrl+q";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.case";                                              "key" = "ctrl+a ctrl+c";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.compile";                                           "key" = "ctrl+a ctrl+-";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.compute-normal-form[DefaultCompute]";               "key" = "ctrl+a ctrl+e";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.give";                                              "key" = "ctrl+a ctrl+space"; "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.goal-type-context-and-inferred-type[Instantiated]"; "key" = "ctrl+a ctrl+g";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.goal-type-context-and-inferred-type[Normalised]";   "key" = "ctrl+a ctrl+s";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.goal-type-context-and-inferred-type[Simplified]";   "key" = "ctrl+a ctrl+f";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.load";                                              "key" = "ctrl+a ctrl+d";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.lookup-symbol";                                     "key" = "ctrl+a ctrl+l";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.next-goal";                                         "key" = "ctrl+a ctrl+z";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.previous-goal";                                     "key" = "ctrl+a ctrl+w";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.refine";                                            "key" = "ctrl+a ctrl+r";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.restart";                                           "key" = "ctrl+a ctrl+p";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.restart";                                           "key" = "ctrl+a ctrl+t";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.show-constraints";                                  "key" = "ctrl+a ctrl+v";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.switch-agda-version";                               "key" = "ctrl+a ctrl+b";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
+        { "command" = "agda-mode.toggle-display-of-irrelevant-arguments";            "key" = "ctrl+a ctrl+n";     "when" = "editorLangId == 'agda'"; }
+      ];
       extensions = with pkgs.vscode-extensions; [
         rust-lang.rust-analyzer
         ms-vsliveshare.vsliveshare
