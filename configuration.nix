@@ -245,7 +245,7 @@
               };
               fonts = { names = [ "DejaVuSansM Nerd Font" ]; size = 9.0; };
               command = "i3bar --transparency";
-              statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config.toml";
+              statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-bar.toml";
             }
           ];
           workspaceOutputAssign = [
@@ -342,6 +342,193 @@
         extraConfig = ''
           popup_during_fullscreen smart
         '';
+    };
+    programs.i3status-rust = {
+      enable = true;
+      bars.bar = {
+        icons = "awesome6";
+        theme = "modern";
+        blocks = [
+          {
+            block = "custom";
+            command = "echo ";
+            click = { button = "left"; action = "code -n /etc/nixos/configuration.nix"; };
+          }
+          {
+            block = "custom";
+            command = "echo ";
+            click = { button = "left"; action = "alacritty --hold -t 'NixOS rebuild' -e sudo nixos-rebuild switch"; };
+          }
+          {
+            block = "battery";
+            format = " $icon $percentage $time $power ";
+            missing_format = "";
+          }
+          {
+            block = "menu";
+            text = " \uf011 ";
+            items = [
+              { display = "menu"; cmd = "google-chrome-stable"; }
+            ];
+          }
+          { block = "custom"; command = "echo ' '"; theme_overrides = { idle_bg = "#50505030"; }; }
+          {
+            block = "net";
+            format = " $icon  $ssid ";
+          }
+          {
+            block = "net";
+            format = " ^icon_net_down $speed_down.eng(w:4,p:K) ^icon_net_up $speed_up.eng(w:4,p:K) ";
+            theme_overrides = { idle_bg = "#505050e0"; idle_fg = "#e0e0e0ff"; };
+          }
+          {
+            block = "cpu";
+            format = " $utilization @$frequency ";
+            merge_with_next = true;
+          }
+          {
+            block = "memory";
+            format = " $icon $mem_avail ";
+          }
+          {
+            block = "disk_space";
+          }
+          {
+            block = "custom";
+            command = "echo ' '";
+            theme_overrides = { idle_bg = "#50505030"; };
+          }
+          {
+            block = "sound";
+            max_vol = 150;
+            show_volume_when_muted = true;
+            headphones_indicator = true;
+            theme_overrides = { idle_bg = "#449CDB"; idle_fg = "#1D1F21"; };
+          }
+          {
+            block = "time";
+            interval = 1;
+            format.full = " $icon $timestamp.datetime(f:'%F %a %T', l:ja_JP) ";
+          }
+        ];
+      };
+    };
+    programs.alacritty = {
+      enable = true;
+      settings = {
+        env = {
+          WINIT_X11_SCALE_FACTOR = "1";
+        };
+        colors = {
+          bright = {
+            black   = "#555753";
+            blue    = "#739fcf";
+            cyan    = "#34e2e2";
+            green   = "#8ae234";
+            magenta = "#ad7fa8";
+            red     = "#ef2929";
+            white   = "#eeeeec";
+            yellow  = "#fce94f";
+          };
+          normal = {
+            black   = "#2e3436";
+            blue    = "#3465a4";
+            cyan    = "#06989a";
+            green   = "#4e9a06";
+            magenta = "#75507b";
+            red     = "#cc0000";
+            white   = "#d3d7cf";
+            yellow  = "#c4a000";
+          };
+          primary = {
+            background = "#000000";
+            foreground = "#ffffff";
+          };
+        };
+        cursor.blink_interval = 650;
+        cursor.style = {
+          shape = "beam";
+          blinking = "always";
+        };
+        draw_bold_text_with_bright_colors = true;
+        font.normal.family = "DejaVuSansM Nerd Font";
+        font.size = 10;
+        selection.save_to_clipboard = true;
+        window.opacity = 0.8;
+        mouse_bindings = [
+          {
+            mouse = "Right";
+            action = "PasteSelection";
+          }
+        ];
+        key_bindings = [
+          {
+            key = "Return";
+            mods = "Control|Shift";
+            action = "SpawnNewInstance";
+          }
+          {
+            key = "Z";
+            mods = "Control|Shift";
+            action = "SpawnNewInstance";
+          }
+        ];
+      };
+    };
+    services.flameshot = {
+      enable = true;
+      settings = {
+        General = {
+          disabledTrayIcon = true;
+          showStartupLaunchMessage = false;
+          uiColor = "#e0e0e0";
+          showHelp = false;
+          showSidePanelButton = false;
+          autoCloseIdleDaemon = false;
+        };
+      };
+    };
+    programs.ssh = {
+      enable = true;
+      extraConfig = "AddKeysToAgent yes";
+    };
+    programs.git = {
+      enable = true;
+      diff-so-fancy.enable = true;
+      userName  = "iwilare";
+      userEmail = "iwilare@gmail.com";
+
+      extraConfig.color.ui = true;
+      extraConfig.core.askPass = "";
+      extraConfig.core.fileMode = false;
+      extraConfig.credential.helper = "store";
+      extraConfig.github.user = "iwilare";
+      extraConfig.init.defaultBranch = "main";
+      extraConfig.pull.rebase = false;
+      extraConfig.push.autoSetupRemote = true;
+      extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
+      extraConfig.commit.gpgsign = true;
+      extraConfig.gpg.format = "ssh";
+      extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug iwilare@gmail.com";
+    };
+    programs.fish = {
+      enable = true;
+      functions = {
+        fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
+        get.body = "git clone git@github.com:$argv[1]";
+      };
+      shellAliases = {
+        cat = "bat -p";
+        ls  = "exa";
+        la  = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
+        l   = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
+        t   = "exa --icons --tree -s=type --all";
+        ta  = "exa --icons --tree -s=type";
+        w   = "ack -il";
+        gl  = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
+        gs  = "git commit -m \"`date '+%Y-%m-%d %H:%M:%S'`\" && git push";
+      };
+      shellInit = ''set fish_greeting'';
     };
     programs.vscode = {
       enable = true;
@@ -578,169 +765,6 @@
         { name = "agda-mode";    publisher = "banacorn";         version = "0.3.11"; sha256 = "jnH3oNqvkO/+Oi+8MM1RqooPFrQZMDWLSEnrVLnc5VI="; }
         { name = "remote-wsl";   publisher = "ms-vscode-remote"; version = "0.79.2"; sha256 = "s9hJKgfg4g1Nf740bnmee/QNa0nq9dvwbtHvaQUBjZc="; }
       ];
-    };
-    services.flameshot = {
-      enable = true;
-      settings = {
-        General = {
-          disabledTrayIcon = true;
-          showStartupLaunchMessage = false;
-          uiColor = "#e0e0e0";
-          showHelp = false;
-          showSidePanelButton = false;
-          autoCloseIdleDaemon = false;
-        };
-      };
-    };
-    programs.ssh = {
-      enable = true;
-      extraConfig = "AddKeysToAgent yes";
-    };
-    programs.git = {
-      enable = true;
-      diff-so-fancy.enable = true;
-      userName  = "iwilare";
-      userEmail = "iwilare@gmail.com";
-
-      extraConfig.color.ui = true;
-      extraConfig.core.askPass = "";
-      extraConfig.core.fileMode = false;
-      extraConfig.credential.helper = "store";
-      extraConfig.github.user = "iwilare";
-      extraConfig.init.defaultBranch = "main";
-      extraConfig.pull.rebase = false;
-      extraConfig.push.autoSetupRemote = true;
-      extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
-      extraConfig.commit.gpgsign = true;
-      extraConfig.gpg.format = "ssh";
-      extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug iwilare@gmail.com";
-    };
-    programs.fish = {
-      enable = true;
-      functions = {
-        fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
-        get.body = "git clone git@github.com:$argv[1]";
-      };
-      shellAliases = {
-        cat = "bat -p";
-        ls  = "exa";
-        la  = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
-        l   = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
-        t   = "exa --icons --tree -s=type --all";
-        ta  = "exa --icons --tree -s=type";
-        w   = "ack -il";
-        gl  = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
-        gs  = "git commit -m \"`date '+%Y-%m-%d %H:%M:%S'`\" && git push";
-      };
-      shellInit = ''set fish_greeting'';
-    };
-    programs.alacritty = {
-      enable = true;
-      settings = {
-        env = {
-          WINIT_X11_SCALE_FACTOR = "1";
-        };
-        colors = {
-          bright = {
-            black   = "#555753";
-            blue    = "#739fcf";
-            cyan    = "#34e2e2";
-            green   = "#8ae234";
-            magenta = "#ad7fa8";
-            red     = "#ef2929";
-            white   = "#eeeeec";
-            yellow  = "#fce94f";
-          };
-          normal = {
-            black   = "#2e3436";
-            blue    = "#3465a4";
-            cyan    = "#06989a";
-            green   = "#4e9a06";
-            magenta = "#75507b";
-            red     = "#cc0000";
-            white   = "#d3d7cf";
-            yellow  = "#c4a000";
-          };
-          primary = {
-            background = "#000000";
-            foreground = "#ffffff";
-          };
-        };
-        cursor.blink_interval = 650;
-        cursor.style = {
-          shape = "beam";
-          blinking = "always";
-        };
-        draw_bold_text_with_bright_colors = true;
-        font.normal.family = "DejaVuSansM Nerd Font";
-        font.size = 10;
-        selection.save_to_clipboard = true;
-        window.opacity = 0.8;
-        mouse_bindings = [
-          {
-            mouse = "Right";
-            action = "PasteSelection";
-          }
-        ];
-        key_bindings = [
-          {
-            key = "Return";
-            mods = "Control|Shift";
-            action = "SpawnNewInstance";
-          }
-          {
-            key = "Z";
-            mods = "Control|Shift";
-            action = "SpawnNewInstance";
-          }
-        ];
-      };
-    };
-    programs.i3status-rust = {
-      enable = true;
-      bars.bar = {
-        icons = "awesome6";
-        theme = "modern";
-        blocks = [
-          {
-            block = "custom";
-            on_click = "code -n /etc/nixos/configuration.nix";
-            command = "echo ";
-          }
-          {
-            block = "custom";
-            on_click = "alacritty --hold -t 'NixOS rebuild' -e sudo nixos-rebuild switch";
-            command = "echo ";
-          }
-          {
-            block = "battery";
-            interval = 10;
-            format = "{percentage} {time} {power}";
-          }
-          {
-            block = "disk_space";
-            path = "/";
-            alias = "/";
-            info_type = "available";
-            unit = "GB";
-            interval = 60;
-            warning = 20.0;
-            alert = 10.0;
-          }
-          {
-            block = "sound";
-            on_click = "amixer set Master toggle";
-            show_volume_when_muted = true;
-            max_vol = 150;
-          }
-          {
-            block = "time";
-            interval = 1;
-            format = "%F %a %T";
-            locale = "ja_JP";
-          }
-        ];
-      };
     };
     home.file.".icons/default/index.theme".text = ''
 [Icon Theme]
