@@ -30,6 +30,7 @@
   programs.ssh.startAgent = true;
   security.pam.services.andrea.enableGnomeKeyring = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
+  services.autorandr.enable = true;
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
   services.blueman.enable = true;
@@ -162,6 +163,9 @@
     hyperfine  # Command-line benchmarking tool
     pv         # Monitor the progress of data through a pipe
     btop
+
+    lxde.lxrandr
+    #autorandr
   ];
   programs.noisetorch = {
     enable = true;
@@ -347,31 +351,40 @@
       enable = true;
       bars.bar = {
         icons = "awesome6";
-        theme = "modern";
+        theme = "modern"; # https://github.com/greshake/i3status-rust/blob/master/files/themes/modern.toml
         blocks = [
           {
             block = "custom";
-            command = "echo ";
-            click = { button = "left"; action = "code -n /etc/nixos/configuration.nix"; };
+            command = "";
+            format = "  ";
+            click = [{ button = "left"; cmd = "code -n /etc/nixos/configuration.nix"; }];
+            theme_overrides = { idle_bg = "#333F46A0"; };
           }
           {
             block = "custom";
-            command = "echo ";
-            click = { button = "left"; action = "alacritty --hold -t 'NixOS rebuild' -e sudo nixos-rebuild switch"; };
+            command = "";
+            format = "  ";
+            click = [{ button = "left"; cmd = "alacritty --hold -t 'NixOS rebuild' -e sudo nixos-rebuild switch"; }];
+            theme_overrides = { idle_bg = "#333F46A0"; };
           }
+          {
+            block = "custom";
+            command = "";
+            format = "   ";
+            click = [{ button = "left"; cmd = "lxrandr"; }];
+            theme_overrides = { idle_bg = "#333F46A0"; };
+          }
+          {
+            block = "menu";
+            text = " ⏻ ";
+            items = [{ display = "[Are you sure?]"; cmd = "google-chrome-stable"; }];
+          }
+          { block = "custom"; command = "echo ' '"; theme_overrides = { idle_bg = "#50505030"; }; }
           {
             block = "battery";
             format = " $icon $percentage $time $power ";
             missing_format = "";
           }
-          {
-            block = "menu";
-            text = " \uf011 ";
-            items = [
-              { display = "menu"; cmd = "google-chrome-stable"; }
-            ];
-          }
-          { block = "custom"; command = "echo ' '"; theme_overrides = { idle_bg = "#50505030"; }; }
           {
             block = "net";
             format = " $icon  $ssid ";
@@ -612,10 +625,12 @@
         "latex-workshop.latex.recipes" = [
           { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
           { "name" = "latexmk";           "tools" = [ "latexmk"   ]; }
+          { "name" = "pdflatex";          "tools" = [ "pdflatex"  ]; }
         ];
         "latex-workshop.latex.tools" = [
-          { "command" = "latexmk"; "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "-draftmode" "%DOC%" ]; }
-          { "command" = "latexmk"; "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "-draftmode" "%DOC%" ]; }
+          { "command" = "latexmk";  "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "-draftmode" "%DOC%" ]; }
+          { "command" = "latexmk";  "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "-draftmode" "%DOC%" ]; }
+          { "command" = "pdflatex"; "env" = {}; "name" = "pdflatex";  "args" = [ "-synctex=1" "-outdir=%OUTDIR%" "-draftmode" "%DOC%" ]; }
         ];
         "workbench.editor.autoLockGroups" = {
           "latex-workshop-pdf-hook" = true;
