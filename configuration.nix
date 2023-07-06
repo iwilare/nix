@@ -3,12 +3,57 @@
     ./hardware-configuration.nix
     (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-23.05.tar.gz}/nixos")
   ];
+  #services.xserver.videoDrivers = [ "nvidia" ];
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+  environment.systemPackages = with pkgs; [
+    (agda.withPackages
+      [
+        agdaPackages.standard-library
+        agdaPackages.agda-categories
+      ])
+    #ghc rustup stack
+
+    dropbox
+    spotify
+    tdesktop
+
+    discord
+    google-chrome
+    teamviewer
+
+    pcmanfm
+    xfce.xfce4-terminal
+    xfce.thunar
+
+    rofi
+    pavucontrol
+
+    lxde.lxrandr
+    arandr
+    #autorandr
+
+    texlive.combined.scheme-full
+
+    zip
+    unzip
+    neofetch
+    git
+    exa
+    bat
+    ack
+    dua        # Disk usage analyzer
+    gource     # SVC visualization
+    hyperfine  # Command-line benchmarking tool
+    pv         # Monitor the progress of data through a pipe
+    btop
+  ];
 
   #networking.interfaces.wlp2s0.useDHCP = false;
   #i18n.inputMethod.enabled = "fcitx";
   #i18n.inputMethod.fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.configurationLimit = 1;
   boot.loader.systemd-boot.enable = true;
   boot.loader.timeout = 0;
@@ -16,7 +61,6 @@
   console.useXkbConfig = true;
   fonts.fontconfig.enable = true;
   hardware.bluetooth.enable = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.opengl.enable = true;
   hardware.pulseaudio.enable = true;
   i18n.defaultLocale = "en_US.UTF-8";
@@ -24,7 +68,6 @@
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
   nixpkgs.config.allowUnfree = true;
-  programs.dconf.enable = true; # https://www.reddit.com/r/NixOS/comments/b255k5/home_manager_cannot_set_gnome_themes/
   programs.fish.enable = true;
   programs.nm-applet.enable = true;
   programs.ssh.startAgent = true;
@@ -123,50 +166,6 @@
       "IPAPMincho"
     ];
   };
-  environment.systemPackages = with pkgs; [
-    (agda.withPackages
-      [
-        agdaPackages.standard-library
-        agdaPackages.agda-categories
-      ])
-    texlive.combined.scheme-full
-
-    #ghc
-    #rustup
-    #stack
-
-    dropbox
-    spotify
-    tdesktop
-
-    discord
-    google-chrome
-    teamviewer
-
-    pcmanfm
-    xfce.xfce4-terminal
-    xfce.thunar
-
-    rofi
-    pavucontrol
-
-    zip
-    unzip
-    neofetch
-    git
-
-    exa
-    bat
-    ack
-    dua        # Disk usage analyzer
-    gource     # SVC visualization
-    hyperfine  # Command-line benchmarking tool
-    pv         # Monitor the progress of data through a pipe
-    btop
-
-    lxde.lxrandr
-    #autorandr
-  ];
   programs.noisetorch = {
     enable = true;
   };
@@ -513,7 +512,7 @@
 
       extraConfig.color.ui = true;
       extraConfig.core.askPass = "";
-      extraConfig.core.fileMode = false;
+      extraConfig.core.fileMode = true;
       extraConfig.credential.helper = "store";
       extraConfig.github.user = "iwilare";
       extraConfig.init.defaultBranch = "main";
