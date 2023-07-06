@@ -3,6 +3,9 @@
     ./hardware-configuration.nix
     (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-23.05.tar.gz}/nixos")
   ];
+  system.stateVersion = "23.05";
+  system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
+  nixpkgs.config.allowUnfree = true;
   #services.xserver.videoDrivers = [ "nvidia" ];
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
@@ -12,8 +15,6 @@
         agdaPackages.standard-library
         agdaPackages.agda-categories
       ])
-    #ghc rustup stack
-
     dropbox
     spotify
     tdesktop
@@ -24,7 +25,6 @@
 
     pcmanfm
     xfce.xfce4-terminal
-    xfce.thunar
 
     rofi
     pavucontrol
@@ -32,6 +32,8 @@
     lxde.lxrandr
     arandr
     #autorandr
+
+    #ghc rustup stack
 
     texlive.combined.scheme-full
 
@@ -47,11 +49,18 @@
     hyperfine  # Command-line benchmarking tool
     pv         # Monitor the progress of data through a pipe
     btop
+
+    cinnamon.nemo
+    #-with-extensions
+    #cinnamon.folder-color-switcher
+    #cinnamon.nemo-fileroller
+    #cinnamon.nemo-python
   ];
 
-  #networking.interfaces.wlp2s0.useDHCP = false;
-  #i18n.inputMethod.enabled = "fcitx";
-  #i18n.inputMethod.fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ mozc ];
+  };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.configurationLimit = 1;
@@ -67,27 +76,11 @@
   networking.hostName = "iwilare";
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
-  nixpkgs.config.allowUnfree = true;
-  programs.fish.enable = true;
   programs.nm-applet.enable = true;
   programs.ssh.startAgent = true;
   security.pam.services.andrea.enableGnomeKeyring = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
-  services.autorandr.enable = true;
-  services.avahi.enable = true;
-  services.avahi.nssmdns = true;
-  services.blueman.enable = true;
-  services.gnome.gnome-keyring.enable = true;
-  services.gvfs.enable = true;
-  services.illum.enable = true;
-  services.printing.drivers = [ pkgs.gutenprint ];
-  services.printing.enable = true;
-  services.teamviewer.enable = true;
-  services.tumbler.enable = true;
-  sound.mediaKeys.enable = true;
-  sound.mediaKeys.volumeStep = "10%";
-  system.autoUpgrade.channel = "https://nixos.org/channels/nixos-23.05/";
-  system.stateVersion = "23.05";
+  environment.variables.TERMINAL = "alacritty";
   time = {
     hardwareClockInLocalTime = true;
     timeZone = "Europe/Tallinn";
@@ -102,9 +95,18 @@
       shell = pkgs.fish;
     };
   };
-  security.sudo.extraConfig = ''
-    Defaults timestamp_timeout=7200
-  '';
+  security.sudo.extraConfig = ''Defaults timestamp_timeout=7200'';
+  services.autorandr.enable = true;
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
+  services.blueman.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  services.gvfs.enable = true;
+  services.illum.enable = true;
+  services.printing.drivers = [ pkgs.gutenprint ];
+  services.printing.enable = true;
+  services.teamviewer.enable = true;
+  services.tumbler.enable = true;
   services.xserver = {
     autoRepeatDelay = 300;
     autoRepeatInterval = 25;
@@ -120,9 +122,8 @@
     libinput.enable = true;
     libinput.mouse.scrollMethod = "button";
     libinput.mouse.accelSpeed = "20";
+    xkbOptions = "caps:ctrl_modifier,eurosign:e"; #caps:super
     windowManager.i3.enable = true;
-    #xkbOptions = "caps:super,eurosign:e";
-    xkbOptions = "caps:ctrl_modifier,eurosign:e";
 
     #videoDrivers = [ "nvidia" ];
 
@@ -130,7 +131,6 @@
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
     #'';
   };
-
   services.picom = {
     enable = true;
     fade = true;
@@ -144,8 +144,10 @@
       frame-opacity = 0;
     };
   };
+  services.dbus.packages = with pkgs; [
+    xfce.xfconf
+  ];
 
-  environment.variables.TERMINAL = "alacritty";
   fonts.fonts = [
     pkgs.ipafont
     pkgs.noto-fonts
@@ -166,16 +168,22 @@
       "IPAPMincho"
     ];
   };
+
+  # ------------ programs ------------
+
+  programs.fish.enable = true;
   programs.noisetorch = {
     enable = true;
   };
-  programs.thunar.plugins = with pkgs.xfce; [
-    thunar-archive-plugin
-    thunar-volman
-  ];
-  services.dbus.packages = with pkgs; [
-    xfce.xfconf
-  ];
+  #programs.thunar = {
+  #  enable = true;
+  #  plugins = with pkgs.xfce; [
+  #    thunar-archive-plugin
+  #    thunar-volman
+  #  ];
+  #};
+
+  # ------------ services ------------
 
   networking.firewall = {
     allowedTCPPorts = [ 17500 ];
@@ -199,13 +207,11 @@
     };
   };
 
-  # -------------------------------------
-  # home-manager
-  # -------------------------------------
+  # ------------ home-manager ------------
 
   home-manager.users.andrea = {
-    nixpkgs.config.allowUnfree = true;
     home.stateVersion = "23.05";
+    nix.settings.extra-experimental-features = "flakes nix-command";
     home.file.".background-image".source = (pkgs.fetchurl {
       url = "https://github.com/iwilare/backgrounds/raw/main/iss.png";
       sha256 = "/r/R1tTzvbivSepmYa2nA4Otq3CSuvqjr3J4sY0Sqxg=";
@@ -213,19 +219,9 @@
     gtk = {
       enable = true;
       font.name = "Sans 10";
-      cursorTheme = {
-        name = "Breeze_Snow";
-        package = pkgs.breeze-gtk;
-        #size = 24;
-      };
-      iconTheme = {
-        name = "elementary-xfce";
-        package = pkgs.elementary-xfce-icon-theme;
-      };
-      theme = {
-        name = "Adwaita-dark";
-        package = pkgs.gnome.adwaita-icon-theme;
-      };
+      cursorTheme = { name = "Breeze_Snow";     package = pkgs.breeze-gtk;                 }; #size = 24; };
+      iconTheme   = { name = "elementary-xfce"; package = pkgs.elementary-xfce-icon-theme; };
+      theme       = { name = "Adwaita-dark";    package = pkgs.gnome.adwaita-icon-theme;   };
     };
     xsession.windowManager.i3 = {
       enable = true;
@@ -235,7 +231,7 @@
         terminal      = "alacritty";
         browser       = "google-chrome-stable";
         run           = "rofi -show drun -columns 2 -hide-scrollbar -show-icons -icon-theme elementary-xfce-dark -theme paper-float";
-        filemanager   = "thunar";
+        filemanager   = "nemo";
         editor        = "code";
         audio         = "pavucontrol";
         screenshooter = "flameshot gui"; in {
@@ -290,36 +286,32 @@
             "${Mod}+7"             = "workspace 7";
             "${Mod}+8"             = "workspace 8";
             "${Mod}+9"             = "workspace 9";
-            "${Mod}+a"             = "focus left";
-            "${Mod}+b"             = "exec ${audio}";
             "${Mod}+v"             = "split h";
             "${Mod}+c"             = "split v";
-            "${Mod}+d"             = "focus right";
-            "${Mod}+e"             = "layout toggle split";
-            "${Mod}+f"             = "fullscreen";
-            "${Mod}+l"             = "focus child";
-            "${Mod}+p"             = "focus parent";
-            "${Mod}+q"             = "kill";
+            "${Mod}+z"             = "exec ${terminal}";
             "${Mod}+r"             = "exec ${browser}";
-            "${Mod}+Return"        = "exec ${terminal}";
+            "${Mod}+b"             = "exec ${audio}";
+            "${Mod}+x"             = "focus parent";
+            "${Mod}+w"             = "focus up";
             "${Mod}+s"             = "focus down";
+            "${Mod}+p"             = "focus parent";
+            "${Mod}+l"             = "focus child";
+            "${Mod}+d"             = "focus right";
+            "${Mod}+a"             = "focus left";
+            "${Mod}+e"             = "layout toggle split";
+            "${Mod}+t"             = "layout tabbed";
+            "${Mod}+f"             = "fullscreen";
+            "${Mod}+q"             = "kill";
+            "${Mod}+Return"        = "exec ${terminal}";
             "${Mod}+less"          = "exec ${run}";
             "${Mod}+space"         = "floating toggle";
-            "${Mod}+t"             = "layout tabbed";
-            "${Mod}+w"             = "focus up";
-            "${Mod}+x"             = "focus parent";
-            "${Mod}+z"             = "exec ${terminal}";
-            "Print"                = "exec ${screenshooter}";
-            "XF86AudioLowerVolume" = "exec pactl set-sink-volume 0 -10%";
-            "XF86AudioMute"        = "exec pactl set-sink-mute 0 toggle";
-            "XF86AudioRaiseVolume" = "exec pactl set-sink-volume 0 +10%";
+            "${Mod}+Control+space" = "focus Mode_toggle";
             "${Mod}+Control+a"     = "resize shrink width 10 px or 5 ppt";
             "${Mod}+Control+d"     = "resize grow width 10 px or 5 ppt";
             "${Mod}+Control+Down"  = "resize grow height 10 px or 5 ppt";
             "${Mod}+Control+Left"  = "resize shrink width 10 px or 5 ppt";
             "${Mod}+Control+Right" = "resize grow width 10 px or 5 ppt";
             "${Mod}+Control+s"     = "resize grow height 10 px or 5 ppt";
-            "${Mod}+Control+space" = "focus Mode_toggle";
             "${Mod}+Control+Up"    = "resize shrink height 10 px or 5 ppt";
             "${Mod}+Control+w"     = "resize shrink height 10 px or 5 ppt";
             "${Mod}+Shift+0"       = "move container to workspace 10";
@@ -333,13 +325,19 @@
             "${Mod}+Shift+8"       = "move container to workspace 8";
             "${Mod}+Shift+9"       = "move container to workspace 9";
             "${Mod}+Shift+a"       = "move left";
-            "${Mod}+Shift+c"       = "reload; restart;";
             "${Mod}+Shift+d"       = "move right";
-            "${Mod}+Shift+f"       = "exec ${filemanager}";
-            "${Mod}+Shift+p"       = "border toggle";
             "${Mod}+Shift+s"       = "move down";
             "${Mod}+Shift+w"       = "move up";
-            "Win+Shift+s"          = "exec ${screenshooter}";
+            "${Mod}+Shift+c"       = "reload; restart;";
+            "${Mod}+Shift+p"       = "border toggle";
+            "${Win}+f"             = "exec ${filemanager}";
+            "${Win}+s"             = "exec ${screenshooter}";
+            "${Win}+c"             = "exec ${browser}";
+            "${Win}+b"             = "exec ${audio}";
+            "Print"                = "exec ${screenshooter}";
+            "XF86AudioLowerVolume" = "exec pactl set-sink-volume 0 -10%";
+            "XF86AudioMute"        = "exec pactl set-sink-mute 0 toggle";
+            "XF86AudioRaiseVolume" = "exec pactl set-sink-volume 0 +10%";
           };
         };
         extraConfig = ''
