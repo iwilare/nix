@@ -74,6 +74,10 @@
   hardware.bluetooth.enable = true;
   hardware.opengl.enable = true;
   hardware.pulseaudio.enable = true;
+  sound.mediaKeys = {
+    enable = true;
+    volumeStep = "5%";
+  };
   i18n.defaultLocale = "en_US.UTF-8";
   networking.hostName = "iwilare";
   networking.networkmanager.enable = true;
@@ -126,9 +130,6 @@
     libinput.mouse.accelSpeed = "20";
     xkbOptions = "caps:ctrl_modifier,eurosign:e"; #caps:super
     windowManager.i3.enable = true;
-
-    #videoDrivers = [ "nvidia" ];
-
     #screenSection = ''
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
     #'';
@@ -337,9 +338,9 @@
             "${Win}+c"             = "exec ${browser}";
             "${Win}+b"             = "exec ${audio}";
             "Print"                = "exec ${screenshooter}";
-            "XF86AudioLowerVolume" = "exec pactl set-sink-volume 0 -10%";
-            "XF86AudioMute"        = "exec pactl set-sink-mute 0 toggle";
-            "XF86AudioRaiseVolume" = "exec pactl set-sink-volume 0 +10%";
+            "XF86AudioMute"        = "exec ${pkgs.alsa-utils}/bin/amixer -qM set Master toggle";
+            "XF86AudioLowerVolume" = "exec ${pkgs.alsa-utils}/bin/amixer -qM set Master 5%- unmute";
+            "XF86AudioRaiseVolume" = "exec ${pkgs.alsa-utils}/bin/amixer -qM set Master 5%+ unmute";
           };
         };
         extraConfig = ''
@@ -390,6 +391,8 @@
             max_vol = 150;
             show_volume_when_muted = true;
             headphones_indicator = true;
+            natural_mapping = true;
+            step_width = 5;
             theme_overrides = { idle_bg = "#449CDB"; idle_fg = "#1D1F21"; };
             click = [{ button = "left"; cmd = "pavucontrol"; }];
           }
