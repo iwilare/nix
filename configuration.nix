@@ -37,6 +37,8 @@
 
     texlive.combined.scheme-full
 
+    obsidian
+
     zip
     unzip
     neofetch
@@ -51,7 +53,7 @@
     btop
 
     cinnamon.nemo
-    #-with-extensions
+    #cinnamon.nemo-with-extensions
     #cinnamon.folder-color-switcher
     #cinnamon.nemo-fileroller
     #cinnamon.nemo-python
@@ -367,8 +369,15 @@
           {
             block = "custom";
             command = "";
-            format = "   ";
+            format = "  ";
             click = [{ button = "left"; cmd = "lxrandr"; }];
+            theme_overrides = { idle_bg = "#333F46A0"; };
+          }
+          {
+            block = "custom";
+            command = "";
+            format = "  ";
+            click = [{ button = "left"; cmd = "pavucontrol"; }];
             theme_overrides = { idle_bg = "#333F46A0"; };
           }
           {
@@ -384,21 +393,22 @@
           }
           {
             block = "net";
-            format = " $icon  $ssid ";
+            format = " $icon  $ssid";
+
           }
-          {
-            block = "net";
-            format = " ^icon_net_down $speed_down.eng(w:4,p:K) ^icon_net_up $speed_up.eng(w:4,p:K) ";
-            theme_overrides = { idle_bg = "#505050e0"; idle_fg = "#e0e0e0ff"; };
-          }
-          {
-            block = "cpu";
-            format = " $utilization @$frequency ";
-            merge_with_next = true;
-          }
+          # {
+          #   block = "net";
+          #   format = " ^icon_net_down $speed_down.eng(w:4,p:K) ^icon_net_up $speed_up.eng(w:4,p:K) ";
+          #   theme_overrides = { idle_bg = "#505050e0"; idle_fg = "#e0e0e0ff"; };
+          # }
+          # {
+          #   block = "cpu";
+          #   format = " $utilization @$frequency ";
+          #   merge_with_next = true;
+          # }
           {
             block = "memory";
-            format = " $icon $mem_avail ";
+            format = " $icon $mem_avail";
           }
           {
             block = "disk_space";
