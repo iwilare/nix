@@ -351,51 +351,27 @@
       bars.bar = {
         icons = "awesome6";
         theme = "modern"; # https://github.com/greshake/i3status-rust/blob/master/files/themes/modern.toml
-        blocks = [
-          {
-            block = "custom";
-            command = "";
-            format = "  ";
-            click = [{ button = "left"; cmd = "code -n /etc/nixos/configuration.nix"; }];
-            theme_overrides = { idle_bg = "#333F46A0"; };
-          }
-          {
-            block = "custom";
-            command = "";
-            format = "  ";
-            click = [{ button = "left"; cmd = "alacritty --hold -t 'NixOS rebuild' -e sudo nixos-rebuild switch"; }];
-            theme_overrides = { idle_bg = "#333F46A0"; };
-          }
-          {
-            block = "custom";
-            command = "";
-            format = "  ";
-            click = [{ button = "left"; cmd = "lxrandr"; }];
-            theme_overrides = { idle_bg = "#333F46A0"; };
-          }
-          {
-            block = "custom";
-            command = "";
-            format = "  ";
-            click = [{ button = "left"; cmd = "pavucontrol"; }];
-            theme_overrides = { idle_bg = "#333F46A0"; };
-          }
-          {
-            block = "menu";
-            text = " ⏻ ";
-            items = [{ display = "[Are you sure?]"; cmd = "google-chrome-stable"; }];
-          }
-          { block = "custom"; command = "echo ' '"; theme_overrides = { idle_bg = "#50505030"; }; }
-          {
-            block = "battery";
-            format = " $icon $percentage $time $power ";
-            missing_format = "";
-          }
-          {
-            block = "net";
-            format = " $icon  $ssid";
-
-          }
+        blocks =
+        let transparent = { idle_bg = "#333F46A0"; };
+            button = { icon, cmd }: {
+              block = "custom";
+              command = "";
+              format = icon;
+              click = [{ button = "left"; cmd = cmd; }];
+            };
+            separation = { block = "custom"; command = "echo ' '"; theme_overrides = { idle_bg = "#50505030"; }; }; in [
+          (button { icon = "   "; cmd =  "code -n /etc/nixos/configuration.nix"; })
+          (button { icon = "  " ; cmd =  "alacritty --hold -t 'NixOS rebuild' -e sudo nixos-rebuild switch"; })
+          (button { icon = "  " ; cmd =  "lxrandr"; })
+          (button { icon = "   "; cmd =  "pavucontrol"; })
+          # {
+          #   block = "menu";
+          #   text = " ⏻ ";
+          #   items = [{ display = "[Are you sure?]"; cmd = "google-chrome-stable"; }];
+          # }
+          separation
+          { block = "battery"; format = " $icon $percentage $time $power "; missing_format = ""; }
+          { block = "net"; format = " $icon  $ssid"; }
           # {
           #   block = "net";
           #   format = " ^icon_net_down $speed_down.eng(w:4,p:K) ^icon_net_up $speed_up.eng(w:4,p:K) ";
@@ -406,24 +382,16 @@
           #   format = " $utilization @$frequency ";
           #   merge_with_next = true;
           # }
-          {
-            block = "memory";
-            format = " $icon $mem_avail";
-          }
-          {
-            block = "disk_space";
-          }
-          {
-            block = "custom";
-            command = "echo ' '";
-            theme_overrides = { idle_bg = "#50505030"; };
-          }
+          { block = "memory"; format = " $icon $mem_avail"; }
+          { block = "disk_space"; }
+          separation
           {
             block = "sound";
             max_vol = 150;
             show_volume_when_muted = true;
             headphones_indicator = true;
             theme_overrides = { idle_bg = "#449CDB"; idle_fg = "#1D1F21"; };
+            click = [{ button = "left"; cmd = "pavucontrol"; }];
           }
           {
             block = "time";
