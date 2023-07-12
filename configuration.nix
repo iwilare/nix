@@ -156,6 +156,12 @@
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk
     (pkgs.nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+    (import (pkgs.fetchFromGitHub {
+      owner = "iwilare";
+      repo = "font";
+      rev = "0108e7806a5525cd1d95df38d698be19de2a470a";
+      sha256 = "sha256-EB161WxWLl3vQlC5hXYGz3C08x9zU38tc2BCj9YJv+0=";
+    })).default
   ];
   fonts.fontconfig.defaultFonts = {
     monospace = [
@@ -371,8 +377,8 @@
           #   items = [{ display = "[Are you sure?]"; cmd = "google-chrome-stable"; }];
           # }
           separation
-          { block = "battery"; format = " $icon $percentage $time $power "; missing_format = ""; }
-          { block = "net"; format = " $icon  $ssid"; }
+          { block = "battery"; format = " $icon  $percentage $time $power "; missing_format = ""; }
+          { block = "net"; format = " $icon {$ssid ($signal_strenth)|$ip}"; }
           # {
           #   block = "net";
           #   format = " ^icon_net_down $speed_down.eng(w:4,p:K) ^icon_net_up $speed_up.eng(w:4,p:K) ";
