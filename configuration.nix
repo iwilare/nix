@@ -1,4 +1,6 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+let iwi-font = "DejaVuSansMCode Nerd Font"; in
+{
   imports = [
     ./hardware-configuration.nix
     (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-23.05.tar.gz}/nixos")
@@ -155,17 +157,17 @@
     pkgs.ipafont
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk
-    (pkgs.nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+    #(pkgs.nerdfonts.override { fonts = [ "DejaVuSansCode" ]; })
     (import (pkgs.fetchFromGitHub {
       owner = "iwilare";
       repo = "font";
-      rev = "0108e7806a5525cd1d95df38d698be19de2a470a";
-      sha256 = "sha256-EB161WxWLl3vQlC5hXYGz3C08x9zU38tc2BCj9YJv+0=";
+      rev = "017eb3bcf133668e83ac0190e5dfa4dcd718659d";
+      sha256 = "sha256-LtRpVQ5E2WzUm+6Tn7+eX8kIUOLbvFoRDNW4HiXzYOg=ee";
     })).default
   ];
   fonts.fontconfig.defaultFonts = {
     monospace = [
-      "DejaVuSansM Nerd Font"
+      iwi-font
       "IPAGothic"
     ];
     sansSerif = [
@@ -251,7 +253,7 @@
                 statusline = "#000000";
                 separator  = "#0B0B0B";
               };
-              fonts = { names = [ "DejaVuSansM Nerd Font" ]; size = 9.0; };
+              fonts = { names = [ iwi-font ]; size = 9.0; };
               command = "i3bar --transparency";
               statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-bar.toml";
             }
@@ -261,7 +263,7 @@
             { workspace = "2"; output = "DP-2"; }
             { workspace = "3"; output = "DP-0"; }
           ];
-          fonts = { names = [ "DejaVuSansM Nerd Font" ]; size = 9.0; };
+          fonts = { names = [ iwi-font ]; size = 9.0; };
           focus.newWindow = "smart";
           #workspaceAutoBackAndForth = true;
           #focus.wrapping = "workspace";
@@ -416,6 +418,32 @@
         env = {
           WINIT_X11_SCALE_FACTOR = "1";
         };
+        font.normal.family = iwi-font;
+        font.size = 10;
+        cursor.blink_interval = 650;
+        cursor.style.shape = "beam";
+        cursor.style.blinking = "always";
+        draw_bold_text_with_bright_colors = true;
+        selection.save_to_clipboard = true;
+        window.opacity = 0.8;
+        mouse_bindings = [
+          {
+            mouse = "Right";
+            action = "PasteSelection";
+          }
+        ];
+        key_bindings = [
+          {
+            key = "Return";
+            mods = "Control|Shift";
+            action = "SpawnNewInstance";
+          }
+          {
+            key = "Z";
+            mods = "Control|Shift";
+            action = "SpawnNewInstance";
+          }
+        ];
         colors = {
           bright = {
             black   = "#555753";
@@ -442,34 +470,6 @@
             foreground = "#ffffff";
           };
         };
-        cursor.blink_interval = 650;
-        cursor.style = {
-          shape = "beam";
-          blinking = "always";
-        };
-        draw_bold_text_with_bright_colors = true;
-        font.normal.family = "DejaVuSansM Nerd Font";
-        font.size = 10;
-        selection.save_to_clipboard = true;
-        window.opacity = 0.8;
-        mouse_bindings = [
-          {
-            mouse = "Right";
-            action = "PasteSelection";
-          }
-        ];
-        key_bindings = [
-          {
-            key = "Return";
-            mods = "Control|Shift";
-            action = "SpawnNewInstance";
-          }
-          {
-            key = "Z";
-            mods = "Control|Shift";
-            action = "SpawnNewInstance";
-          }
-        ];
       };
     };
     services.flameshot = {
@@ -532,7 +532,8 @@
       package = pkgs.vscode.overrideAttrs (oldAttrs: rec { version = "stable"; });
       userSettings = {
         "editor.bracketPairColorization.enabled" = true;
-        "editor.fontFamily" = "'DejaVuSansM Nerd Font'";
+        "editor.fontFamily" = "'${iwi-font}'";
+        "editor.fontLigatures" = true;
         "editor.fontSize" = 13.16;
         "editor.glyphMargin" = false;
         "editor.guides.bracketPairs" = true;
