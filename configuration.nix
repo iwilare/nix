@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
-let iwi-font = "DejaVuSansMCode Nerd Font"; in
+let iwi-font = "DejaVuSansCode Nerd Font"; in
 {
   imports = [
     ./hardware-configuration.nix
@@ -9,7 +9,7 @@ let iwi-font = "DejaVuSansMCode Nerd Font"; in
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
   nixpkgs.config.allowUnfree = true;
   #services.xserver.videoDrivers = [ "nvidia" ];
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable; -->
 
   environment.systemPackages = with pkgs; [
     (agda.withPackages
@@ -53,6 +53,8 @@ let iwi-font = "DejaVuSansMCode Nerd Font"; in
     hyperfine  # Command-line benchmarking tool
     pv         # Monitor the progress of data through a pipe
     btop
+
+    mate.engrampa
 
     cinnamon.nemo
     #cinnamon.nemo-with-extensions
@@ -153,17 +155,19 @@ let iwi-font = "DejaVuSansMCode Nerd Font"; in
     xfce.xfconf
   ];
 
-  fonts.fonts = [
+  fonts.fonts =
+    let iwi-font-package = pkgs.lib.traceVal (import (pkgs.fetchFromGitHub {
+      owner = "iwilare";
+      repo = "font";
+      rev = "30d8f0219f3653e15f5d49c3a2b2af8510df2741";
+      sha256 = "sha256-2uxJ5/drbuETGbVGQYEn7UdhzlIcdtVJgqubQgk7Keg=";
+    })).packages.x86_64-linux; in [
     pkgs.ipafont
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk
     #(pkgs.nerdfonts.override { fonts = [ "DejaVuSansCode" ]; })
-    (import (pkgs.fetchFromGitHub {
-      owner = "iwilare";
-      repo = "font";
-      rev = "017eb3bcf133668e83ac0190e5dfa4dcd718659d";
-      sha256 = "sha256-LtRpVQ5E2WzUm+6Tn7+eX8kIUOLbvFoRDNW4HiXzYOg=ee";
-    })).default
+    iwi-font-package.dejavucode-nerd-font
+    iwi-font-package.dejavusansmonocode-nerd-font
   ];
   fonts.fontconfig.defaultFonts = {
     monospace = [
