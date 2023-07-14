@@ -162,8 +162,8 @@ let iwi-font = "LigaDejaVuSansM Nerd Font"; in
     let iwi-font-package = (import (pkgs.fetchFromGitHub {
       owner = "iwilare";
       repo = "font";
-      rev = "0a7c025e63a9e8f2008858134832cb84452414b5";
-      sha256 = "sha256-Ce7uHTGqdwqwxJx8SvCc/k6moSz6DODT3U6ocE/qfs0=";
+      rev = "289a0e80774137d2d46e462a2e0ec921643f73c3";
+      sha256 = "sha256-7RA7Sn5lzn8CC+9E4wOhhh1gGkPyz1YsGU40h08ONQU=";
     })).packages.x86_64-linux; in [
     pkgs.ipafont
     pkgs.noto-fonts
