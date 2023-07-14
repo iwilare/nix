@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
-let iwi-font = "DejaVuSansCode Nerd Font"; in
+let iwi-font = "LigaDejaVuSansM Nerd Font"; in
 {
   imports = [
     ./hardware-configuration.nix
@@ -9,7 +9,7 @@ let iwi-font = "DejaVuSansCode Nerd Font"; in
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
   nixpkgs.config.allowUnfree = true;
   #services.xserver.videoDrivers = [ "nvidia" ];
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable; -->
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
   environment.systemPackages = with pkgs; [
     (agda.withPackages
@@ -54,13 +54,16 @@ let iwi-font = "DejaVuSansCode Nerd Font"; in
     pv         # Monitor the progress of data through a pipe
     btop
 
-    mate.engrampa
+    #mate.engrampa
 
+    #cinnamon.nemo-compare
+    #cinnamon.nemo-preview
+    #cinnamon.nemo-seahorse
+    #cinnamon.nemo-share
+    cinnamon.folder-color-switcher
+    cinnamon.nemo-fileroller
+    cinnamon.nemo-python
     cinnamon.nemo
-    #cinnamon.nemo-with-extensions
-    #cinnamon.folder-color-switcher
-    #cinnamon.nemo-fileroller
-    #cinnamon.nemo-python
   ];
 
   i18n.inputMethod = {
@@ -156,18 +159,16 @@ let iwi-font = "DejaVuSansCode Nerd Font"; in
   ];
 
   fonts.fonts =
-    let iwi-font-package = pkgs.lib.traceVal (import (pkgs.fetchFromGitHub {
+    let iwi-font-package = (import (pkgs.fetchFromGitHub {
       owner = "iwilare";
       repo = "font";
-      rev = "30d8f0219f3653e15f5d49c3a2b2af8510df2741";
-      sha256 = "sha256-2uxJ5/drbuETGbVGQYEn7UdhzlIcdtVJgqubQgk7Keg=";
+      rev = "0a7c025e63a9e8f2008858134832cb84452414b5";
+      sha256 = "sha256-Ce7uHTGqdwqwxJx8SvCc/k6moSz6DODT3U6ocE/qfs0=";
     })).packages.x86_64-linux; in [
     pkgs.ipafont
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk
-    #(pkgs.nerdfonts.override { fonts = [ "DejaVuSansCode" ]; })
-    iwi-font-package.dejavucode-nerd-font
-    iwi-font-package.dejavusansmonocode-nerd-font
+    iwi-font-package.iwidejavu
   ];
   fonts.fontconfig.defaultFonts = {
     monospace = [
@@ -384,7 +385,7 @@ let iwi-font = "DejaVuSansCode Nerd Font"; in
           # }
           separation
           { block = "battery"; format = " $icon  $percentage $time $power "; missing_format = ""; }
-          { block = "net"; format = " $icon {$ssid ($signal_strenth)|$ip}"; }
+          { block = "net"; format = " $icon  {$ssid|$ip}"; }
           # {
           #   block = "net";
           #   format = " ^icon_net_down $speed_down.eng(w:4,p:K) ^icon_net_up $speed_up.eng(w:4,p:K) ";
