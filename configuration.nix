@@ -12,11 +12,6 @@ let iwi-font = "LigaDejaVuSansM Nerd Font"; in
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
   environment.systemPackages = with pkgs; [
-    (agda.withPackages
-      [
-        agdaPackages.standard-library
-        agdaPackages.agda-categories
-      ])
     dropbox
     spotify
     tdesktop
@@ -33,26 +28,8 @@ let iwi-font = "LigaDejaVuSansM Nerd Font"; in
 
     lxde.lxrandr
     arandr
-    #autorandr
-
-    #ghc rustup stack
-
-    texlive.combined.scheme-full
 
     obsidian
-
-    zip
-    unzip
-    neofetch
-    git
-    exa
-    bat
-    ack
-    dua        # Disk usage analyzer
-    gource     # SVC visualization
-    hyperfine  # Command-line benchmarking tool
-    pv         # Monitor the progress of data through a pipe
-    btop
 
     #mate.engrampa
 
@@ -228,17 +205,30 @@ let iwi-font = "LigaDejaVuSansM Nerd Font"; in
   home-manager.users.andrea = {
     home.stateVersion = "23.05";
     nix.settings.extra-experimental-features = "flakes nix-command";
-    home.file.".background-image".source = (pkgs.fetchurl {
-      url = "https://github.com/iwilare/backgrounds/raw/main/iss.png";
-      sha256 = "/r/R1tTzvbivSepmYa2nA4Otq3CSuvqjr3J4sY0Sqxg=";
-    });
-    gtk = {
-      enable = true;
-      font.name = "Sans 10";
-      cursorTheme = { name = "Breeze_Snow";     package = pkgs.breeze-gtk;                 }; #size = 24; };
-      iconTheme   = { name = "elementary-xfce"; package = pkgs.elementary-xfce-icon-theme; };
-      theme       = { name = "Adwaita-dark";    package = pkgs.gnome.adwaita-icon-theme;   };
-    };
+    packages = [
+      texlive.combined.scheme-full
+
+      (agda.withPackages
+        [
+          agdaPackages.standard-library
+          agdaPackages.agda-categories
+        ])
+      zip
+      unzip
+      neofetch
+      git
+      exa
+      bat
+      ack
+      dua        # Disk usage analyzer
+      gource     # SVC visualization
+      hyperfine  # Command-line benchmarking tool
+      pv         # Monitor the progress of data through a pipe
+      btop
+    ];
+
+    # Configs
+
     xsession.windowManager.i3 = {
       enable = true;
       config = let
@@ -490,6 +480,9 @@ let iwi-font = "LigaDejaVuSansM Nerd Font"; in
         };
       };
     };
+
+    # Programs
+
     programs.ssh = {
       enable = true;
       extraConfig = "AddKeysToAgent yes";
@@ -771,6 +764,20 @@ let iwi-font = "LigaDejaVuSansM Nerd Font"; in
         { name = "remote-wsl";   publisher = "ms-vscode-remote"; version = "0.79.2"; sha256 = "s9hJKgfg4g1Nf740bnmee/QNa0nq9dvwbtHvaQUBjZc="; }
       ];
     };
+
+    # Environment
+
+    gtk = {
+      enable = true;
+      font.name = "Sans 10";
+      cursorTheme = { name = "Breeze_Snow";     package = pkgs.breeze-gtk;                 }; #size = 24; };
+      iconTheme   = { name = "elementary-xfce"; package = pkgs.elementary-xfce-icon-theme; };
+      theme       = { name = "Adwaita-dark";    package = pkgs.gnome.adwaita-icon-theme;   };
+    };
+    home.file.".background-image".source = (pkgs.fetchurl {
+      url = "https://github.com/iwilare/backgrounds/raw/main/iss.png";
+      sha256 = "/r/R1tTzvbivSepmYa2nA4Otq3CSuvqjr3J4sY0Sqxg=";
+    });
     home.file.".icons/default/index.theme".text = ''
 [Icon Theme]
 Name=Default
