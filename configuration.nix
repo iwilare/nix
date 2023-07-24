@@ -205,7 +205,7 @@ let iwi-font = "LigaDejaVuSansM Nerd Font"; in
   home-manager.users.andrea = {
     home.stateVersion = "23.05";
     nix.settings.extra-experimental-features = "flakes nix-command";
-    packages = with pkgs; [
+    home.packages = with pkgs; [
       texlive.combined.scheme-full
 
       (agda.withPackages
