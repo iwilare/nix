@@ -1,5 +1,5 @@
 { config, pkgs, ... }:
-let iwi-font = "LigaDejaVuSansM Nerd Font"; in
+let iwi-font = "IwiDejaVu"; in
 {
   imports = [
     ./hardware-configuration.nix
@@ -149,7 +149,7 @@ let iwi-font = "LigaDejaVuSansM Nerd Font"; in
     let iwi-font-package = (import (pkgs.fetchFromGitHub {
       owner = "iwilare";
       repo = "font";
-      rev = "289a0e80774137d2d46e462a2e0ec921643f73c3";
+      rev = "4dbfc76da45f3c7065600773888cca9302aedf4e";
       sha256 = "sha256-7RA7Sn5lzn8CC+9E4wOhhh1gGkPyz1YsGU40h08ONQU=";
     })).packages.x86_64-linux; in [
     pkgs.ipafont
