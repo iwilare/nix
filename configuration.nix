@@ -226,19 +226,18 @@ let iwi-font = "IwiDejaVu"; in
       zip
       unzip
       neofetch
-      git
-      exa
-      bat
       ack
       dua        # Disk usage analyzer
       gource     # SVC visualization
       hyperfine  # Command-line benchmarking tool
       pv         # Monitor the progress of data through a pipe
-      zoxide     # Smarter cd
-      delta      # Smarter diff
-      ripgrep    # Smarter ripgrep (rg)
-      btop
+      nixfmt
     ];
+    programs.zoxide  = { enable = true; enableFishIntegration = true; };
+    programs.ripgrep = { enable = true; };
+    programs.btop    = { enable = true; };
+    programs.bat     = { enable = true; };
+    programs.exa     = { enable = true; };
 
     # Configs
 
@@ -538,6 +537,7 @@ let iwi-font = "IwiDejaVu"; in
         gp = "git push";
         nd = "nextd";
         pd = "prevd";
+        diff = "diff-so-fancy";
         save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
       };
       shellInit = ''set fish_greeting'';
@@ -796,18 +796,18 @@ let iwi-font = "IwiDejaVu"; in
       sha256 = "/r/R1tTzvbivSepmYa2nA4Otq3CSuvqjr3J4sY0Sqxg=";
     });
     home.file.".icons/default/index.theme".text = ''
-[Icon Theme]
-Name=Default
-Inherits=Breeze_Snow
+      [Icon Theme]
+      Name=Default
+      Inherits=Breeze_Snow
     '';
     xdg.configFile."noisetorch/config.toml".text = ''
-Threshold = 95
-DisplayMonitorSources = false
-EnableUpdates = true
-FilterInput = true
-FilterOutput = false
-LastUsedInput = "alsa_input.usb-Generic_Blue_Microphones_LT_2103170103279D0305B1_111000-00.analog-stereo"
-LastUsedOutput = ""
+      Threshold = 95
+      DisplayMonitorSources = false
+      EnableUpdates = true
+      FilterInput = true
+      FilterOutput = false
+      LastUsedInput = "alsa_input.usb-Generic_Blue_Microphones_LT_2103170103279D0305B1_111000-00.analog-stereo"
+      LastUsedOutput = ""
     '';
   };
 }

@@ -8,7 +8,7 @@ let username = "andrea";
   home.stateVersion = "23.05";
   home.packages = home-manager-config.home.packages;
   programs = {
-    inherit (home-manager-config.programs) ssh git;
+    inherit (home-manager-config.programs) ssh git zoxide ripgrep btop bat exa;
     fish = (prev: prev // {
       shellInit =
         ''
@@ -23,6 +23,7 @@ let username = "andrea";
     vscode.wsl = home-manager-config.programs.vscode;
   };
 
+  #chsh andrea /home/andrea/.nix-profile/bin/fish
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
   programs.home-manager.enable = true;
