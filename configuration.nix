@@ -520,18 +520,22 @@ let iwi-font = "IwiDejaVu"; in
       enable = true;
       functions = {
         fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
-        get.body = "git clone git@github.com:$argv[1]";
+        gg.body = "git clone git@github.com:$argv[1]";
+        commit.body = "git commit -am $argv[1] && git push";
       };
       shellAliases = {
-        cat = "bat -p";
-        ls  = "exa";
-        la  = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
-        l   = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
-        t   = "exa --icons --tree -s=type --all";
-        ta  = "exa --icons --tree -s=type";
-        w   = "ack -il";
-        gl  = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
-        gs  = "git commit -m \"`date '+%Y-%m-%d %H:%M:%S'`\" && git push";
+        c  = "bat -p";
+        l  = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
+        la = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
+        t  = "exa --icons --tree -s=type --all";
+        ta = "exa --icons --tree -s=type";
+        w  = "ack -il";
+        gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
+        gs = "git status";
+        gp = "git push";
+        nd = "nextd";
+        pd = "prevd";
+        save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
       };
       shellInit = ''set fish_greeting'';
     };

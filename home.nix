@@ -13,14 +13,14 @@ let username = "andrea";
       shellInit =
         ''
           ${prev.shellInit}
-          if test -z (pgrep ssh-agent)
+          if test -z (pgrep -c ssh-agent)
             eval (ssh-agent -c) > /dev/null
             set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
             set -Ux SSH_AGENT_PID $SSH_AGENT_PID
           end
         '';
     }) home-manager-config.programs.fish;
-    #vscode = home-manager-config.programs.vscode;
+    vscode.wsl = home-manager-config.programs.vscode;
   };
 
   nixpkgs.config.allowUnfree = true;
