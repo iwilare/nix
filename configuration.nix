@@ -234,6 +234,9 @@ let iwi-font = "IwiDejaVu"; in
       gource     # SVC visualization
       hyperfine  # Command-line benchmarking tool
       pv         # Monitor the progress of data through a pipe
+      zoxide     # Smarter cd
+      delta      # Smarter diff
+      ripgrep    # Smarter ripgrep (rg)
       btop
     ];
 
