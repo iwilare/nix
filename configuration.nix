@@ -553,16 +553,17 @@ let iwi-font = "IwiDejaVu"; in
       enable = true;
       package = pkgs.vscode.overrideAttrs (oldAttrs: rec { version = "stable"; });
       userSettings = {
-        "editor.bracketPairColorization.enabled" = true;
+        # "editor.letterSpacing" = -0.3;
         # "editor.fontFamily" = "'${iwi-font}'";
+        # "editor.fontSize" = 13.16;
         "editor.fontLigatures" = true;
-        "editor.fontSize" = 13.16;
         "editor.glyphMargin" = false;
+
+        "editor.bracketPairColorization.enabled" = true;
         "editor.guides.bracketPairs" = true;
         "editor.hover.delay" = 250;
         "editor.inlineSuggest.enabled" = true;
         "editor.insertSpaces" = true;
-        # "editor.letterSpacing" = -0.3;
         "editor.linkedEditing" = true;
         "editor.minimap.maxColumn" = 60;
         "editor.minimap.scale" = 2;
