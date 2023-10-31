@@ -554,7 +554,7 @@ let iwi-font = "IwiDejaVu"; in
       package = pkgs.vscode.overrideAttrs (oldAttrs: rec { version = "stable"; });
       userSettings = {
         "editor.bracketPairColorization.enabled" = true;
-        "editor.fontFamily" = "'${iwi-font}'";
+        # "editor.fontFamily" = "'${iwi-font}'";
         "editor.fontLigatures" = true;
         "editor.fontSize" = 13.16;
         "editor.glyphMargin" = false;
@@ -609,6 +609,7 @@ let iwi-font = "IwiDejaVu"; in
         "[agda]" = {
           "editor.unicodeHighlight.ambiguousCharacters" = false;
         };
+        # Dart
         "[dart]" = {
           "editor.formatOnSave" = true;
           "editor.formatOnType" = true;
@@ -634,17 +635,19 @@ let iwi-font = "IwiDejaVu"; in
           { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
           { "name" = "latexmk";           "tools" = [ "latexmk"   ]; }
           { "name" = "pdflatex";          "tools" = [ "pdflatex"  ]; }
+          { "name" = "xelatex";           "tools" = [ "xelatex"   ]; }
         ];
         "latex-workshop.latex.tools" = [
           { "command" = "latexmk";  "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "-draftmode" "%DOC%" ]; }
           { "command" = "latexmk";  "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "-draftmode" "%DOC%" ]; }
           { "command" = "pdflatex"; "env" = {}; "name" = "pdflatex";  "args" = [ "-synctex=1" "-outdir=%OUTDIR%" "-draftmode" "%DOC%" ]; }
+          { "command" = "xelatex";  "env" = {}; "name" = "xelatex";   "args" = [ "-synctex=1" "-outdir=%OUTDIR%" "-draftmode" "%DOC%" ]; }
         ];
+        "workbench.editor.empty.hint" = "hidden";
         "workbench.editor.autoLockGroups" = {
           "latex-workshop-pdf-hook" = true;
           "mainThreadWebview-markdown.preview" = true;
         };
-        # "terminal.integrated.defaultProfile.linux" = "fish";
       };
       keybindings = [
 
