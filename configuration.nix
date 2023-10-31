@@ -526,19 +526,26 @@ let iwi-font = "IwiDejaVu"; in
         commit.body = "git commit -am $argv[1] && git push";
       };
       shellAliases = {
-        c  = "bat -p";
+        c  = "bat -p"; # -p[lain] (use as cat)
+        w  = "ack -il";
         l  = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
         la = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
         t  = "exa --icons --tree -s=type --all";
         ta = "exa --icons --tree -s=type";
-        w  = "ack -il";
-        gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
+
         gs = "git status";
         gp = "git push";
+        gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
+        save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
+
         nd = "nextd";
         pd = "prevd";
         diff = "diff-so-fancy";
-        save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
+
+        hm = "code ~/.config/home-manager";
+        no = "code /etc/nixos/";
+        hms = "home-manager switch";
+        nos = "sudo nixos-rebuild switch";
       };
       shellInit = ''set fish_greeting'';
     };
@@ -555,7 +562,7 @@ let iwi-font = "IwiDejaVu"; in
         "editor.hover.delay" = 250;
         "editor.inlineSuggest.enabled" = true;
         "editor.insertSpaces" = true;
-        "editor.letterSpacing" = -0.3;
+        # "editor.letterSpacing" = -0.3;
         "editor.linkedEditing" = true;
         "editor.minimap.maxColumn" = 60;
         "editor.minimap.scale" = 2;
@@ -585,6 +592,7 @@ let iwi-font = "IwiDejaVu"; in
         "terminal.integrated.rightClickBehavior" = "copyPaste";
         "terminal.integrated.scrollback" = 10000;
         "terminal.integrated.smoothScrolling" = true;
+        "terminal.integrated.defaultProfile.linux" = "fish"; # Needed on WSL
         "update.mode" = "none";
         "window.menuBarVisibility" = "hidden";
         "workbench.editor.splitSizing" = "split";
@@ -636,6 +644,7 @@ let iwi-font = "IwiDejaVu"; in
           "latex-workshop-pdf-hook" = true;
           "mainThreadWebview-markdown.preview" = true;
         };
+        # "terminal.integrated.defaultProfile.linux" = "fish";
       };
       keybindings = [
 
