@@ -254,8 +254,8 @@ let iwi-font = "IwiDejaVu"; in
       extraConfig.push.autoSetupRemote = true;
       extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
       # extraConfig.commit.gpgsign = true;
-      # extraConfig.gpg.format = "ssh";
-      # extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5ezAA13c/iug iwilare@gmail.com";
+      extraConfig.gpg.format = "ssh";
+      extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5ezAA13c/iug iwilare@gmail.com";
     };
     programs.fish = {
       enable = true;
@@ -264,6 +264,9 @@ let iwi-font = "IwiDejaVu"; in
         gg.body = "git clone git@github.com:$argv[1]";
         commit.body = "git commit -am $argv[1] && git push";
       };
+      # shellAbbrs = {
+      #   ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
+      # };
       shellAliases = {
         c  = "bat -p"; # -p[lain] (use as cat)
         w  = "ack -il";
@@ -280,6 +283,8 @@ let iwi-font = "IwiDejaVu"; in
         nd = "nextd";
         pd = "prevd";
         diff = "diff-so-fancy";
+        
+        ns = "nix shell nixpkgs#";
 
         hm = "code ~/.config/home-manager";
         no = "code /etc/nixos/";

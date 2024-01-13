@@ -22,10 +22,7 @@
         modules = [
           (let
             username = "andrea";
-            iwi-config = (import ./configuration.nix) {
-              pkgs = pkgs;
-              config = { allowUnfree = true; };
-            };
+            iwi-config = (import ./configuration.nix) { pkgs = pkgs; config = { }; };
             iwi-hm = iwi-config.home-manager.users.${username};
           in {
             home.username = username;
