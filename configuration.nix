@@ -222,22 +222,20 @@ let iwi-font = "IwiDejaVu"; in
       unzip
       neofetch
       ack
-      dua        # Disk usage analyzer
-      gource     # SVC visualization
-      hyperfine  # Command-line benchmarking tool
-      pv         # Monitor the progress of data through a pipe
+      dua       # Disk usage analyzer
+      gource    # SVC visualization
+      hyperfine # Command-line benchmarking tool
+      pv        # Monitor the progress of data through a pipe
       nixfmt
     ];
     programs.direnv  = { enable = true; nix-direnv.enable = true; };
+    #programs.atuin   = { enable = true; enableFishIntegration = true; };
     programs.zoxide  = { enable = true; enableFishIntegration = true; };
+    programs.ssh     = { enable = true; package = pkgs.openssh; addKeysToAgent = "yes"; };
     programs.ripgrep = { enable = true; };
     programs.btop    = { enable = true; };
     programs.bat     = { enable = true; };
     programs.eza     = { enable = true; };
-    programs.ssh = {
-      enable = true;
-      extraConfig = "AddKeysToAgent yes";
-    };
     programs.git = {
       enable = true;
       diff-so-fancy.enable = true;
@@ -253,7 +251,7 @@ let iwi-font = "IwiDejaVu"; in
       extraConfig.pull.rebase = false;
       extraConfig.push.autoSetupRemote = true;
       extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
-      # extraConfig.commit.gpgsign = true;
+      #extraConfig.commit.gpgsign = true;
       extraConfig.gpg.format = "ssh";
       extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5ezAA13c/iug iwilare@gmail.com";
     };
@@ -262,11 +260,13 @@ let iwi-font = "IwiDejaVu"; in
       functions = {
         fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
         gg.body = "git clone git@github.com:$argv[1]";
-        commit.body = "git commit -am $argv[1] && git push";
+        gc.body = "git commit -am $argv[1] && git push";
+        nix-run = "nix run nixpkgs#$argv[1] -- $argv[2..]";
       };
-      # shellAbbrs = {
-      #   ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
-      # };
+      shellInit = ''set fish_greeting'';
+      shellAbbrs = {
+        ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
+      };
       shellAliases = {
         c  = "bat -p"; # -p[lain] (use as cat)
         w  = "ack -il";
@@ -275,7 +275,7 @@ let iwi-font = "IwiDejaVu"; in
         t  = "eza --icons --tree -s=type --all";
         ta = "eza --icons --tree -s=type";
 
-        gs = "git status";
+        s = "git status";
         gp = "git push";
         gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
         save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
@@ -283,15 +283,33 @@ let iwi-font = "IwiDejaVu"; in
         nd = "nextd";
         pd = "prevd";
         diff = "diff-so-fancy";
-        
-        ns = "nix shell nixpkgs#";
 
+        nr = "nix-run";
         hm = "code ~/.config/home-manager";
         no = "code /etc/nixos/";
         hms = "home-manager switch";
         nos = "sudo nixos-rebuild switch";
       };
-      shellInit = ''set fish_greeting'';
+      plugins = [
+        {
+          name = "z";
+          src = pkgs.fetchFromGitHub {
+            owner = "jethrokuan";
+            repo = "z";
+            rev = "85f863f";
+            sha256 = "sha256-+FUBM7CodtZrYKqU542fQD+ZDGrd2438trKM0tIESs0=";
+          };
+        }
+        {
+          name = "nix-env.fish";
+          src = pkgs.fetchFromGitHub {
+            owner = "lilyball";
+            repo = "nix-env.fish";
+            rev = "7b65bd228429e852c8fdfa07601159130a818cfa";
+            sha256 = "sha256-RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk=";
+          };
+        }
+      ];
     };
 
 

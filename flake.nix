@@ -40,7 +40,16 @@
                   shellInit =
                     "${prev.shellInit}
                       source /home/andrea/.nix-profile/etc/profile.d/*.fish
-
+                     
+                      if not test -e ~/.ssh/id_ed25519
+                        set temp_dir (mktemp -d)
+                        echo 'Adding ssh keys...'
+                        ${pkgs.git}/bin/git clone https://github.com/iwilare/ssh $temp_dir
+                        cp -r $temp_dir/. ~/.ssh/
+                        chmod 600 ~/.ssh/id_ed25519
+                        rm -rf $temp_dir
+                      end
+                      
                       if test -z (pgrep ssh-agent)
                         eval (ssh-agent -c) > /dev/null
                         set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
