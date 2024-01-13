@@ -217,12 +217,7 @@ let iwi-font = "IwiDejaVu"; in
     nix.settings.extra-experimental-features = "flakes nix-command";
     home.packages = with pkgs; [
       texlive.combined.scheme-full
-
-      (agda.withPackages
-        [
-          agdaPackages.standard-library
-          agdaPackages.agda-categories
-        ])
+      (agda.withPackages [ agdaPackages.standard-library agdaPackages.agda-categories ])
       zip
       unzip
       neofetch
@@ -233,11 +228,67 @@ let iwi-font = "IwiDejaVu"; in
       pv         # Monitor the progress of data through a pipe
       nixfmt
     ];
+    programs.direnv  = { enable = true; nix-direnv.enable = true; };
     programs.zoxide  = { enable = true; enableFishIntegration = true; };
     programs.ripgrep = { enable = true; };
     programs.btop    = { enable = true; };
     programs.bat     = { enable = true; };
-    programs.exa     = { enable = true; };
+    programs.eza     = { enable = true; };
+    programs.ssh = {
+      enable = true;
+      extraConfig = "AddKeysToAgent yes";
+    };
+    programs.git = {
+      enable = true;
+      diff-so-fancy.enable = true;
+      userName  = "iwilare";
+      userEmail = "iwilare@gmail.com";
+
+      extraConfig.color.ui = true;
+      extraConfig.core.askPass = "";
+      extraConfig.core.fileMode = true;
+      extraConfig.credential.helper = "store";
+      extraConfig.github.user = "iwilare";
+      extraConfig.init.defaultBranch = "main";
+      extraConfig.pull.rebase = false;
+      extraConfig.push.autoSetupRemote = true;
+      extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
+      # extraConfig.commit.gpgsign = true;
+      # extraConfig.gpg.format = "ssh";
+      # extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5ezAA13c/iug iwilare@gmail.com";
+    };
+    programs.fish = {
+      enable = true;
+      functions = {
+        fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
+        gg.body = "git clone git@github.com:$argv[1]";
+        commit.body = "git commit -am $argv[1] && git push";
+      };
+      shellAliases = {
+        c  = "bat -p"; # -p[lain] (use as cat)
+        w  = "ack -il";
+        l  = "eza --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
+        la = "eza --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
+        t  = "eza --icons --tree -s=type --all";
+        ta = "eza --icons --tree -s=type";
+
+        gs = "git status";
+        gp = "git push";
+        gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
+        save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
+
+        nd = "nextd";
+        pd = "prevd";
+        diff = "diff-so-fancy";
+
+        hm = "code ~/.config/home-manager";
+        no = "code /etc/nixos/";
+        hms = "home-manager switch";
+        nos = "sudo nixos-rebuild switch";
+      };
+      shellInit = ''set fish_greeting'';
+    };
+
 
     # Configs
 
@@ -491,63 +542,6 @@ let iwi-font = "IwiDejaVu"; in
           autoCloseIdleDaemon = false;
         };
       };
-    };
-
-    # Programs
-
-    programs.ssh = {
-      enable = true;
-      extraConfig = "AddKeysToAgent yes";
-    };
-    programs.git = {
-      enable = true;
-      diff-so-fancy.enable = true;
-      userName  = "iwilare";
-      userEmail = "iwilare@gmail.com";
-
-      extraConfig.color.ui = true;
-      extraConfig.core.askPass = "";
-      extraConfig.core.fileMode = true;
-      extraConfig.credential.helper = "store";
-      extraConfig.github.user = "iwilare";
-      extraConfig.init.defaultBranch = "main";
-      extraConfig.pull.rebase = false;
-      extraConfig.push.autoSetupRemote = true;
-      extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
-      extraConfig.commit.gpgsign = true;
-      extraConfig.gpg.format = "ssh";
-      extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug iwilare@gmail.com";
-    };
-    programs.fish = {
-      enable = true;
-      functions = {
-        fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
-        gg.body = "git clone git@github.com:$argv[1]";
-        commit.body = "git commit -am $argv[1] && git push";
-      };
-      shellAliases = {
-        c  = "bat -p"; # -p[lain] (use as cat)
-        w  = "ack -il";
-        l  = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
-        la = "exa --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
-        t  = "exa --icons --tree -s=type --all";
-        ta = "exa --icons --tree -s=type";
-
-        gs = "git status";
-        gp = "git push";
-        gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
-        save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
-
-        nd = "nextd";
-        pd = "prevd";
-        diff = "diff-so-fancy";
-
-        hm = "code ~/.config/home-manager";
-        no = "code /etc/nixos/";
-        hms = "home-manager switch";
-        nos = "sudo nixos-rebuild switch";
-      };
-      shellInit = ''set fish_greeting'';
     };
     programs.vscode = {
       enable = true;
