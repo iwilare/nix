@@ -251,7 +251,7 @@ let iwi-font = "IwiDejaVu"; in
       extraConfig.pull.rebase = false;
       extraConfig.push.autoSetupRemote = true;
       extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
-      #extraConfig.commit.gpgsign = true;
+      extraConfig.commit.gpgsign = true;
       extraConfig.gpg.format = "ssh";
       extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5ezAA13c/iug iwilare@gmail.com";
     };
