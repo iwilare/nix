@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nix-vscode-extensions, ... }:
 let iwi-font = "IwiDejaVu"; in
 {
   imports = [
@@ -253,7 +253,8 @@ let iwi-font = "IwiDejaVu"; in
       extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
       extraConfig.commit.gpgsign = true;
       extraConfig.gpg.format = "ssh";
-      extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5ezAA13c/iug iwilare@gmail.com";
+      extraConfig.user.signingKey = "~/.ssh/id_ed25519";
+      # extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5ezAA13c/iug iwilare@gmail.com";
     };
     programs.fish = {
       enable = true;
@@ -277,6 +278,7 @@ let iwi-font = "IwiDejaVu"; in
 
         s = "git status";
         gp = "git push";
+        gd = "git diff";
         gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
         save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
 
@@ -285,21 +287,22 @@ let iwi-font = "IwiDejaVu"; in
         diff = "diff-so-fancy";
 
         nr = "nix-run";
-        hm = "code ~/.config/home-manager";
         no = "code /etc/nixos/";
-        hms = "home-manager switch";
         nos = "sudo nixos-rebuild switch";
+        hm = "code ~/.config/home-manager";
+        hmd = "cd ~/.config/home-manager";
+        hms = "home-manager switch -b backup";
       };
       plugins = [
-        {
-          name = "z";
-          src = pkgs.fetchFromGitHub {
-            owner = "jethrokuan";
-            repo = "z";
-            rev = "85f863f";
-            sha256 = "sha256-+FUBM7CodtZrYKqU542fQD+ZDGrd2438trKM0tIESs0=";
-          };
-        }
+        # {
+        #   name = "z";
+        #   src = pkgs.fetchFromGitHub {
+        #     owner = "jethrokuan";
+        #     repo = "z";
+        #     rev = "85f863f";
+        #     sha256 = "sha256-+FUBM7CodtZrYKqU542fQD+ZDGrd2438trKM0tIESs0=";
+        #   };
+        # }
         {
           name = "nix-env.fish";
           src = pkgs.fetchFromGitHub {
@@ -790,25 +793,24 @@ let iwi-font = "IwiDejaVu"; in
         { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
         { "command" = "agda-mode.toggle-display-of-irrelevant-arguments";            "key" = "ctrl+a ctrl+n";     "when" = "editorLangId == 'agda'"; }
       ];
-      extensions = with pkgs.vscode-extensions; [
-        rust-lang.rust-analyzer
-        ms-vsliveshare.vsliveshare
-        justusadam.language-haskell
-        jnoortheen.nix-ide
-        james-yu.latex-workshop
-        haskell.haskell
-        github.copilot
-        denoland.vscode-deno
-        dart-code.dart-code
-        bbenoist.nix
-        eamodio.gitlens
+      extensions = with nix-vscode-extensions.extensions."x86_64-linux".vscode-marketplace; [
+        ms-vscode-remote.remote-wsl
+        banacorn.agda-mode
         adpyke.codesnap
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        { name = "cursor-align"; publisher = "yo1dog";           version = "1.1.0";  sha256 = "LgcMwNundAUcsRLvr+yw0+REgv7ZS+HLh3aLH2mgw00="; }
-        { name = "idris-vscode"; publisher = "meraymond";        version = "0.0.14"; sha256 = "QAzjm+8Z+4TDbM5amh3UEkSmp0n8ZlRHYpUGAewIVXk="; }
-        { name = "wordcount";    publisher = "ms-vscode";        version = "0.1.0";  sha256 = "Qb4KU3K0NsU7U2GWZscA6WAk406RbnAOpIIvvII4mpg="; }
-        { name = "agda-mode";    publisher = "banacorn";         version = "0.3.11"; sha256 = "jnH3oNqvkO/+Oi+8MM1RqooPFrQZMDWLSEnrVLnc5VI="; }
-        { name = "remote-wsl";   publisher = "ms-vscode-remote"; version = "0.79.2"; sha256 = "s9hJKgfg4g1Nf740bnmee/QNa0nq9dvwbtHvaQUBjZc="; }
+        bbenoist.nix
+        jnoortheen.nix-ide
+        haskell.haskell
+        justusadam.language-haskell
+        dart-code.dart-code
+        denoland.vscode-deno
+        eamodio.gitlens
+        github.copilot
+        james-yu.latex-workshop
+        meraymond.idris-vscode
+        ms-vscode.wordcount
+        ms-vsliveshare.vsliveshare
+        rust-lang.rust-analyzer
+        yo1dog.cursor-align
       ];
     };
 
