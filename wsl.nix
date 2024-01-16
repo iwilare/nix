@@ -14,9 +14,10 @@ let
   extensionPath = ".vscode-server/extensions";
   userDir = ".vscode-server/data/Machine/";
 
+  keybindingsFilePath = "/mnt/c/Users/Andrea/Appdata/Roaming/Code/User/keybindings.json";
+
   configFilePath = "${userDir}/settings.json";
   tasksFilePath = "${userDir}/tasks.json";
-  keybindingsFilePath = "${userDir}/keybindings.json";
   snippetDir = "${userDir}/snippets";
 
   extensionJson = pkgs.vscode-utils.toExtensionJson cfg.extensions;
