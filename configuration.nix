@@ -253,7 +253,6 @@ let iwi-font = "IwiDejaVu"; in
       extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
       extraConfig.commit.gpgsign = true;
       extraConfig.gpg.format = "ssh";
-      extraConfig.user.signingKey = "~/.ssh/id_ed25519";
       # extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5ezAA13c/iug iwilare@gmail.com";
     };
     programs.fish = {
