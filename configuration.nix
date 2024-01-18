@@ -259,13 +259,14 @@ let iwi-font = "IwiDejaVu"; in
       enable = true;
       functions = {
         fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
-        gg.body = "git clone git@github.com:$argv[1]";
-        gc.body = "git commit -am $argv[1] && git push";
         nix-run = "nix run nixpkgs#$argv[1] -- $argv[2..]";
       };
       shellInit = ''set fish_greeting'';
       shellAbbrs = {
+        m  = { expansion = "git commit -am '%'"; setCursor = true; };
         ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
+        gs = { expansion = "git remote set-url origin git@github.com:iwilare/%"; setCursor = true; };
+        gg = { expansion = "git clone git@github.com:$argv[1]"; setCursor = true; };
       };
       shellAliases = {
         c  = "bat -p"; # -p[lain] (use as cat)
