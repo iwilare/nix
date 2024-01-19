@@ -280,7 +280,7 @@ let iwi-font = "IwiDejaVu"; in
         gp = "git push";
         gd = "git diff";
         gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
-        gu = "git remote add origin git@github.com:iwilare/(basename $PWD)";
+        gu = "git remote add origin ''; git remote set-url origin git@github.com:iwilare/(basename $PWD)";
         save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
 
         nd = "nextd";
