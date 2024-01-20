@@ -21,6 +21,14 @@
         config.allowUnfree = true;
       };
     in {
+      nixosConfigurations = {
+        "iwilare" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./configuration.nix
+          ];
+        };
+      };
       homeConfigurations."andrea" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
