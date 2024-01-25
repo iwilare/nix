@@ -24,16 +24,17 @@
         inherit system;
         config.allowUnfree = true;
       };
+      arguments = { inherit pkgs system nix-vscode-extensions iwi-font; };
     in {
       nixosConfigurations."iwilare" = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit iwi-font system; };
+        specialArgs = arguments;
         modules = [
           ./system.nix
           ./hardware-configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
-            home-manager.extraSpecialArgs = { inherit nix-vscode-extensions iwi-font system; };
+            home-manager.extraSpecialArgs = arguments;
             home-manager.users."andrea".imports = [
               ./home.nix
               ./home-system.nix
@@ -41,15 +42,14 @@
           }
         ];
       };
-      /*
       homeConfigurations."andrea" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = arguments;
         modules = [
-          ./home-system.nix
           ./home.nix
-          #./home-wsl.nix
+          ./home-wsl.nix
           ./vscode-wsl.nix
         ];
-      };*/
+      };
     };
 }

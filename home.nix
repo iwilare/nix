@@ -1,6 +1,9 @@
 { config, pkgs, nix-vscode-extensions, ... }: {
   home.stateVersion = "23.05";
-  nix.settings.extra-experimental-features = "flakes nix-command";
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "flakes" "nix-command" ];
+  };
   home.packages = with pkgs; [
     texlive.combined.scheme-full
     (agda.withPackages [ agdaPackages.standard-library agdaPackages.agda-categories ])
