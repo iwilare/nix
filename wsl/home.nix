@@ -8,7 +8,7 @@ let username = "andrea"; in
   services.ssh-agent.enable = true;
   targets.genericLinux.enable = true;
   programs = {
-    # vscode.wsl = iwi-hm.programs.vscode;
+    vscode.wsl = true;
     fish.shellInit = ''
       source /home/andrea/.nix-profile/etc/profile.d/*.fish
 

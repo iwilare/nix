@@ -30,7 +30,15 @@ let
 in {
   imports = [ ];
 
-  config = mkIf cfg.enable {
+  options = {
+    programs.vscode.wsl = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable WSL installation (does not install any package, integrates settings with Windows).";
+    };
+  };
+
+  config = mkIf cfg.wsl {
     home.file = mkMerge [
       (mkIf (mergedUserSettings != { }) {
         "${configFilePath}".source =
