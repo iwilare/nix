@@ -60,28 +60,30 @@
     shellAliases = {
       c  = "bat -p"; # -p[lain] (use as cat)
       w  = "ack -il";
+      e  = "explorer.exe .";
       l  = "eza --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
-      la = "eza --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type --all";
+      la = "eza --git --icons --time-style=long-iso --long -s=type --all";
       t  = "eza --icons --tree -s=type --all";
       ta = "eza --icons --tree -s=type";
 
-      s = "git status";
-      p = "git push";
+      s  = "git status -sb --show-stash";
+      p  = "git push";
       pp = "git push --force";
       ga = "git commit -a --amend --no-edit";
       gp = "git push --force";
       gd = "git diff";
-      gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph --reverse";
+      ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --reverse";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
 
+      RM = "rm -rfd";
       dn = "nextd";
       dp = "prevd";
       diff = "diff-so-fancy";
 
-      nr = "nix-run";
-      no = "code /etc/nixos/";
+      nr  = "nix-run";
+      no  = "code /etc/nixos/";
       nos = "sudo nixos-rebuild switch";
-      hm = "code ~/.config/home-manager";
+      hm  = "code ~/.config/home-manager";
       hmd = "cd ~/.config/home-manager";
       hms = "home-manager switch -b backup";
     };
