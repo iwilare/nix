@@ -54,8 +54,8 @@
     shellAbbrs = {
       m  = { expansion = "git commit -am '%'"; setCursor = true; };
       ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
-      gs = { expansion = "git remote set-url origin git@github.com:iwilare/%"; setCursor = true; };
-      gg = { expansion = "git clone git@github.com:$argv[1]"; setCursor = true; };
+      gg = { expansion = "git clone git@github.com:%"; setCursor = true; };
+      gsu = { expansion = "git remote set-url origin git@github.com:iwilare/(basename $PWD)"; setCursor = true; };
     };
     shellAliases = {
       c  = "bat -p"; # -p[lain] (use as cat)
@@ -66,14 +66,16 @@
       ta = "eza --icons --tree -s=type";
 
       s = "git status";
-      gp = "git push";
+      p = "git push";
+      pp = "git push --force";
+      ga = "git commit -a --amend --no-edit";
+      gp = "git push --force";
       gd = "git diff";
-      gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph";
-      gu = "git remote add origin ''; git remote set-url origin git@github.com:iwilare/(basename $PWD)";
+      gl = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' --graph --reverse";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
 
-      nd = "nextd";
-      pd = "prevd";
+      dn = "nextd";
+      dp = "prevd";
       diff = "diff-so-fancy";
 
       nr = "nix-run";
