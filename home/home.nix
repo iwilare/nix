@@ -56,11 +56,13 @@
       ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg = { expansion = "git clone git@github.com:%"; setCursor = true; };
       gsu = { expansion = "git remote set-url origin git@github.com:iwilare/(basename $PWD)%"; setCursor = true; };
+      proj = { expansion = "z % && nc"; setCursor = true; };
     };
     shellAliases = {
       c  = "bat -p"; # -p[lain] (use as cat)
       w  = "ack -il";
       e  = "explorer.exe .";
+      d  = "git diff";
       l  = "eza --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
       la = "eza --git --icons --time-style=long-iso --long -s=type --all";
       t  = "eza --icons --tree -s=type --all";
@@ -80,6 +82,9 @@
       dn = "nextd";
       dp = "prevd";
       diff = "diff-so-fancy";
+
+      n = "nix develop";
+      nc = "nix develop --command code .";
 
       nr  = "nix-run";
       no  = "code /etc/nixos/";
