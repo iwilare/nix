@@ -73,7 +73,7 @@
       ga = "git commit -a --amend --no-edit";
       gp = "git push --force";
       gd = "git diff";
-      ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --reverse";
+      ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
 
       RM = "rm -rfd";
