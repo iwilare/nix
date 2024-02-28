@@ -55,7 +55,7 @@
       m  = { expansion = "git commit -am '%'"; setCursor = true; };
       ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg = { expansion = "git clone git@github.com:%"; setCursor = true; };
-      gsu = { expansion = "git remote set-url origin git@github.com:iwilare/(basename $PWD)"; setCursor = true; };
+      gsu = { expansion = "git remote set-url origin git@github.com:iwilare/(basename $PWD)%"; setCursor = true; };
     };
     shellAliases = {
       c  = "bat -p"; # -p[lain] (use as cat)
@@ -66,6 +66,7 @@
       t  = "eza --icons --tree -s=type --all";
       ta = "eza --icons --tree -s=type";
 
+      sd = "git diff --stat";
       s  = "git status -sb --show-stash";
       p  = "git push";
       pp = "git push --force";
