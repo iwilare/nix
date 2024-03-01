@@ -59,7 +59,6 @@
       proj = { expansion = "z % && nc"; setCursor = true; };
     };
     shellAliases = {
-      c  = "bat -p"; # -p[lain] (use as cat)
       w  = "ack -il";
       e  = "explorer.exe .";
       d  = "git diff";
@@ -83,7 +82,8 @@
       dp = "prevd";
       diff = "diff-so-fancy";
 
-      n = "nix develop";
+      n  = "nix develop";
+      c  = "code .";
       nc = "nix develop --command code .";
 
       nr  = "nix-run";
@@ -92,6 +92,7 @@
       hm  = "code ~/.config/home-manager";
       hmd = "cd ~/.config/home-manager";
       hms = "home-manager switch -b backup";
+      hemp = "hms; save";
     };
     plugins = [
       # {
