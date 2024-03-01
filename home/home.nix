@@ -89,10 +89,9 @@
       nr  = "nix-run";
       no  = "code /etc/nixos/";
       nos = "sudo nixos-rebuild switch";
-      hm  = "code ~/.config/home-manager";
-      hmd = "cd ~/.config/home-manager";
+      hm  = "cd ~/.config/home-manager; code .";
       hms = "home-manager switch -b backup";
-      hemp = "hms; save";
+      hemp = "hms && ga && gp";
     };
     plugins = [
       # {
