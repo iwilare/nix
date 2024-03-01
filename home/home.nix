@@ -49,6 +49,7 @@
     functions = {
       fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
       nix-run = "nix run nixpkgs#$argv[1] -- $argv[2..]";
+      proj = "z $argv[1] && nc";
     };
     shellInit = ''set fish_greeting'';
     shellAbbrs = {
@@ -56,7 +57,6 @@
       ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg = { expansion = "git clone git@github.com:%"; setCursor = true; };
       gsu = { expansion = "git remote set-url origin git@github.com:iwilare/(basename $PWD)%"; setCursor = true; };
-      proj = { expansion = "z % && nc"; setCursor = true; };
     };
     shellAliases = {
       w  = "ack -il";
