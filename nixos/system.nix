@@ -49,7 +49,7 @@
 
   i18n.inputMethod = {
     enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ mozc ];
+    #ibus.engines = with pkgs.ibus-engines; [ mozc ];
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
@@ -92,7 +92,7 @@
   security.sudo.extraConfig = ''Defaults timestamp_timeout=7200'';
   services.autorandr.enable = true;
   services.avahi.enable = true;
-  services.avahi.nssmdns = true;
+  services.avahi.nssmdns4 = true;
   services.blueman.enable = true;
   services.gnome.gnome-keyring.enable = true;
   services.gvfs.enable = true;
@@ -115,7 +115,7 @@
     layout = "it";
     libinput.enable = true;
     libinput.mouse.scrollMethod = "button";
-    libinput.mouse.accelSpeed = "20";
+    libinput.mouse.accelSpeed = "18";
     xkbOptions = "caps:ctrl_modifier,eurosign:e"; #caps:super
     windowManager.i3.enable = true;
     #screenSection = ''
