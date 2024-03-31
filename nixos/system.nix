@@ -112,11 +112,11 @@
     displayManager.lightdm.enable = true;
     dpi = 96;
     enable = true;
-    layout = "it";
+    xkb.layout = "it";
+    xkb.options = "caps:ctrl_modifier,eurosign:e"; #caps:super
     libinput.enable = true;
     libinput.mouse.scrollMethod = "button";
     libinput.mouse.accelSpeed = "18";
-    xkbOptions = "caps:ctrl_modifier,eurosign:e"; #caps:super
     windowManager.i3.enable = true;
     #screenSection = ''
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"

@@ -191,16 +191,16 @@
       cursor.blink_interval = 650;
       cursor.style.shape = "beam";
       cursor.style.blinking = "always";
-      draw_bold_text_with_bright_colors = true;
+      color.draw_bold_text_with_bright_colors = true;
       selection.save_to_clipboard = true;
       window.opacity = 0.8;
-      mouse_bindings = [
+      mouse.bindings = [
         {
           mouse = "Right";
           action = "PasteSelection";
         }
       ];
-      key_bindings = [
+      keyboard.bindings = [
         {
           key = "Return";
           mods = "Control|Shift";
