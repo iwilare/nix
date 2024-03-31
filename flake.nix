@@ -46,7 +46,7 @@
         modules = nixos-modules ++ [
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
+            #home-manager.useGlobalPkgs = true;
             home-manager.extraSpecialArgs = arguments;
             home-manager.users."andrea".imports = home-modules ++ nixos-home-modules;
           }
