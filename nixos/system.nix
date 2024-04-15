@@ -53,7 +53,7 @@
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
-  boot.loader.systemd-boot.configurationLimit = 1;
+  boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.systemd-boot.enable = true;
   boot.loader.timeout = 0;
   console.font = "Lat2-Terminus16";

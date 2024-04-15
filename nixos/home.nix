@@ -1,5 +1,6 @@
 { config, pkgs, iwi-font, system, ... }: {
 
+  programs.vscode.enable = true;
   programs.vscode.package = pkgs.vscode.overrideAttrs (oldAttrs: rec { version = "stable"; });
 
   xsession.windowManager.i3 = {

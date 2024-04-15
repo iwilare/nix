@@ -16,6 +16,7 @@
     hyperfine # Command-line benchmarking tool
     pv        # Monitor the progress of data through a pipe
     nixfmt
+    nix-tree
   ];
   programs.direnv  = { enable = true; nix-direnv.enable = true; };
   #programs.atuin   = { enable = true; enableFishIntegration = true; };

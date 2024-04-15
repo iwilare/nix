@@ -2,7 +2,7 @@
   programs.vscode = {
     userSettings = {
       # "editor.letterSpacing" = -0.3;
-      # "editor.fontFamily" = "'${iwi-font}'";
+      "editor.fontFamily" = "IwiDejaVu";
       # "editor.fontSize" = 13.16;
       "editor.fontLigatures" = true;
       "editor.glyphMargin" = false;
