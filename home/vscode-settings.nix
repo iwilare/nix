@@ -50,6 +50,11 @@
       "workbench.startupEditor" = "none";
       "workbench.tree.indent" = 16;
       "workbench.tree.renderIndentGuides" = "always";
+      "editor.suggest.showWords" = false;
+      # Nix
+      "nix.enableLanguageServer" = true;
+      "nix.formatterPath" = "${pkgs.alejandra}/bin/alejandra";
+      "nix.serverPath" = "${pkgs.nil}/bin/nil";
       # Idris
       "idris.idris2Mode" = true;
       "idris.idrisPath" = "idris2";
@@ -71,6 +76,10 @@
         "editor.tabCompletion" = "onlySnippets";
       };
       # LaTeX
+      "[tex]" = {
+        "editor.wordWrap" = "on";
+        "editor.wordWrapColumn" = 80;
+      };
       "files.associations" = {
         "*.tikz" = "latex";
         "*.tikzstyles" = "latex";
@@ -238,6 +247,7 @@
       ms-vsliveshare.vsliveshare
       rust-lang.rust-analyzer
       yo1dog.cursor-align
+      rubymaniac.vscode-direnv
     ];
   };
 }
