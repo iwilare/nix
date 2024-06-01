@@ -97,8 +97,8 @@
       "latex-workshop.latex.tools" = [
         { "command" = "latexmk";  "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "-draftmode" "%DOC%" ]; }
         { "command" = "latexmk";  "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "-draftmode" "%DOC%" ]; }
-        { "command" = "pdflatex"; "env" = {}; "name" = "pdflatex";  "args" = [ "-synctex=1" "-outdir=%OUTDIR%" "-draftmode" "%DOC%" ]; }
-        { "command" = "xelatex";  "env" = {}; "name" = "xelatex";   "args" = [ "-synctex=1" "-outdir=%OUTDIR%" "-draftmode" "%DOC%" ]; }
+        { "command" = "pdflatex"; "env" = {}; "name" = "pdflatex";  "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-draftmode" "%DOC%" ]; }
+        { "command" = "xelatex";  "env" = {}; "name" = "xelatex";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-draftmode" "%DOC%" ]; }
       ];
       "workbench.editor.empty.hint" = "hidden";
       "workbench.editor.autoLockGroups" = {

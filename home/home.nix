@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   home.stateVersion = "23.05";
   nix = {
-    #package = pkgs.nix;
+    package = pkgs.nix;
     settings.experimental-features = [ "flakes" "nix-command" ];
   };
   home.packages = with pkgs; [
