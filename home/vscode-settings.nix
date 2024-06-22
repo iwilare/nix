@@ -4,6 +4,7 @@
       # "editor.letterSpacing" = -0.3;
       # "editor.fontFamily" = "IwiDejaVu";
       # "editor.fontSize" = 13.16;
+      "terminal.integrated.fontFamily" = "IwiDejaVu";
 
       "editor.fontLigatures" = true;
       "editor.glyphMargin" = false;
@@ -13,6 +14,7 @@
       "editor.hover.delay" = 250;
       "editor.inlineSuggest.enabled" = true;
       "editor.insertSpaces" = true;
+      "editor.lineHeight" = 1.20;
       "editor.linkedEditing" = true;
       "editor.minimap.maxColumn" = 60;
       "editor.minimap.scale" = 2;
@@ -24,7 +26,6 @@
       "editor.tabSize" = 2;
       "explorer.compactFolders" = false;
       "explorer.confirmDragAndDrop" = false;
-      "editor.lineHeight" = 1.30;
       "explorer.incrementalNaming" = "smart";
       "explorer.sortOrderLexicographicOptions" = "upper";
       "files.eol" = "\n";
