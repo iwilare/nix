@@ -2,8 +2,9 @@
   programs.vscode = {
     userSettings = {
       # "editor.letterSpacing" = -0.3;
-      "editor.fontFamily" = "IwiDejaVu";
+      # "editor.fontFamily" = "IwiDejaVu";
       # "editor.fontSize" = 13.16;
+
       "editor.fontLigatures" = true;
       "editor.glyphMargin" = false;
 
@@ -15,6 +16,7 @@
       "editor.linkedEditing" = true;
       "editor.minimap.maxColumn" = 60;
       "editor.minimap.scale" = 2;
+      "editor.mouseWheelZoom" = true;
       "editor.smoothScrolling" = true;
       "editor.stickyScroll.enabled" = true;
       "editor.suggest.localityBonus" = true;
@@ -22,6 +24,7 @@
       "editor.tabSize" = 2;
       "explorer.compactFolders" = false;
       "explorer.confirmDragAndDrop" = false;
+      "editor.lineHeight" = 1.30;
       "explorer.incrementalNaming" = "smart";
       "explorer.sortOrderLexicographicOptions" = "upper";
       "files.eol" = "\n";
@@ -41,9 +44,11 @@
       "terminal.integrated.rightClickBehavior" = "copyPaste";
       "terminal.integrated.scrollback" = 10000;
       "terminal.integrated.smoothScrolling" = true;
+      "terminal.integrated.mouseWheelZoom" = true;
       "terminal.integrated.defaultProfile.linux" = "fish"; # Needed on WSL
       "update.mode" = "none";
       "window.menuBarVisibility" = "hidden";
+      "window.zoomLevel" = 1;
       "workbench.editor.splitSizing" = "split";
       "workbench.editor.tabSizing" = "shrink";
       "workbench.list.smoothScrolling" = true;
@@ -51,6 +56,8 @@
       "workbench.tree.indent" = 16;
       "workbench.tree.renderIndentGuides" = "always";
       "editor.suggest.showWords" = false;
+      # Copilot
+      "github.copilot.editor.enableCodeActions" = false;
       # Nix
       "nix.enableLanguageServer" = true;
       "nix.formatterPath" = "${pkgs.alejandra}/bin/alejandra";
@@ -60,6 +67,7 @@
       "idris.idrisPath" = "idris2";
       # Agda
       "agdaMode.view.panelMountPosition" = "right";
+      "agdaMode.connection.commandLineOptions" = "+RTS -M16G";
       "[agda]" = {
         "editor.unicodeHighlight.ambiguousCharacters" = false;
       };
@@ -95,10 +103,10 @@
         { "name" = "xelatex";           "tools" = [ "xelatex"   ]; }
       ];
       "latex-workshop.latex.tools" = [
-        { "command" = "latexmk";  "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "-draftmode" "%DOC%" ]; }
-        { "command" = "latexmk";  "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "-draftmode" "%DOC%" ]; }
-        { "command" = "pdflatex"; "env" = {}; "name" = "pdflatex";  "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-draftmode" "%DOC%" ]; }
-        { "command" = "xelatex";  "env" = {}; "name" = "xelatex";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-draftmode" "%DOC%" ]; }
+        { "command" = "latexmk";  "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "%DOC%" ]; }
+        { "command" = "latexmk";  "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "%DOC%" ]; }
+        { "command" = "pdflatex"; "env" = {}; "name" = "pdflatex";  "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "%DOC%" ]; }
+        { "command" = "xelatex";  "env" = {}; "name" = "xelatex";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "%DOC%" ]; }
       ];
       "workbench.editor.empty.hint" = "hidden";
       "workbench.editor.autoLockGroups" = {
@@ -130,6 +138,9 @@
       { "command" = "deleteWordPartLeft";        "key" = "ctrl+shift+h";           }
       { "command" = "deleteWordPartRight";       "key" = "ctrl+shift+[semicolon]"; }
       { "command" = "deleteWordRight";           "key" = "ctrl+[semicolon]";       }
+
+      { "command" = "deleteWordLeft";            "key" = "ctrl+space ctrl+a";      }
+      { "command" = "deleteWordRight";           "key" = "ctrl+space ctrl+d";      }
 
       { "command" = "cursorHome";                "key" = "ctrl+q";                 }
       { "command" = "cursorHomeSelect";          "key" = "ctrl+alt+q";             }
@@ -201,6 +212,8 @@
       { "command" = "workbench.action.togglePanel";              "key" = "ctrl+space ctrl+q";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.action.toggleSidebarVisibility";  "key" = "ctrl+space ctrl+e";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.files.action.focusFilesExplorer"; "key" = "ctrl+space ctrl+d";     "when" = "!editorHasSelection"; }
+
+      { "command" = "editor.action.toggleWordWrap";              "key" = "ctrl+space w";          "when" = "";                    }
 
       # Menus
 

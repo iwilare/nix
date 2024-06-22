@@ -84,14 +84,14 @@
       dp = "prevd";
       diff = "diff-so-fancy";
 
-      n  = "nix develop";
-      c  = "code .";
-      nc = "nix develop --command code .";
+      n = "nix develop";
+      c = "nix develop --command code .";
 
       nr  = "nix-run";
       no  = "code /etc/nixos/";
       nos = "sudo nixos-rebuild switch";
       hm  = "cd ~/.config/home-manager; code .";
+      hmd = "cd ~/.config/home-manager";
       hms = "home-manager switch -b backup";
       hemp = "hms && ga && gp";
     };
