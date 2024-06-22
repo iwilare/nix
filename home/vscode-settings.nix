@@ -193,15 +193,9 @@
       { "command" = "action.find";                               "key" = "ctrl+f";                "when" = "!findWidgetVisible";  }
       { "command" = "closeFindWidget";                           "key" = "ctrl+f";                "when" = "findWidgetVisible";   }
 
-<<<<<<< HEAD
-      { "command" = "editor.action.indentLines";                 "key" = "tab";                   "when" = "editorHasSelection";   }
-      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";             "when" = "editorHasSelection";   }
-      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";             "when" = "editorHasSelection";   }
-=======
       { "command" = "editor.action.indentLines";                 "key" = "tab";                "when" = "editorHasSelection";   }
       { "command" = "editor.action.outdentLines";                "key" = "shift+tab";          "when" = "editorHasSelection";   }
       { "command" = "editor.action.outdentLines";                "key" = "shift+tab";          "when" = "editorHasSelection";   }
->>>>>>> 124ba38 (Macos)
 
       # Windows
 

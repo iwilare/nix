@@ -84,6 +84,7 @@
       pp = "git push --force";
       gp = "git push --force";
       ga = "git commit -a --amend --no-edit";
+      gapp = "ga && pp";
       gd = "git diff";
       ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
@@ -101,10 +102,7 @@
       nos = "sudo nixos-rebuild switch";
       hm  = "cd ~/.config/home-manager; code .";
       hmd = "cd ~/.config/home-manager";
-      hm  = "code ~/.config/home-manager";
-      hmd = "cd ~/.config/home-manager";
-      hms = "home-manager switch -b backup";
-      hemp = "hms && ga && gp";
+      hms = "home-manager switch -b backup --flake .#${if !config.isMacos then "andrea" else "andrea-macos"}";
     };
   };
 }
