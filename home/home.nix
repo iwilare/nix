@@ -43,12 +43,21 @@
     extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
     extraConfig.commit.gpgsign = true;
     extraConfig.gpg.format = "ssh";
+    extraConfig.merge.autoStash = true;
     extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug iwilare@gmail.com";
   };
   programs.fish = {
     enable = true;
     functions = {
-      fish_prompt.body = ''printf "λ %s%s%s> " (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)'';
+      fish_prompt.body = ''
+        set -l last_status $status
+        set -l prompt_nix ""
+        set -l prompt_stat ""
+        set -l prompt_folder (set_color $fish_color_cwd)(prompt_pwd)(set_color normal)
+        if test -n "$IN_NIX_SHELL"; set prompt_nix "(nix) "; end
+        if test $last_status -ne 0; set prompt_stat (set_color red)" [$last_status]"(set_color normal); end
+        echo -n "λ "$prompt_nix$prompt_folder$prompt_stat"> "
+      '';
       nix-run = "nix run nixpkgs#$argv[1] -- $argv[2..]";
       proj = "z $argv[1] && nc";
     };
@@ -92,28 +101,10 @@
       nos = "sudo nixos-rebuild switch";
       hm  = "cd ~/.config/home-manager; code .";
       hmd = "cd ~/.config/home-manager";
+      hm  = "code ~/.config/home-manager";
+      hmd = "cd ~/.config/home-manager";
       hms = "home-manager switch -b backup";
       hemp = "hms && ga && gp";
     };
-    plugins = [
-      # {
-      #   name = "z";
-      #   src = pkgs.fetchFromGitHub {
-      #     owner = "jethrokuan";
-      #     repo = "z";
-      #     rev = "85f863f";
-      #     sha256 = "sha256-+FUBM7CodtZrYKqU542fQD+ZDGrd2438trKM0tIESs0=";
-      #   };
-      # }
-      {
-        name = "nix-env.fish";
-        src = pkgs.fetchFromGitHub {
-          owner = "lilyball";
-          repo = "nix-env.fish";
-          rev = "7b65bd228429e852c8fdfa07601159130a818cfa";
-          sha256 = "sha256-RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk=";
-        };
-      }
-    ];
   };
 }

@@ -19,7 +19,7 @@
 
   outputs = { nixpkgs, home-manager, nix-vscode-extensions, iwi-font, ... }:
     let
-      system = "x86_64-linux";
+      system = "x86_64-darwin";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
@@ -56,6 +56,11 @@
         inherit pkgs;
         extraSpecialArgs = arguments;
         modules = home-modules ++ wsl-home-modules;
+      };
+      homeConfigurations."andrea-macos" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = arguments;
+        modules = home-modules ++ wsl-home-modules ++ [ { isMacos = true; } ];
       };
     };
 }
