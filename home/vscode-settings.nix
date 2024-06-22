@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nix-vscode-extensions, system, ... }: {
+{ config, pkgs, lib, nix-vscode-extensions, ... }: {
   programs.vscode = {
     userSettings = {
       # "editor.letterSpacing" = -0.3;
@@ -186,7 +186,7 @@
       { "command" = "editor.action.commentLine";                 "key" = "ctrl+b";                                                }
       { "command" = "editor.action.triggerSuggest";              "key" = "ctrl+y";                "when" = "!editorHasSelection"; }
       { "command" = "editor.action.startFindReplaceAction";      "key" = "ctrl+space ctrl+f";     "when" = "!editorHasSelection"; }
-      { "command" = "editor.action.triggerSuggest";              "key" = "tab";                   "when" = "!editorHasSelection"; }
+      { "command" = "editor.action.triggerSuggest";              "key" = "ctrl+space ctrl+space"; "when" = "!editorHasSelection"; }
 
       { "command" = "removeSecondaryCursors";                    "key" = "ctrl+w";                "when" = "multiCursorModifier"; }
 
@@ -256,7 +256,7 @@
       { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-irrelevant-arguments";            "key" = "ctrl+a ctrl+n";     "when" = "editorLangId == 'agda'"; }
     ];
-    extensions = with nix-vscode-extensions.extensions.${system}.vscode-marketplace; [
+    extensions = with nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace; [
       ms-vscode-remote.remote-wsl
       banacorn.agda-mode
       adpyke.codesnap

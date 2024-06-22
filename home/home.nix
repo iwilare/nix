@@ -100,7 +100,7 @@
       nos = "sudo nixos-rebuild switch";
       hm  = "cd ~/.config/home-manager; code .";
       hmd = "cd ~/.config/home-manager";
-      hms = "home-manager switch -b backup --flake .#${if !config.isMacos then "andrea" else "andrea-macos"}";
+      hms = "home-manager switch -b backup --flake .#${if !pkgs.stdenv.isDarwin then "andrea" else "andrea-macos"}";
     };
   };
 }
