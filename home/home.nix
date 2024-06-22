@@ -81,12 +81,10 @@
       sd = "git diff --stat";
       s  = "git status -sb --show-stash";
       p  = "git push";
-      pp = "git push --force";
-      gp = "git push --force";
-      ga = "git commit -a --amend --no-edit";
-      gapp = "ga && pp";
-      gd = "git diff";
       ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";
+      pp = "git push --force";
+      fix = "git commit -a --amend --no-edit";
+      gapp = "ga && pp";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
 
       RM = "rm -rfd";
