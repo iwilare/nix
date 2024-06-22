@@ -15,9 +15,11 @@ let username = "andrea"; in
     programs.vscode.enable = config.isMacos;
     programs.vscode.wsl = !config.isMacos;
     programs = {
-      fish.shellInit = ''
-        source /home/andrea/.nix-profile/etc/profile.d/*.fish
-
+      fish.shellInit =
+        (if !config.isMacos then
+          "source /home/andrea/.nix-profile/etc/profile.d/**.fish"
+         else "")
+        + ''
         if not test -e ~/.ssh/id_ed25519
           set temp_dir (mktemp -d)
           echo 'Adding ssh keys...'
@@ -27,7 +29,7 @@ let username = "andrea"; in
           rm -rf $temp_dir
         end
 
-        if test -z (pgrep ssh-agent)
+        if test -z "$(pgrep ssh-agent)"
           eval (ssh-agent -c) > /dev/null
           set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
           set -Ux SSH_AGENT_PID $SSH_AGENT_PID
