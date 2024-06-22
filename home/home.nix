@@ -54,27 +54,27 @@
     };
     shellInit = ''set fish_greeting'';
     shellAbbrs = {
-      m  = { expansion = "git commit -am '%'"; setCursor = true; };
+      c  = { expansion = "git commit -am '%'"; setCursor = true; };
       ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg = { expansion = "git clone git@github.com:%"; setCursor = true; };
-      gsu = { expansion = "git remote set-url origin git@github.com:iwilare/(basename $PWD)%"; setCursor = true; };
+      o  = { expansion = "git remote set-url origin git@github.com:iwilare/(basename $PWD)%"; setCursor = true; };
       yt = { expansion = "youtube-dl -x --audio-format mp3 --audio-quality 0 -o 'C:\\Dropbox\\Music\\%%(title)s.%%(ext)s' '|'"; setCursor = "|"; };
     };
     shellAliases = {
       w  = "ack -il";
       e  = "explorer.exe .";
-      d  = "git diff";
       l  = "eza --git --icons --time-style=long-iso --long --no-user --no-permissions -s=type";
       la = "eza --git --icons --time-style=long-iso --long -s=type --all";
       t  = "eza --icons --tree -s=type --all";
       ta = "eza --icons --tree -s=type";
 
+      d  = "git diff";
       sd = "git diff --stat";
       s  = "git status -sb --show-stash";
       p  = "git push";
       pp = "git push --force";
-      ga = "git commit -a --amend --no-edit";
       gp = "git push --force";
+      ga = "git commit -a --amend --no-edit";
       gd = "git diff";
       ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
@@ -84,10 +84,10 @@
       dp = "prevd";
       diff = "diff-so-fancy";
 
-      n = "nix develop";
-      c = "nix develop --command code .";
+      n  = "nix develop";
+      nr = "nix-run";
+      nc = "nix develop --command code .";
 
-      nr  = "nix-run";
       no  = "code /etc/nixos/";
       nos = "sudo nixos-rebuild switch";
       hm  = "cd ~/.config/home-manager; code .";

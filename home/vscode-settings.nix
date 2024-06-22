@@ -5,6 +5,7 @@
       # "editor.fontFamily" = "IwiDejaVu";
       # "editor.fontSize" = 13.16;
       "terminal.integrated.fontFamily" = "IwiDejaVu";
+      "terminal.integrated.fontSize" = 13;
 
       "editor.fontLigatures" = true;
       "editor.glyphMargin" = false;
@@ -14,7 +15,7 @@
       "editor.hover.delay" = 250;
       "editor.inlineSuggest.enabled" = true;
       "editor.insertSpaces" = true;
-      "editor.lineHeight" = 1.20;
+      "editor.lineHeight" = 1.30;
       "editor.linkedEditing" = true;
       "editor.minimap.maxColumn" = 60;
       "editor.minimap.scale" = 2;
@@ -41,7 +42,7 @@
       "security.workspace.trust.untrustedFiles" = "open";
       "telemetry.telemetryLevel" = "off";
       "terminal.integrated.cursorStyle" = "line";
-      "terminal.integrated.enableMultiLinePasteWarning" = false;
+      "terminal.integrated.enableMultiLinePasteWarning" = "never";
       "terminal.integrated.rightClickBehavior" = "copyPaste";
       "terminal.integrated.scrollback" = 10000;
       "terminal.integrated.smoothScrolling" = true;
@@ -50,12 +51,14 @@
       "update.mode" = "none";
       "window.menuBarVisibility" = "hidden";
       "window.zoomLevel" = 1;
+      "window.confirmSaveUntitledWorkspace" = false;
       "workbench.editor.splitSizing" = "split";
       "workbench.editor.tabSizing" = "shrink";
       "workbench.list.smoothScrolling" = true;
       "workbench.startupEditor" = "none";
       "workbench.tree.indent" = 16;
       "workbench.tree.renderIndentGuides" = "always";
+      "workbench.activityBar.location" = "hidden";
       "editor.suggest.showWords" = false;
       # Copilot
       "github.copilot.editor.enableCodeActions" = false;
@@ -63,6 +66,7 @@
       "nix.enableLanguageServer" = true;
       "nix.formatterPath" = "${pkgs.alejandra}/bin/alejandra";
       "nix.serverPath" = "${pkgs.nil}/bin/nil";
+      "nixEnvSelector.nixShellPath" = "nix develop";
       # Idris
       "idris.idris2Mode" = true;
       "idris.idrisPath" = "idris2";
@@ -181,20 +185,21 @@
       { "command" = "editor.action.joinLines";                   "key" = "ctrl+g";                "when" = "!editorHasSelection"; }
       { "command" = "editor.action.commentLine";                 "key" = "ctrl+b";                                                }
       { "command" = "editor.action.triggerSuggest";              "key" = "ctrl+y";                "when" = "!editorHasSelection"; }
-      { "command" = "removeSecondaryCursors";                    "key" = "ctrl+;";                "when" = "multiCursorModifier"; }
       { "command" = "editor.action.startFindReplaceAction";      "key" = "ctrl+space ctrl+f";     "when" = "!editorHasSelection"; }
-      { "command" = "editor.action.triggerSuggest";              "key" = "ctrl+space ctrl+space"; "when" = "!editorHasSelection"; }
+      { "command" = "editor.action.triggerSuggest";              "key" = "tab";                   "when" = "!editorHasSelection"; }
 
-      { "command" = "removeSecondaryCursors";                    "key" = "ctrl+;";                "when" = "multiCursorModifier"; }
+      { "command" = "removeSecondaryCursors";                    "key" = "ctrl+w";                "when" = "multiCursorModifier"; }
 
-      # { "command" = "editor.action.deleteLines";                 "key" = "ctrl+n";                                              }
-      # { "command" = "editor.action.indentLines";                 "key" = "tab";                "when" = "editorHasSelection";   }
-      # { "command" = "editor.action.outdentLines";                "key" = "shift+tab";          "when" = "editorHasSelection";   }
+      { "command" = "action.find";                               "key" = "ctrl+f";                "when" = "!findWidgetVisible";  }
+      { "command" = "closeFindWidget";                           "key" = "ctrl+f";                "when" = "findWidgetVisible";   }
+
+      { "command" = "editor.action.indentLines";                 "key" = "tab";                "when" = "editorHasSelection";   }
+      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";          "when" = "editorHasSelection";   }
+      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";          "when" = "editorHasSelection";   }
 
       # Windows
 
-      { "command" = "workbench.action.closeActiveEditor";        "key" = "ctrl+space ctrl+w";     "when" = "!editorHasSelection"; }
-      { "command" = "workbench.action.closeActiveEditor";        "key" = "ctrl+w";                "when" = "multiCursorModifier"; }
+      { "command" = "workbench.action.closeActiveEditor";        "key" = "ctrl+w";                "when" = "!editorHasSelection"; }
       { "command" = "workbench.action.files.newUntitledFile";    "key" = "ctrl+space ctrl+s";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.action.files.openFile";           "key" = "ctrl+o";                                                }
       { "command" = "workbench.action.files.openFileFolder";     "key" = "ctrl+space ctrl+o";                                     }
@@ -213,6 +218,9 @@
       { "command" = "workbench.action.togglePanel";              "key" = "ctrl+space ctrl+q";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.action.toggleSidebarVisibility";  "key" = "ctrl+space ctrl+e";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.files.action.focusFilesExplorer"; "key" = "ctrl+space ctrl+d";     "when" = "!editorHasSelection"; }
+
+      { "command" = "workbench.action.reopenClosedEditor";       "key" = "ctrl+shift+t";                                          }
+      { "command" = "workbench.action.reopenTextEditor";         "key" = "ctrl+space ctrl+t";                                     }
 
       { "command" = "editor.action.toggleWordWrap";              "key" = "ctrl+space w";          "when" = "";                    }
 
