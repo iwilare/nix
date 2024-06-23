@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   home.stateVersion = "23.05";
   nix = {
     package = pkgs.nix;

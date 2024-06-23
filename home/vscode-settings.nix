@@ -1,9 +1,10 @@
-{ config, pkgs, lib, nix-vscode-extensions, ... }: {
+{ pkgs, nix-vscode-extensions, ... }: {
   programs.vscode = {
     userSettings = {
       # "editor.letterSpacing" = -0.3;
       # "editor.fontFamily" = "IwiDejaVu";
       # "editor.fontSize" = 13.16;
+      # "terminal.integrated.fontFamily" = "Fira Code";
       "terminal.integrated.fontFamily" = "IwiDejaVu";
       "terminal.integrated.fontSize" = 13;
 
@@ -193,9 +194,9 @@
       { "command" = "action.find";                               "key" = "ctrl+f";                "when" = "!findWidgetVisible";  }
       { "command" = "closeFindWidget";                           "key" = "ctrl+f";                "when" = "findWidgetVisible";   }
 
-      { "command" = "editor.action.indentLines";                 "key" = "tab";                "when" = "editorHasSelection";   }
-      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";          "when" = "editorHasSelection";   }
-      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";          "when" = "editorHasSelection";   }
+      { "command" = "editor.action.indentLines";                 "key" = "tab";                   "when" = "editorHasSelection";   }
+      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";             "when" = "editorHasSelection";   }
+      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";             "when" = "editorHasSelection";   }
 
       # Windows
 

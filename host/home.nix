@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 let username = "andrea";
     isDarwin = pkgs.stdenv.isDarwin; in
 {
@@ -12,10 +12,10 @@ let username = "andrea";
   programs.vscode.wsl = !isDarwin;
   programs = {
     fish.shellInit =
-      (if !isDarwin then
-        "source /home/andrea/.nix-profile/etc/profile.d/**.fish"
-        else "")
-      + ''
+      ''
+      ${if !isDarwin then
+     "source /home/andrea/.nix-profile/etc/profile.d/**.fish" else ""}
+
       if not test -e ~/.ssh/id_ed25519
         set temp_dir (mktemp -d)
         echo 'Adding ssh keys...'
@@ -29,7 +29,8 @@ let username = "andrea";
         eval (ssh-agent -c) > /dev/null
         set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
         set -Ux SSH_AGENT_PID $SSH_AGENT_PID
-      end'';
+      end
+      '';
     # Add this to /etc/shells
     #chsh -s /home/andrea/.nix-profile/bin/fish andrea
   };
