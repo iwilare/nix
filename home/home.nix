@@ -35,15 +35,16 @@
     extraConfig.color.ui = true;
     extraConfig.core.askPass = "";
     extraConfig.core.fileMode = true;
+    extraConfig.core.editor = "code --wait";
     extraConfig.credential.helper = "store";
     extraConfig.github.user = "iwilare";
     extraConfig.init.defaultBranch = "main";
     extraConfig.pull.rebase = false;
     extraConfig.push.autoSetupRemote = true;
+    extraConfig.merge.autoStash = true;
     extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
     extraConfig.commit.gpgsign = true;
     extraConfig.gpg.format = "ssh";
-    extraConfig.merge.autoStash = true;
     extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug iwilare@gmail.com";
   };
   programs.fish = {
