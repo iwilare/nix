@@ -39,9 +39,9 @@
     extraConfig.credential.helper = "store";
     extraConfig.github.user = "iwilare";
     extraConfig.init.defaultBranch = "main";
-    extraConfig.pull.rebase = false;
     extraConfig.push.autoSetupRemote = true;
-    extraConfig.merge.autoStash = true;
+    #extraConfig.pull.rebase = false;
+    #extraConfig.merge.autoStash = true;
     extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
     extraConfig.commit.gpgsign = true;
     extraConfig.gpg.format = "ssh";
@@ -64,11 +64,12 @@
     };
     shellInit = ''set fish_greeting'';
     shellAbbrs = {
-      c  = { expansion = "git commit -am '%'"; setCursor = true; };
+      m  = { expansion = "git commit -am '%'"; setCursor = true; };
       ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg = { expansion = "git clone git@github.com:%"; setCursor = true; };
       o  = { expansion = "git remote set-url origin git@github.com:iwilare/(basename $PWD)%"; setCursor = true; };
       yt = { expansion = "youtube-dl -x --audio-format mp3 --audio-quality 0 -o 'C:\\Dropbox\\Music\\%%(title)s.%%(ext)s' '|'"; setCursor = "|"; };
+      ren = { expansion = "git commit -a --amend -m '%'"; setCursor = true; };
     };
     shellAliases = {
       w  = "ack -il";
@@ -80,12 +81,11 @@
 
       d  = "git diff";
       sd = "git diff --stat";
-      s  = "git status -sb --show-stash";
+      s  = "git status --show-stash";
       p  = "git push";
       ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";
       pp = "git push --force";
       fix = "git commit -a --amend --no-edit";
-      gapp = "ga && pp";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
 
       RM = "rm -rfd";
@@ -96,10 +96,12 @@
       n  = "nix develop";
       nr = "nix-run";
       nc = "nix develop --command code .";
+      nl = "nix log";
+      b  = "nix build && cd result";
 
       no  = "code /etc/nixos/";
       nos = "sudo nixos-rebuild switch";
-      hm  = "cd ~/.config/home-manager; code .";
+      hm  = "code ~/.config/home-manager";
       hmd = "cd ~/.config/home-manager";
       hms = "home-manager switch -b backup --flake ~/.config/home-manager#${if !pkgs.stdenv.isDarwin then "andrea" else "andrea-macos"}";
     };
