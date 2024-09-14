@@ -26,6 +26,8 @@
       "editor.suggest.localityBonus" = true;
       "editor.suggest.preview" = true;
       "editor.tabSize" = 2;
+      "editor.inlayHints.enabled" = "off";
+      "editor.accessibilitySupport" = "off";
       "explorer.compactFolders" = false;
       "explorer.confirmDragAndDrop" = false;
       "explorer.incrementalNaming" = "smart";
@@ -40,7 +42,7 @@
       "search.smartCase" = true;
       "search.sortOrder" = "fileNames";
       "security.workspace.trust.enabled" = false;
-      "security.workspace.trust.untrustedFiles" = "open";
+      "security.workspace.trust.untrustedFiles" = "open"; # Does not work from WSL
       "telemetry.telemetryLevel" = "off";
       "terminal.integrated.cursorStyle" = "line";
       "terminal.integrated.enableMultiLinePasteWarning" = "never";
@@ -61,6 +63,8 @@
       "workbench.tree.renderIndentGuides" = "always";
       "workbench.activityBar.location" = "hidden";
       "editor.suggest.showWords" = false;
+      # Rust
+      "rust-analyzer.inlayHints.typeHints.enable" = false;
       # Copilot
       "github.copilot.editor.enableCodeActions" = false;
       # Nix
