@@ -40,7 +40,7 @@
     extraConfig.github.user = "iwilare";
     extraConfig.init.defaultBranch = "main";
     extraConfig.push.autoSetupRemote = true;
-    #extraConfig.pull.rebase = false;
+    extraConfig.pull.rebase = true;
     #extraConfig.merge.autoStash = true;
     extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
     extraConfig.commit.gpgsign = true;
@@ -60,7 +60,7 @@
         echo -n "λ "$prompt_nix$prompt_folder$prompt_stat"> "
       '';
       nix-run = "nix run nixpkgs#$argv[1] -- $argv[2..]";
-      proj = "z $argv[1] && nc";
+      proj = "z $argv[1] && n";
     };
     shellInit = ''set fish_greeting'';
     shellAbbrs = {
