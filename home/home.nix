@@ -105,7 +105,7 @@
       hm  = "code ~/.config/home-manager";
       hmd = "cd ~/.config/home-manager";
       hms = "home-manager switch -b backup --flake ~/.config/home-manager#${if !pkgs.stdenv.isDarwin then "andrea" else "andrea-macos"}";
-      hmsave = "save; hms";
+      hmsave = "save && hms";
     };
     plugins = [
       {
