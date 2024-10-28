@@ -17,6 +17,7 @@
     pv        # Monitor the progress of data through a pipe
     nixfmt
     nix-tree
+    gh
   ];
   programs.direnv  = { enable = true; nix-direnv.enable = true; };
   #programs.atuin   = { enable = true; enableFishIntegration = true; };
@@ -64,12 +65,12 @@
     };
     shellInit = ''set fish_greeting'';
     shellAbbrs = {
-      q  = { expansion = "git commit -am '%'"; setCursor = true; };
-      a  = { expansion = "git commit -a --amend -m '%'"; setCursor = true; };
-      ns = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
-      gg = { expansion = "git clone git@github.com:%"; setCursor = true; };
-      o  = { expansion = "git remote add-url origin git@github.com:iwilare/(basename $PWD)%"; setCursor = true; };
-      yt = { expansion = "nix-run youtube-dl -x --audio-format mp3 --audio-quality 0 -o 'C:\\Dropbox\\Music\\%%(title)s.%%(ext)s' '|'"; setCursor = "|"; };
+      q   = { expansion = "git commit -am '%'"; setCursor = true; };
+      a   = { expansion = "git commit -a --amend -m '%'"; setCursor = true; };
+      ns  = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
+      gg  = { expansion = "git clone git@github.com:%"; setCursor = true; };
+      o   = { expansion = "set -l REPO=(basename $PWD)% && gh repo create --private iwilare/$REPO && git remote add origin git@github.com:iwilare/$REPO"; setCursor = true; };
+      yt  = { expansion = "nix-run youtube-dl -x --audio-format mp3 --audio-quality 0 -o 'C:\\Dropbox\\Music\\%%(title)s.%%(ext)s' '|'"; setCursor = "|"; };
     };
     shellAliases = {
       w  = "ack -il";
