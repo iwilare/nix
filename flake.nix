@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     iwi-font = {
-      url = "github:iwilare/font";
+      url = "git+ssh://git@github.com/iwilare/font.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
