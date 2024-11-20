@@ -1,4 +1,4 @@
-{ config, pkgs, iwi-font, system, ... }: {
+{ config, pkgs, system, iwi-font, ... }: {
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "23.05";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
@@ -41,14 +41,15 @@
     #cinnamon.nemo-preview
     #cinnamon.nemo-seahorse
     #cinnamon.nemo-share
-    cinnamon.folder-color-switcher
-    cinnamon.nemo-fileroller
-    cinnamon.nemo-python
-    cinnamon.nemo
+    folder-color-switcher
+    nemo-fileroller
+    nemo-python
+    nemo
   ];
 
   i18n.inputMethod = {
-    enabled = "ibus";
+    enable = true;
+    type = "ibus";
     #ibus.engines = with pkgs.ibus-engines; [ mozc ];
   };
   boot.loader.efi.canTouchEfiVariables = true;
@@ -60,12 +61,12 @@
   console.useXkbConfig = true;
   fonts.fontconfig.enable = true;
   hardware.bluetooth.enable = true;
-  hardware.opengl.enable = true;
-  hardware.pulseaudio.enable = true;
-  sound.mediaKeys = {
-    enable = true;
-    volumeStep = "5%";
-  };
+  hardware.graphics.enable = true;
+  hardware.pulseaudio.enable = false;
+  #sound.mediaKeys = {
+  #  enable = true;
+  #  volumeStep = "5%";
+  #};
   i18n.defaultLocale = "en_US.UTF-8";
   networking.hostName = "iwilare";
   networking.networkmanager.enable = true;
@@ -101,22 +102,26 @@
   services.printing.enable = true;
   services.teamviewer.enable = true;
   services.tumbler.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.displayManager = {
+    autoLogin.enable = true;
+    autoLogin.user = "andrea";
+    defaultSession = "none+i3";
+  };
+  services.libinput = {
+    enable = true;
+    mouse.scrollMethod = "button";
+    mouse.accelSpeed = "18";
+  };
   services.xserver = {
     autoRepeatDelay = 300;
     autoRepeatInterval = 25;
     desktopManager.wallpaper.mode = "fill";
     desktopManager.xterm.enable = false;
-    displayManager.autoLogin.enable = true;
-    displayManager.autoLogin.user = "andrea";
-    displayManager.defaultSession = "none+i3";
-    displayManager.lightdm.enable = true;
     dpi = 96;
     enable = true;
     xkb.layout = "it";
     xkb.options = "caps:ctrl_modifier,eurosign:e"; #caps:super
-    libinput.enable = true;
-    libinput.mouse.scrollMethod = "button";
-    libinput.mouse.accelSpeed = "18";
     windowManager.i3.enable = true;
     #screenSection = ''
     #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
@@ -142,7 +147,7 @@
   fonts.packages = [
     pkgs.ipafont
     pkgs.noto-fonts
-    pkgs.noto-fonts-cjk
+    pkgs.noto-fonts-cjk-sans
     iwi-font
   ];
   fonts.fontconfig.defaultFonts = {

@@ -262,7 +262,7 @@
     font.name = "Sans 10";
     cursorTheme = { name = "Breeze_Snow";     package = pkgs.breeze-gtk;                 }; #size = 24; };
     iconTheme   = { name = "elementary-xfce"; package = pkgs.elementary-xfce-icon-theme; };
-    theme       = { name = "Adwaita-dark";    package = pkgs.gnome.adwaita-icon-theme;   };
+    theme       = { name = "Adwaita-dark";    package = pkgs.adwaita-icon-theme;         };
   };
   home.file.".background-image".source = (pkgs.fetchurl {
     url = "https://github.com/iwilare/backgrounds/raw/main/iss.png";

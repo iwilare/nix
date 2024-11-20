@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home.stateVersion = "23.05";
   nix = {
-    package = pkgs.nix;
+    #package = pkgs.nix;
     settings.experimental-features = [ "flakes" "nix-command" ];
   };
   home.packages = with pkgs; [
@@ -63,7 +63,6 @@
       nix-run = "nix run nixpkgs#$argv[1] -- $argv[2..]";
       proj = "z $argv[1] && n";
     };
-    shellInit = ''set fish_greeting'';
     shellAbbrs = {
       q   = { expansion = "git commit -am '%'"; setCursor = true; };
       a   = { expansion = "git commit -a --amend -m '%'"; setCursor = true; };
@@ -110,6 +109,19 @@
 
       nv = "nix run ~/Dropbox/Repos/neovim";
     };
+    shellInit = ''
+      set fish_greeting
+
+      if not test -e ~/.ssh/id_ed25519
+        mkdir -p ~/.ssh/repository
+        set temp_dir '~/.ssh/repository'
+        echo 'Adding ssh keys...'
+        ${pkgs.git}/bin/git clone https://github.com/iwilare/ssh $temp_dir
+        cp -r $temp_dir/. ~/.ssh/
+        chmod 600 ~/.ssh/id_ed25519
+        rm -rf $temp_dir
+      end
+    '';
     plugins = [
       {
         name = "nix-env.fish";

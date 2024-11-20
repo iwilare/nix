@@ -11,13 +11,17 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    iwi-dejavu = {
+      url = "github:iwilare/iwi-dejavu";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     iwi-font = {
       url = "git+ssh://git@github.com/iwilare/font.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, nix-vscode-extensions, iwi-font, ... }:
+  outputs = { nixpkgs, home-manager, nix-vscode-extensions, iwi-dejavu, iwi-font, ... }:
     let
       home-modules = [
         ./home/home.nix
@@ -34,7 +38,7 @@
         ./host/home.nix
         ./host/vscode-wsl.nix
       ];
-      arguments = { inherit nix-vscode-extensions iwi-font; };
+      arguments = { inherit nix-vscode-extensions iwi-dejavu; };
       mkHomeConfig = system:
         let pkgs = import nixpkgs {
               inherit system;
@@ -55,7 +59,7 @@
           modules = nixos-modules ++ [
             home-manager.nixosModules.home-manager
             {
-              #home-manager.useGlobalPkgs = true;
+              home-manager.useGlobalPkgs = true;
               home-manager.extraSpecialArgs = arguments // { inherit pkgs; };
               home-manager.users."andrea".imports = home-modules ++ nixos-home-modules;
             }
