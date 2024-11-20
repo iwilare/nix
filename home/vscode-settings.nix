@@ -1,4 +1,4 @@
-{ pkgs, nix-vscode-extensions, ... }: {
+{ pkgs, nix-vscode-extensions, iwi-consolas, ... }: {
   programs.vscode = {
     userSettings = {
       # "editor.letterSpacing" = -0.3;

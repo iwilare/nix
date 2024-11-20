@@ -15,13 +15,13 @@
       url = "github:iwilare/iwi-dejavu";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    iwi-font = {
-      url = "git+ssh://git@github.com/iwilare/font.git";
+    iwi-consolas = {
+      url = "git+ssh://git@github.com/iwilare/iwi-consolas.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, nix-vscode-extensions, iwi-dejavu, iwi-font, ... }:
+  outputs = { nixpkgs, home-manager, nix-vscode-extensions, iwi-dejavu, iwi-consolas, ... }:
     let
       home-modules = [
         ./home/home.nix
@@ -38,7 +38,7 @@
         ./host/home.nix
         ./host/vscode-wsl.nix
       ];
-      arguments = { inherit nix-vscode-extensions iwi-dejavu; };
+      flake-inputs = { inherit nix-vscode-extensions iwi-dejavu iwi-consolas; }; 
       mkHomeConfig = system:
         let pkgs = import nixpkgs {
               inherit system;
@@ -46,7 +46,7 @@
             }; in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = arguments // { inherit pkgs; };
+          extraSpecialArgs = flake-inputs // { inherit pkgs; };
           modules = home-modules ++ host-home-modules;
         };
       mkNixosConfig = system:
@@ -55,12 +55,12 @@
               config.allowUnfree = true;
             }; in
         nixpkgs.lib.nixosSystem {
-          specialArgs = arguments // { inherit pkgs; };
+          specialArgs = flake-inputs // { inherit pkgs; };
           modules = nixos-modules ++ [
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
-              home-manager.extraSpecialArgs = arguments // { inherit pkgs; };
+              home-manager.extraSpecialArgs = flake-inputs // { inherit pkgs; };
               home-manager.users."andrea".imports = home-modules ++ nixos-home-modules;
             }
           ];
