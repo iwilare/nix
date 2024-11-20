@@ -133,17 +133,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1719238253,
-        "narHash": "sha256-atgp/rqUPsKCp0DtvSbN+q1KPpU6T6pydpfqCIlMUmE=",
-        "ref": "refs/heads/main",
-        "rev": "c13f067d14fa6209db7223f67400f09e96401e98",
-        "revCount": 2,
-        "type": "git",
-        "url": "ssh://git@github.com/iwilare/iwi-consolas.git"
+        "lastModified": 1732119695,
+        "narHash": "sha256-Aj5GLTkeLhwbHFC5D5/TxJi0mOuUTrKnr7dyISQksSc=",
+        "owner": "iwilare",
+        "repo": "iwi-consolas",
+        "rev": "bfd5158ec52d9d24e6c4d3c06a10d6c157bd7852",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/iwilare/iwi-consolas.git"
+        "owner": "iwilare",
+        "repo": "iwi-consolas",
+        "type": "github"
       }
     },
     "iwi-dejavu": {

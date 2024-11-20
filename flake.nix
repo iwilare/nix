@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     iwi-consolas = {
-      url = "git+ssh://git@github.com/iwilare/iwi-consolas.git";
+      url = "github:iwilare/iwi-consolas";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -38,7 +38,7 @@
         ./host/home.nix
         ./host/vscode-wsl.nix
       ];
-      flake-inputs = { inherit nix-vscode-extensions iwi-dejavu iwi-consolas; }; 
+      flake-inputs = { inherit nix-vscode-extensions iwi-dejavu iwi-consolas; };
       mkHomeConfig = system:
         let pkgs = import nixpkgs {
               inherit system;
@@ -46,7 +46,7 @@
             }; in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = flake-inputs // { inherit pkgs; };
+          extraSpecialArgs = flake-inputs // { inherit pkgs system; };
           modules = home-modules ++ host-home-modules;
         };
       mkNixosConfig = system:
@@ -55,12 +55,12 @@
               config.allowUnfree = true;
             }; in
         nixpkgs.lib.nixosSystem {
-          specialArgs = flake-inputs // { inherit pkgs; };
+          specialArgs = flake-inputs // { inherit pkgs system; };
           modules = nixos-modules ++ [
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
-              home-manager.extraSpecialArgs = flake-inputs // { inherit pkgs; };
+              home-manager.extraSpecialArgs = flake-inputs // { inherit pkgs system; };
               home-manager.users."andrea".imports = home-modules ++ nixos-home-modules;
             }
           ];

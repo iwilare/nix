@@ -1,11 +1,11 @@
-{ pkgs, nix-vscode-extensions, iwi-consolas, ... }: {
+{ pkgs, nix-vscode-extensions, iwi-consolas, iwi-dejavu, ... }: {
   programs.vscode = {
     userSettings = {
       # "editor.letterSpacing" = -0.3;
-      # "editor.fontFamily" = "IwiDejaVu";
       # "editor.fontSize" = 13.16;
       # "terminal.integrated.fontFamily" = "Fira Code";
-      "terminal.integrated.fontFamily" = "IwiDejaVu";
+      "editor.fontFamily" = iwi-consolas.name;
+      "terminal.integrated.fontFamily" = iwi-dejavu.name;
       "terminal.integrated.fontSize" = 13;
 
       "editor.fontLigatures" = true;
