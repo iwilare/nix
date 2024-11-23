@@ -54,7 +54,9 @@
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = { inherit inputs system; };
-          modules = home-modules ++ host-home-modules;
+          modules = home-modules ++ host-home-modules ++ {
+            # nixpkgs.config.allowUnfree = true;
+          };
         };
       mkNixosConfig = system:
         let pkgs = import nixpkgs {
