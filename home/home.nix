@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   home.stateVersion = "23.05";
   nix = {
     settings.experimental-features = [ "flakes" "nix-command" ];
@@ -133,4 +133,51 @@
       }
     ];
   };
+  programs.starship = {
+    enable = true;
+    settings = {
+      character = {
+        success_symbol = "[❄](bold bright-blue)";
+        error_symbol = "[❄](bold red)";
+      };
+      directory = {
+        truncate_to_repo = false;
+        truncation_symbol = "…/";
+        fish_style_pwd_dir_length = 3;
+      };
+    };
+  };
+  programs.yazi = {
+    enable = true;
+    enableFishIntegration = true;
+    shellWrapperName = "y";
+
+    settings = {
+      preview = {
+        max_width = 1000;
+        max_height = 1000;
+      };
+    };
+
+    plugins = {
+      full-border = "${inputs.yazi-plugins}/full-border.yazi";
+      max-preview = "${inputs.yazi-plugins}/max-preview.yazi";
+      fuse-archive = "${inputs.fuse-archive-yazi}";
+    };
+
+    initLua = ''
+      require("full-border"):setup()
+    '';
+
+    keymap = {
+      manager.prepend_keymap = [
+        {
+          on = "T";
+          run = "plugin --sync max-preview";
+          desc = "Maximize or restore the preview pane";
+        }
+      ];
+    };
+  };
+  programs.nix-index.enable = true;
 }

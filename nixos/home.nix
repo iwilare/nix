@@ -1,4 +1,4 @@
-{ config, pkgs, iwi-consolas, iwi-dejavu, system, ... }: {
+{ config, pkgs, inputs, system, ... }: {
 
   programs.vscode.enable = true;
   programs.vscode.package = pkgs.vscode.overrideAttrs (oldAttrs: rec { version = "stable"; });
@@ -22,7 +22,7 @@
               statusline = "#000000";
               separator  = "#0B0B0B";
             };
-            fonts = { names = [ iwi-dejavu.name ]; size = 9.0; };
+            fonts = { names = [ inputs.iwi-dejavu.name ]; size = 9.0; };
             command = "i3bar --transparency";
             statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-bar.toml";
           }
@@ -32,7 +32,7 @@
           { workspace = "2"; output = "DP-2"; }
           { workspace = "3"; output = "DP-0"; }
         ];
-        fonts = { names = [ iwi-dejavu.name ]; size = 9.0; };
+        fonts = { names = [ inputs.iwi-dejavu.name ]; size = 9.0; };
         focus.newWindow = "smart";
         #workspaceAutoBackAndForth = true;
         #focus.wrapping = "workspace";
@@ -187,7 +187,7 @@
       env = {
         WINIT_X11_SCALE_FACTOR = "1";
       };
-      font.normal.family = iwi-dejavu.name;
+      font.normal.family = inputs.iwi-dejavu.name;
       font.size = 10;
       cursor.blink_interval = 650;
       cursor.style.shape = "beam";

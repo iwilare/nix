@@ -1,4 +1,4 @@
-{ config, pkgs, system, iwi-dejavu, iwi-consolas, ... }: {
+{ config, pkgs, system, inputs, ... }: {
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "23.05";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
@@ -148,8 +148,8 @@
     pkgs.ipafont
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk-sans
-    iwi-dejavu.packages.${system}.default
-    iwi-consolas.packages.${system}.default
+    inputs.iwi-dejavu.packages.${system}.default
+    inputs.iwi-consolas.packages.${system}.default
   ];
   fonts.fontconfig.defaultFonts = {
     monospace = [

@@ -1,11 +1,11 @@
-{ pkgs, nix-vscode-extensions, iwi-consolas, iwi-dejavu, ... }: {
+{ pkgs, inputs, ... }: {
   programs.vscode = {
     userSettings = {
       # "editor.letterSpacing" = -0.3;
       # "editor.fontSize" = 13.16;
       # "terminal.integrated.fontFamily" = "Fira Code";
-      "editor.fontFamily" = iwi-consolas.name;
-      "terminal.integrated.fontFamily" = iwi-dejavu.name;
+      "editor.fontFamily" = inputs.iwi-consolas.name;
+      "terminal.integrated.fontFamily" = inputs.iwi-dejavu.name;
       "terminal.integrated.fontSize" = 13;
 
       "editor.fontLigatures" = true;
@@ -261,7 +261,7 @@
       { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-irrelevant-arguments";            "key" = "ctrl+a ctrl+n";     "when" = "editorLangId == 'agda'"; }
     ];
-    extensions = with nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace; [
+    extensions = with inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace; [
       ms-vscode-remote.remote-wsl
       banacorn.agda-mode
       adpyke.codesnap
