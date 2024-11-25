@@ -138,8 +138,8 @@
             click = [{ button = "left"; cmd = cmd; }];
           };
           separation = { block = "custom"; command = "echo ' '"; theme_overrides = { idle_bg = "#50505030"; }; }; in [
-        (button { icon = "   "; cmd =  "code -n /etc/nixos/configuration.nix"; })
-        (button { icon = "  " ; cmd =  "alacritty --hold -t 'NixOS rebuild' -e sudo nixos-rebuild switch"; })
+        (button { icon = "   "; cmd =  "no"; })
+        (button { icon = "  " ; cmd =  "alacritty --hold -t 'NixOS rebuild' -e nos"; })
         (button { icon = "  " ; cmd =  "lxrandr"; })
         (button { icon = "   "; cmd =  "pavucontrol"; })
         # {

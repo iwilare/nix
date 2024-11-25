@@ -195,7 +195,7 @@
 
       { "command" = "removeSecondaryCursors";                    "key" = "ctrl+w";                "when" = "multiCursorModifier"; }
 
-      { "command" = "action.find";                               "key" = "ctrl+f";                "when" = "!findWidgetVisible";  }
+      { "command" = "actions.find";                              "key" = "ctrl+f";                "when" = "!findWidgetVisible";  }
       { "command" = "closeFindWidget";                           "key" = "ctrl+f";                "when" = "findWidgetVisible";   }
 
       { "command" = "editor.action.indentLines";                 "key" = "tab";                   "when" = "editorHasSelection";   }
@@ -222,7 +222,7 @@
       { "command" = "workbench.action.quickOpen";                "key" = "ctrl+p";                                                }
       { "command" = "workbench.action.togglePanel";              "key" = "ctrl+space ctrl+c";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.action.toggleSidebarVisibility";  "key" = "ctrl+space ctrl+e";     "when" = "!editorHasSelection"; }
-      { "command" = "workbench.files.action.focusFilesExplorer";  "key" = "ctrl+space ctrl+d";     "when" = "!editorHasSelection"; }
+      { "command" = "workbench.files.action.focusFilesExplorer";  "key" = "ctrl+space ctrl+d";    "when" = "!editorHasSelection"; }
 
       { "command" = "workbench.action.reopenClosedEditor";       "key" = "ctrl+shift+t";                                          }
       { "command" = "workbench.action.reopenTextEditor";         "key" = "ctrl+space ctrl+t";                                     }
