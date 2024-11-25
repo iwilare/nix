@@ -78,7 +78,7 @@
       t  = "eza --icons --tree -s=type --all";
       ta = "eza --icons --tree -s=type";
 
-      sd = "git diff";
+      d  = "git diff";
       ds = "git diff --stat";
       s  = "git status --show-stash";
       p  = "git push";
@@ -92,7 +92,7 @@
       dp = "prevd";
       diff = "diff-so-fancy";
 
-      d  = "nix develop --command fish";
+      sd = "nix develop --command fish";
       c  = "nix develop --command code .";
       b  = "nix build && cd result";
       nr = "nix-run";
@@ -148,7 +148,7 @@
         "$hostname"
         "$rust"
         "$status"
-        "❯"
+        "❯ "
       ];
       directory = {
         format = "[$path]($style)[$read_only]($read_only_style)";
@@ -164,22 +164,20 @@
         style = "fg:#E0E0E0 bg:#A03050";
       };
       nix_shell = {
-        format = "[](#00B0C0)[❄️](fg:#E0E0E0 bg:#00B0C0)[](#00B0C0) ";
-        impure_msg = "";
-        pure_msg = "pure";
+        format = "[](#00B0C0)[🞱](fg:#E0E0E0 bg:#00B0C0)[](#00B0C0) ";
         heuristic = true;
       };
       rust = {
         format = "[](#C06060)[$symbol($version)]($style)[](#C06060) ";
         style = "fg:#E0E0E0 bg:#C06060";
       };
-      hostname = {
-        ssh_only = true;
-        format = "$ssh_symbol$hostname ";
-      };
-      status = {
+      # hostname = {
+      #   ssh_only = true;
+      #   format = "$ssh_symbol$hostname ";
+      # };
+      # status = {
 
-      };
+      # };
     };
   };
   programs.yazi = {
@@ -214,5 +212,4 @@
       ];
     };
   };
-  programs.nix-index.enable = true;
 }
