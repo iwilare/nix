@@ -151,15 +151,15 @@
       "locked": {
         "lastModified": 1732119695,
         "narHash": "sha256-Aj5GLTkeLhwbHFC5D5/TxJi0mOuUTrKnr7dyISQksSc=",
-        "owner": "iwilare",
-        "repo": "iwi-consolas",
+        "ref": "refs/heads/main",
         "rev": "bfd5158ec52d9d24e6c4d3c06a10d6c157bd7852",
-        "type": "github"
+        "revCount": 3,
+        "type": "git",
+        "url": "ssh://git@github.com/iwilare/iwi-consolas"
       },
       "original": {
-        "owner": "iwilare",
-        "repo": "iwi-consolas",
-        "type": "github"
+        "type": "git",
+        "url": "ssh://git@github.com/iwilare/iwi-consolas"
       }
     },
     "iwi-dejavu": {

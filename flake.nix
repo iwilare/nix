@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     iwi-consolas = {
-      url = "github:iwilare/iwi-consolas";
+      url = "git+ssh://git@github.com/iwilare/iwi-consolas";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     yazi-plugins = {
@@ -54,9 +54,11 @@
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = { inherit inputs system; };
-          modules = home-modules ++ host-home-modules ++ {
-            # nixpkgs.config.allowUnfree = true;
-          };
+          modules = home-modules ++ host-home-modules
+          #  ++ {
+          #   nixpkgs.config.allowUnfree = true;
+          # }
+          ;
         };
       mkNixosConfig = system:
         let pkgs = import nixpkgs {
