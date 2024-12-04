@@ -67,7 +67,7 @@
       a   = { expansion = "git commit -a --amend -m '%'"; setCursor = true; };
       ns  = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg  = { expansion = "git clone git@github.com:%"; setCursor = true; };
-      o   = { expansion = "set -l REPO=(basename $PWD)% && gh repo create --private iwilare/$REPO && git remote add origin git@github.com:iwilare/$REPO"; setCursor = true; };
+      o   = { expansion = "set -l REPO (basename $PWD)% && gh repo create --private iwilare/$REPO && git remote add origin git@github.com:iwilare/$REPO"; setCursor = true; };
       yt  = { expansion = "nix-run youtube-dl -x --audio-format mp3 --audio-quality 0 -o 'C:\\Dropbox\\Music\\%%(title)s.%%(ext)s' '|'"; setCursor = "|"; };
     };
     shellAliases = {
@@ -83,6 +83,7 @@
       s  = "git status --show-stash";
       p  = "git push";
       ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";
+      g  = "git pull";
       pf = "git push --force";
       fix = "git commit -a --amend --no-edit";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
