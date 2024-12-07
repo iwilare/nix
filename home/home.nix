@@ -61,11 +61,10 @@
       '';
       nix-run = "nix run nixpkgs#$argv[1] -- $argv[2..]";
       proj = "z $argv[1] && c";
+      fix = "test (count $argv) -eq 0; and git commit -a --amend --no-edit; or git commit -a --amend -m $argv[1]; end";
     };
     shellAbbrs = {
       q   = { expansion = "git commit -am '%'"; setCursor = true; };
-      a   = { expansion = "git commit -a --amend -m '%'"; setCursor = true; };
-      f   = { expansion = "git commit -a --amend --no-edit"; setCursor = false; };
       ns  = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg  = { expansion = "git clone git@github.com:%"; setCursor = true; };
       o   = { expansion = "set -l REPO (basename $PWD)% && gh repo create --private iwilare/$REPO && git remote add origin git@github.com:iwilare/$REPO && git push -u"; setCursor = true; };
