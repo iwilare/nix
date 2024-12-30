@@ -138,7 +138,7 @@
             click = [{ button = "left"; cmd = cmd; }];
           };
           separation = { block = "custom"; command = "echo ' '"; theme_overrides = { idle_bg = "#50505030"; }; }; in [
-        (button { icon = "   "; cmd =  "no"; })
+        (button { icon = "   "; cmd =  "code /etc/nixos"; })
         (button { icon = "  " ; cmd =  "alacritty --hold -t 'NixOS rebuild' -e nos"; })
         (button { icon = "  " ; cmd =  "lxrandr"; })
         (button { icon = "   "; cmd =  "pavucontrol"; })
