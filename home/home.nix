@@ -47,6 +47,16 @@
     extraConfig.gpg.format = "ssh";
     extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug iwilare@gmail.com";
   };
+  # programs.emacs = {
+  #   enable = true;
+  #   package = pkgs.emacs;  # replace with pkgs.emacs-gtk, or a version provided by the community overlay if desired.
+  #   extraConfig = ''
+  #     (setq standard-indent 2)
+  #   '';
+  #   extraPackages = epkgs: [
+  #     epkgs.agda2-mode
+  #   ];
+  # };
   programs.fish = {
     enable = true;
     functions = {
@@ -86,11 +96,11 @@
       g  = "git pull";
       pf = "git push --force";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
+      repo = "set -l REPO=(basename $PWD)% && gh repo create --private iwilare/$REPO && git remote add origin git@github.com:iwilare/$REPO";
 
       RM = "rm -rfd";
       dn = "nextd";
       dp = "prevd";
-      diff = "diff-so-fancy";
 
       sd = "nix develop --command fish";
       c  = "nix develop --command code .";

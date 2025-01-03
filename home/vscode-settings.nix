@@ -20,7 +20,7 @@
       "editor.linkedEditing" = true;
       "editor.minimap.maxColumn" = 60;
       "editor.minimap.scale" = 2;
-      "editor.mouseWheelZoom" = true;
+      "editor.mouseWheelZoom" = false;
       "editor.smoothScrolling" = true;
       "editor.stickyScroll.enabled" = true;
       "editor.suggest.localityBonus" = true;
@@ -128,29 +128,31 @@
 
       # Movement
 
-      { "command" = "cursorDown";                "key" = "ctrl+k";                 }
-      { "command" = "cursorDownSelect";          "key" = "ctrl+shift+k";           }
-      { "command" = "cursorLeft";                "key" = "ctrl+alt+j";             }
-      { "command" = "cursorLeftSelect";          "key" = "ctrl+shift+j";           }
-      { "command" = "cursorRight";               "key" = "ctrl+alt+l";             }
-      { "command" = "cursorRightSelect";         "key" = "ctrl+shift+l";           }
+      # Alt = selection on
+      # Shift = go slower
+
       { "command" = "cursorUp";                  "key" = "ctrl+i";                 }
-      { "command" = "cursorUpSelect";            "key" = "ctrl+shift+i";           }
-
+      { "command" = "cursorDown";                "key" = "ctrl+k";                 }
       { "command" = "cursorWordPartLeft";        "key" = "ctrl+j";                 }
-      { "command" = "cursorWordPartLeftSelect";  "key" = "ctrl+alt+shift+j";       }
       { "command" = "cursorWordPartRight";       "key" = "ctrl+l";                 }
-      { "command" = "cursorWordPartRightSelect"; "key" = "ctrl+alt+shift+l";       }
 
-      { "command" = "deleteLeft";                "key" = "ctrl+alt+h";             }
-      { "command" = "deleteRight";               "key" = "ctrl+alt+[semicolon]";   }
+      { "command" = "cursorRightSelect";         "key" = "ctrl+shift+l";           }
+      { "command" = "cursorUpSelect";            "key" = "ctrl+shift+i";           }
+      { "command" = "cursorWordPartDownSelect";  "key" = "ctrl+shift+k";           }
+      { "command" = "cursorWordPartLeftSelect";  "key" = "ctrl+shift+j";           }
+
       { "command" = "deleteWordLeft";            "key" = "ctrl+h";                 }
       { "command" = "deleteWordPartLeft";        "key" = "ctrl+shift+h";           }
       { "command" = "deleteWordPartRight";       "key" = "ctrl+shift+[semicolon]"; }
       { "command" = "deleteWordRight";           "key" = "ctrl+[semicolon]";       }
 
-      { "command" = "deleteWordLeft";            "key" = "ctrl+space ctrl+a";      }
-      { "command" = "deleteWordRight";           "key" = "ctrl+space ctrl+d";      }
+      { "command" = "cursorLeft";                "key" = "ctrl+alt+j";             }
+      { "command" = "cursorRight";               "key" = "ctrl+alt+l";             }
+      { "command" = "cursorWordPartLeftSelect";  "key" = "ctrl+alt+shift+j";       }
+      { "command" = "cursorWordPartRightSelect"; "key" = "ctrl+alt+shift+l";       }
+
+      { "command" = "deleteLeft";                "key" = "ctrl+alt+h";             }
+      { "command" = "deleteRight";               "key" = "ctrl+alt+[semicolon]";   }
 
       { "command" = "cursorHome";                "key" = "ctrl+q";                 }
       { "command" = "cursorHomeSelect";          "key" = "ctrl+alt+q";             }
@@ -198,9 +200,8 @@
       { "command" = "actions.find";                              "key" = "ctrl+f";                "when" = "!findWidgetVisible";  }
       { "command" = "closeFindWidget";                           "key" = "ctrl+f";                "when" = "findWidgetVisible";   }
 
-      { "command" = "editor.action.indentLines";                 "key" = "tab";                   "when" = "editorHasSelection";   }
-      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";             "when" = "editorHasSelection";   }
-      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";             "when" = "editorHasSelection";   }
+      { "command" = "editor.action.indentLines";                 "key" = "tab";                   "when" = "editorHasSelection";  }
+      { "command" = "editor.action.outdentLines";                "key" = "shift+tab";             "when" = "editorHasSelection";  }
 
       # Windows
 
@@ -222,7 +223,7 @@
       { "command" = "workbench.action.quickOpen";                "key" = "ctrl+p";                                                }
       { "command" = "workbench.action.togglePanel";              "key" = "ctrl+space ctrl+c";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.action.toggleSidebarVisibility";  "key" = "ctrl+space ctrl+e";     "when" = "!editorHasSelection"; }
-      { "command" = "workbench.files.action.focusFilesExplorer";  "key" = "ctrl+space ctrl+d";    "when" = "!editorHasSelection"; }
+      { "command" = "workbench.files.action.focusFilesExplorer"; "key" = "ctrl+space ctrl+d";     "when" = "!editorHasSelection"; }
 
       { "command" = "workbench.action.reopenClosedEditor";       "key" = "ctrl+shift+t";                                          }
       { "command" = "workbench.action.reopenTextEditor";         "key" = "ctrl+space ctrl+t";                                     }
