@@ -16,6 +16,7 @@
     pv        # Monitor the progress of data through a pipe
     nixfmt
     nix-tree
+    lazygit
     gh
   ];
   programs.direnv  = { enable = true; nix-direnv.enable = true; };
@@ -76,7 +77,7 @@
     shellAbbrs = {
       q   = { expansion = "git commit -am '%'"; setCursor = true; };
       ns  = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
-      gg  = { expansion = "git clone git@github.com:%"; setCursor = true; };
+      gg  = { expansion = "git clone git@github.com:iwilare/%"; setCursor = true; };
       o   = { expansion = "set -l REPO (basename $PWD)% && gh repo create --private iwilare/$REPO && git remote add origin git@github.com:iwilare/$REPO && git push -u"; setCursor = true; };
       yt  = { expansion = "nix-run youtube-dl -x --audio-format mp3 --audio-quality 0 -o 'C:\\Dropbox\\Music\\%%(title)s.%%(ext)s' '|'"; setCursor = "|"; };
     };
@@ -93,7 +94,7 @@
       s  = "git status --show-stash";
       p  = "git push";
       ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";
-      g  = "git pull";
+      g  = "nr lazygit";
       pf = "git push --force";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
       repo = "set -l REPO=(basename $PWD)% && gh repo create --private iwilare/$REPO && git remote add origin git@github.com:iwilare/$REPO";
@@ -162,8 +163,8 @@
       ];
       directory = {
         format = "[$path]($style)[$read_only]($read_only_style)";
-        style = "fg:#E0E0E0 bg:#3060B0";
-        read_only_style = "fg:#E0E0E0 bg:#3060B0";
+        style = "fg:#C0C0C0 bg:#3060B0";
+        read_only_style = "fg:#C0C0C0 bg:#3060B0";
         truncate_to_repo = true;
         truncation_symbol = "…/";
         fish_style_pwd_dir_length = 1;

@@ -94,8 +94,8 @@
         "editor.tabCompletion" = "onlySnippets";
       };
       # LaTeX
-      "[tex]" = {
-        "editor.wordWrap" = "on";
+      "[latex]" = {
+        "editor.wordWrap" = "bounded";
         "editor.wordWrapColumn" = 80;
       };
       "files.associations" = {
@@ -128,13 +128,18 @@
 
       # Movement
 
-      # Alt = selection on
-      # Shift = go slower
-
+      { "command" = "cursorDown";                "key" = "ctrl+k";                 }
+      { "command" = "cursorDownSelect";          "key" = "ctrl+shift+k";           }
+      { "command" = "cursorLeft";                "key" = "ctrl+alt+j";             }
+      { "command" = "cursorWordLeftSelect";      "key" = "ctrl+shift+j";           }
+      { "command" = "cursorRight";               "key" = "ctrl+alt+l";             }
+      { "command" = "cursorWordRightSelect";     "key" = "ctrl+shift+l";           }
       { "command" = "cursorUp";                  "key" = "ctrl+i";                 }
       { "command" = "cursorDown";                "key" = "ctrl+k";                 }
       { "command" = "cursorWordPartLeft";        "key" = "ctrl+j";                 }
+      { "command" = "cursorLeftSelect";          "key" = "ctrl+alt+shift+j";       }
       { "command" = "cursorWordPartRight";       "key" = "ctrl+l";                 }
+      { "command" = "cursorRightSelect";         "key" = "ctrl+alt+shift+l";       }
 
       { "command" = "cursorRightSelect";         "key" = "ctrl+shift+l";           }
       { "command" = "cursorUpSelect";            "key" = "ctrl+shift+i";           }
@@ -230,11 +235,6 @@
 
       { "command" = "editor.action.toggleWordWrap";              "key" = "ctrl+space w";          "when" = "";                    }
 
-      { "command" = "workbench.action.reopenClosedEditor";       "key" = "ctrl+shift+t";                                          }
-      { "command" = "workbench.action.reopenTextEditor";         "key" = "ctrl+space ctrl+t";                                     }
-
-      { "command" = "editor.action.toggleWordWrap";              "key" = "ctrl+space w";          "when" = "";                    }
-
       # Menus
 
       { "command" = "selectNextSuggestion"; "key" = "ctrl+k"; "when" = "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"; }
@@ -242,21 +242,21 @@
 
       # Agda mode
 
-      { "command" = "agda-mode.auto";                                              "key" = "ctrl+a ctrl+q";     "when" = "editorLangId == 'agda'"; }
+      { "command" = "agda-mode.auto[AsIs]";                                        "key" = "ctrl+a ctrl+q";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.case";                                              "key" = "ctrl+a ctrl+c";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.compile";                                           "key" = "ctrl+a ctrl+-";     "when" = "editorLangId == 'agda'"; }
-      { "command" = "agda-mode.compute-normal-form[DefaultCompute]";               "key" = "ctrl+a ctrl+e";     "when" = "editorLangId == 'agda'"; }
+      { "command" = "agda-mode.compute-normal-form[DefaultCompute]";               "key" = "ctrl+a ctrl+w";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.give";                                              "key" = "ctrl+a ctrl+space"; "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.goal-type-context-and-inferred-type[Instantiated]"; "key" = "ctrl+a ctrl+g";     "when" = "editorLangId == 'agda'"; }
-      { "command" = "agda-mode.goal-type-context-and-inferred-type[Normalised]";   "key" = "ctrl+a ctrl+s";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.goal-type-context-and-inferred-type[Simplified]";   "key" = "ctrl+a ctrl+f";     "when" = "editorLangId == 'agda'"; }
+      { "command" = "agda-mode.goal-type-context-and-inferred-type[Normalised]";   "key" = "ctrl+a ctrl+s";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.load";                                              "key" = "ctrl+a ctrl+d";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.lookup-symbol";                                     "key" = "ctrl+a ctrl+l";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.next-goal";                                         "key" = "ctrl+a ctrl+z";     "when" = "editorLangId == 'agda'"; }
-      { "command" = "agda-mode.previous-goal";                                     "key" = "ctrl+a ctrl+w";     "when" = "editorLangId == 'agda'"; }
+      { "command" = "agda-mode.previous-goal";                                     "key" = "ctrl+a ctrl+e";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.refine";                                            "key" = "ctrl+a ctrl+r";     "when" = "editorLangId == 'agda'"; }
-      { "command" = "agda-mode.restart";                                           "key" = "ctrl+a ctrl+p";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.restart";                                           "key" = "ctrl+a ctrl+t";     "when" = "editorLangId == 'agda'"; }
+      { "command" = "agda-mode.solve-constraints[Normalised]";                     "key" = "ctrl+a ctrl+x";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.show-constraints";                                  "key" = "ctrl+a ctrl+v";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.switch-agda-version";                               "key" = "ctrl+a ctrl+b";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
