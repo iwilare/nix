@@ -107,14 +107,14 @@
       "latex-workshop.latex.recipe.default" = "lastUsed";
       "latex-workshop.view.pdf.viewer" = "tab";
       "latex-workshop.latex.recipes" = [
-        { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
         { "name" = "latexmk";           "tools" = [ "latexmk"   ]; }
+        { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
         { "name" = "pdflatex";          "tools" = [ "pdflatex"  ]; }
         { "name" = "xelatex";           "tools" = [ "xelatex"   ]; }
       ];
       "latex-workshop.latex.tools" = [
-        { "command" = "latexmk";  "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "%DOC%" ]; }
         { "command" = "latexmk";  "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "%DOC%" ]; }
+        { "command" = "latexmk";  "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "%DOC%" ]; }
         { "command" = "pdflatex"; "env" = {}; "name" = "pdflatex";  "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "%DOC%" ]; }
         { "command" = "xelatex";  "env" = {}; "name" = "xelatex";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "%DOC%" ]; }
       ];
