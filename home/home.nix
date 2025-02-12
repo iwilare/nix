@@ -76,9 +76,13 @@
         gh repo create --private iwilare/$REPO
         git remote add origin git@github.com:iwilare/$REPO
       '';
+      save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
+      just-save = "git commit -am (date '+%Y-%m-%d %H:%M:%S'); git push"; # needs to be here for ssave
     };
     shellAbbrs = {
+      ssave = { expansion = "git submodule foreach fish -c just-save"; };
       q   = { expansion = "git commit -am '%'"; setCursor = true; };
+      pf  = { expansion = "git push --force"; setCursor = true; };
       ns  = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg  = { expansion = "git clone git@github.com:iwilare/%"; setCursor = true; };
       yt  = { expansion = "nix-run youtube-dl -x --audio-format mp3 --audio-quality 0 -o 'C:\\Dropbox\\Music\\%%(title)s.%%(ext)s' '|'"; setCursor = "|"; };
@@ -97,8 +101,6 @@
       p  = "git push";
       ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";
       g  = "nr lazygit";
-      pf = "git push --force";
-      save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
 
       RM = "rm -rfd";
       dn = "nextd";
