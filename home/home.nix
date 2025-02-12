@@ -61,24 +61,26 @@
   programs.fish = {
     enable = true;
     functions = {
-      fish_prompt.body = ''
-        set -l last_status $status
-        set -l prompt_nix ""
-        set -l prompt_stat ""
-        set -l prompt_folder (set_color $fish_color_cwd)(prompt_pwd)(set_color normal)
-        if test -n "$IN_NIX_SHELL"; set prompt_nix "(nix) "; end
-        if test $last_status -ne 0; set prompt_stat (set_color red)" [$last_status]"(set_color normal); end
-        echo -n "λ "$prompt_nix$prompt_folder$prompt_stat"> "
-      '';
       nix-run = "nix run nixpkgs#$argv[1] -- $argv[2..]";
       proj = "z $argv[1] && c";
-      fix = "test (count $argv) -eq 0; and git commit -a --amend --no-edit; or git commit -a --amend -m $argv[1]; end";
+      fix = ''
+        test (count $argv) -eq 0;
+        and git commit -a --amend --no-edit;
+        or git commit -a --amend -m $argv[1]
+      '';
+      repo = ''
+        set -l REPO (basename $PWD)
+        if test (count $argv) -gt 0
+          set REPO $argv[1]
+        end
+        gh repo create --private iwilare/$REPO
+        git remote add origin git@github.com:iwilare/$REPO
+      '';
     };
     shellAbbrs = {
       q   = { expansion = "git commit -am '%'"; setCursor = true; };
       ns  = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg  = { expansion = "git clone git@github.com:iwilare/%"; setCursor = true; };
-      o   = { expansion = "set -l REPO (basename $PWD)% && gh repo create --private iwilare/$REPO && git remote add origin git@github.com:iwilare/$REPO && git push -u"; setCursor = true; };
       yt  = { expansion = "nix-run youtube-dl -x --audio-format mp3 --audio-quality 0 -o 'C:\\Dropbox\\Music\\%%(title)s.%%(ext)s' '|'"; setCursor = "|"; };
     };
     shellAliases = {
@@ -97,7 +99,6 @@
       g  = "nr lazygit";
       pf = "git push --force";
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
-      repo = "set -l REPO=(basename $PWD)% && gh repo create --private iwilare/$REPO && git remote add origin git@github.com:iwilare/$REPO";
 
       RM = "rm -rfd";
       dn = "nextd";

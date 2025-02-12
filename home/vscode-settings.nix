@@ -272,7 +272,7 @@
       justusadam.language-haskell
       dart-code.dart-code
       denoland.vscode-deno
-      eamodio.gitlens
+      #eamodio.gitlens
       github.copilot
       james-yu.latex-workshop
       meraymond.idris-vscode
