@@ -2,6 +2,9 @@
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "23.05";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
+
+  home-manager.backupFileExtension = "backup";
+
   #services.xserver.videoDrivers = [ "nvidia" ];
   #hardware.nvidia.nvidiaSettings = true;
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;

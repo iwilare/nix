@@ -27,6 +27,10 @@
       url = "github:dawsers/fuse-archive.yazi";
       flake = false;
     };
+    material-fox-updated = {
+      url = "https://github.com/edelvarden/material-fox-updated/releases/download/v2.0.0/chrome.zip";
+      flake = false;
+    };
   };
 
   outputs = inputs @ { nixpkgs, home-manager, nix-vscode-extensions, iwi-dejavu, iwi-consolas, ... }:
@@ -34,6 +38,7 @@
       home-modules = [
         ./home/home.nix
         ./home/vscode-settings.nix
+        ./home/firefox.nix
       ];
       nixos-modules = [
         ./nixos/system.nix

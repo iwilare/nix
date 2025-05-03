@@ -201,6 +201,19 @@
         "type": "github"
       }
     },
+    "material-fox-updated": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1746113517,
+        "narHash": "sha256-zKs1OTOBMsscln2Y6pPjFDgAcu59IOdKq4/Uc7gv/Qc=",
+        "type": "tarball",
+        "url": "https://github.com/edelvarden/material-fox-updated/releases/download/v2.0.0/chrome.zip"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/edelvarden/material-fox-updated/releases/download/v2.0.0/chrome.zip"
+      }
+    },
     "nix-vscode-extensions": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -245,6 +258,7 @@
         "home-manager": "home-manager",
         "iwi-consolas": "iwi-consolas",
         "iwi-dejavu": "iwi-dejavu",
+        "material-fox-updated": "material-fox-updated",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
         "yazi-plugins": "yazi-plugins"
