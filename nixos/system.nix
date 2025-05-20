@@ -114,7 +114,7 @@
   services.libinput = {
     enable = true;
     mouse.scrollMethod = "button";
-    mouse.accelSpeed = "18";
+    mouse.accelSpeed = "16";
   };
   services.xserver = {
     autoRepeatDelay = 300;
