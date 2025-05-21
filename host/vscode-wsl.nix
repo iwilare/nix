@@ -20,13 +20,11 @@ let
   tasksFilePath = "${userDir}/tasks.json";
   snippetDir = "${userDir}/snippets";
 
-  extensionJson = pkgs.vscode-utils.toExtensionJson cfg.extensions;
+  exts = cfg.profiles.default.extensions;
 
-  mergedUserSettings = cfg.userSettings
-    // optionalAttrs (!cfg.enableUpdateCheck) { "update.mode" = "none"; }
-    // optionalAttrs (!cfg.enableExtensionUpdateCheck) {
-      "extensions.autoCheckUpdates" = false;
-    };
+  extensionJson = pkgs.vscode-utils.toExtensionJson exts;
+
+  mergedUserSettings = cfg.profiles.default.userSettings;
 in {
   imports = [ ];
 
@@ -44,18 +42,18 @@ in {
         "${configFilePath}".source =
           jsonFormat.generate "vscode-user-settings" mergedUserSettings;
       })
-      (mkIf (cfg.userTasks != { }) {
+      (mkIf (cfg.profiles.default.userTasks != { }) {
         "${tasksFilePath}".source =
-          jsonFormat.generate "vscode-user-tasks" cfg.userTasks;
+          jsonFormat.generate "vscode-user-tasks" cfg.profiles.default.userTasks;
       })
-      (mkIf (cfg.keybindings != [ ])
+      (mkIf (cfg.profiles.default.keybindings != [ ])
         (let dropNullFields = filterAttrs (_: v: v != null);
         in {
           "${keybindingsFilePath}".source =
             jsonFormat.generate "vscode-keybindings"
-            (map dropNullFields cfg.keybindings);
+            (map dropNullFields cfg.profiles.default.keybindings);
         }))
-      (mkIf (cfg.extensions != [ ]) (let
+      (mkIf (exts != [ ]) (let
         subDir = "share/vscode/extensions";
 
         # Adapted from https://discourse.nixos.org/t/vscode-extensions-setup/1801/2
@@ -66,7 +64,7 @@ in {
           else
             builtins.attrNames (builtins.readDir (ext + "/${subDir}")));
       in if cfg.mutableExtensionsDir then
-        mkMerge (concatMap toPaths cfg.extensions
+        mkMerge (concatMap toPaths exts
           ++ lib.optional (lib.versionAtLeast vscodeVersion "1.74.0") {
             # Whenever our immutable extensions.json changes, force VSCode to regenerate
             # extensions.json with both mutable and immutable extensions.
@@ -83,23 +81,23 @@ in {
         "${extensionPath}".source = let
           combinedExtensionsDrv = pkgs.buildEnv {
             name = "vscode-extensions";
-            paths = cfg.extensions;
+            paths = exts;
           };
         in "${combinedExtensionsDrv}/${subDir}";
       }))
 
-      (mkIf (cfg.globalSnippets != { })
+      (mkIf (cfg.profiles.default.globalSnippets != { })
         (let globalSnippets = "${snippetDir}/global.code-snippets";
         in {
           "${globalSnippets}".source =
             jsonFormat.generate "user-snippet-global.code-snippets"
-            cfg.globalSnippets;
+            cfg.profiles.default.globalSnippets;
         }))
 
       (lib.mapAttrs' (language: snippet:
         lib.nameValuePair "${snippetDir}/${language}.json" {
           source = jsonFormat.generate "user-snippet-${language}.json" snippet;
-        }) cfg.languageSnippets)
+        }) cfg.profiles.default.languageSnippets)
     ];
   };
 }

@@ -1,6 +1,6 @@
 { pkgs, inputs, ... }: {
   programs.vscode = {
-    userSettings = {
+    profiles.default.userSettings = {
       # "editor.letterSpacing" = -0.3;
       # "editor.fontSize" = 13.16;
       # "terminal.integrated.fontFamily" = "Fira Code";
@@ -124,7 +124,7 @@
         "mainThreadWebview-markdown.preview" = true;
       };
     };
-    keybindings = [
+    profiles.default.keybindings = [
 
       # Movement
 
@@ -262,7 +262,8 @@
       { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-irrelevant-arguments";            "key" = "ctrl+a ctrl+n";     "when" = "editorLangId == 'agda'"; }
     ];
-    extensions = with inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace; [
+    # https://github.com/nix-community/nix-vscode-extensions/issues/99#issuecomment-2703326753
+    profiles.default.extensions = with pkgs.vscode-marketplace; [
       ms-vscode-remote.remote-wsl
       banacorn.agda-mode
       adpyke.codesnap
