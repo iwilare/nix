@@ -1,6 +1,6 @@
 { pkgs, inputs, ... }: {
   programs.vscode = {
-    profiles.default.userSettings = {
+    userSettings = {
       # "editor.letterSpacing" = -0.3;
       # "editor.fontSize" = 13.16;
       # "terminal.integrated.fontFamily" = "Fira Code";
@@ -124,16 +124,20 @@
         "mainThreadWebview-markdown.preview" = true;
       };
     };
-    profiles.default.keybindings = [
+    keybindings = [
 
       # Movement
 
+      { "command" = "cursorDown";                "key" = "ctrl+alt+s";             }
       { "command" = "cursorDown";                "key" = "ctrl+k";                 }
       { "command" = "cursorDownSelect";          "key" = "ctrl+shift+k";           }
       { "command" = "cursorLeft";                "key" = "ctrl+alt+j";             }
+      { "command" = "cursorLeft";                "key" = "ctrl+alt+a";             }
       { "command" = "cursorWordLeftSelect";      "key" = "ctrl+shift+j";           }
       { "command" = "cursorRight";               "key" = "ctrl+alt+l";             }
+      { "command" = "cursorRight";               "key" = "ctrl+alt+d";             }
       { "command" = "cursorWordRightSelect";     "key" = "ctrl+shift+l";           }
+      { "command" = "cursorUp";                  "key" = "ctrl+alt+w";             }
       { "command" = "cursorUp";                  "key" = "ctrl+i";                 }
       { "command" = "cursorDown";                "key" = "ctrl+k";                 }
       { "command" = "cursorWordPartLeft";        "key" = "ctrl+j";                 }
@@ -229,6 +233,7 @@
       { "command" = "workbench.action.togglePanel";              "key" = "ctrl+space ctrl+c";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.action.toggleSidebarVisibility";  "key" = "ctrl+space ctrl+e";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.files.action.focusFilesExplorer"; "key" = "ctrl+space ctrl+d";     "when" = "!editorHasSelection"; }
+      { "command" = "workbench.action.files.showOpenedFileInNewWindow"; "key" = "ctrl+space ctrl+t"; "when" = "!editorHasSelection"; }
 
       { "command" = "workbench.action.reopenClosedEditor";       "key" = "ctrl+shift+t";                                          }
       { "command" = "workbench.action.reopenTextEditor";         "key" = "ctrl+space ctrl+t";                                     }
@@ -245,7 +250,6 @@
       { "command" = "agda-mode.auto[AsIs]";                                        "key" = "ctrl+a ctrl+q";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.case";                                              "key" = "ctrl+a ctrl+c";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.compile";                                           "key" = "ctrl+a ctrl+-";     "when" = "editorLangId == 'agda'"; }
-      { "command" = "agda-mode.compute-normal-form[DefaultCompute]";               "key" = "ctrl+a ctrl+w";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.give";                                              "key" = "ctrl+a ctrl+space"; "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.goal-type-context-and-inferred-type[Instantiated]"; "key" = "ctrl+a ctrl+g";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.goal-type-context-and-inferred-type[Simplified]";   "key" = "ctrl+a ctrl+f";     "when" = "editorLangId == 'agda'"; }
@@ -261,9 +265,10 @@
       { "command" = "agda-mode.switch-agda-version";                               "key" = "ctrl+a ctrl+b";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-irrelevant-arguments";            "key" = "ctrl+a ctrl+n";     "when" = "editorLangId == 'agda'"; }
+      { "command" = "agda-mode.input-symbol[Activate]"; "key" = "<backspace>"; "when" = "config.agdaMode.inputMethod.enabled && editorTextFocus && variableLanguage && !agdaModeTyping && editorLangId =~ /.*(l?agda(-(markdown|typst|latex|tex|rst|org|forester))?).*/"; }
     ];
     # https://github.com/nix-community/nix-vscode-extensions/issues/99#issuecomment-2703326753
-    profiles.default.extensions = with pkgs.vscode-marketplace; [
+    extensions = with pkgs.vscode-marketplace; [
       ms-vscode-remote.remote-wsl
       banacorn.agda-mode
       adpyke.codesnap

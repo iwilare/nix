@@ -53,18 +53,14 @@
       ];
       mkHomeConfig = system:
         let pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            overlays = [ inputs.nix-vscode-extensions.overlays.default ];
-          }; in
+              inherit system;
+              config.allowUnfree = true;
+              overlays = [ inputs.nix-vscode-extensions.overlays.default ];
+            }; in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = { inherit inputs system; };
-          modules = home-modules ++ host-home-modules
-          #  ++ [{
-          #   nixpkgs.config.allowUnfree = true;
-          # }]
-          ;
+          modules = home-modules ++ host-home-modules;
         };
       mkNixosConfig = system:
         nixpkgs.lib.nixosSystem {
@@ -79,8 +75,8 @@
           ];
         };
     in {
-      # nixosConfigurations."iwilare" = mkNixosConfig "x86_64-linux";
+      nixosConfigurations."iwilare" = mkNixosConfig "x86_64-linux";
       homeConfigurations."andrea" = mkHomeConfig "x86_64-linux";
-      # homeConfigurations."andrea-macos" = mkHomeConfig "x86_64-darwin";
+      homeConfigurations."andrea-macos" = mkHomeConfig "x86_64-darwin";
     };
 }

@@ -6,28 +6,19 @@ let
 
   cfg = config.programs.vscode;
 
-  vscodePname = cfg.package.pname;
   vscodeVersion = cfg.package.version;
 
   jsonFormat = pkgs.formats.json { };
 
-  extensionPath = ".vscode-server/extensions";
-  userDir = ".vscode-server/data/Machine/";
+  keybindingsFilePath = "/mnt/c/Users/Andrea/AppData/Roaming/Code/User/keybindings.json";
 
-  keybindingsFilePath = "/mnt/c/Users/Andrea/Appdata/Roaming/Code/User/keybindings.json";
+  extensionPath = ".vscode-server/extensions";
+  userDir = ".vscode-server/data/Machine";
 
   configFilePath = "${userDir}/settings.json";
   tasksFilePath = "${userDir}/tasks.json";
   snippetDir = "${userDir}/snippets";
-
-  exts = cfg.profiles.default.extensions;
-
-  extensionJson = pkgs.vscode-utils.toExtensionJson exts;
-
-  mergedUserSettings = cfg.profiles.default.userSettings;
 in {
-  imports = [ ];
-
   options = {
     programs.vscode.wsl = mkOption {
       type = types.bool;
@@ -36,24 +27,22 @@ in {
     };
   };
 
-  config = mkIf cfg.wsl {
+  config = {
     home.file = mkMerge [
-      (mkIf (mergedUserSettings != { }) {
+      { "miao".text = "hello"; }
+      (mkIf (cfg.userSettings != { }) {
         "${configFilePath}".source =
-          jsonFormat.generate "vscode-user-settings" mergedUserSettings;
+          jsonFormat.generate "vscode-user-settings" cfg.userSettings;
       })
-      (mkIf (cfg.profiles.default.userTasks != { }) {
+      (mkIf (cfg.userTasks != { }) {
         "${tasksFilePath}".source =
-          jsonFormat.generate "vscode-user-tasks" cfg.profiles.default.userTasks;
+          jsonFormat.generate "vscode-user-tasks" cfg.userTasks;
       })
-      (mkIf (cfg.profiles.default.keybindings != [ ])
-        (let dropNullFields = filterAttrs (_: v: v != null);
-        in {
-          "${keybindingsFilePath}".source =
-            jsonFormat.generate "vscode-keybindings"
-            (map dropNullFields cfg.profiles.default.keybindings);
-        }))
-      (mkIf (exts != [ ]) (let
+      (mkIf (cfg.keybindings != [ ]) {
+        "${keybindingsFilePath}".source =
+          jsonFormat.generate "vscode-keybindings" cfg.keybindings;
+      })
+      (mkIf (cfg.extensions != [ ]) (let
         subDir = "share/vscode/extensions";
 
         # Adapted from https://discourse.nixos.org/t/vscode-extensions-setup/1801/2
@@ -64,12 +53,12 @@ in {
           else
             builtins.attrNames (builtins.readDir (ext + "/${subDir}")));
       in if cfg.mutableExtensionsDir then
-        mkMerge (concatMap toPaths exts
+        mkMerge (concatMap toPaths cfg.extensions
           ++ lib.optional (lib.versionAtLeast vscodeVersion "1.74.0") {
             # Whenever our immutable extensions.json changes, force VSCode to regenerate
             # extensions.json with both mutable and immutable extensions.
             "${extensionPath}/.extensions-immutable.json" = {
-              text = extensionJson;
+              text = pkgs.vscode-utils.toExtensionJson cfg.extensions;
               onChange = ''
                 $DRY_RUN_CMD rm $VERBOSE_ARG -f ${extensionPath}/{extensions.json,.init-default-profile-extensions}
                 $VERBOSE_ECHO "Regenerating VSCode extensions.json"
@@ -81,23 +70,23 @@ in {
         "${extensionPath}".source = let
           combinedExtensionsDrv = pkgs.buildEnv {
             name = "vscode-extensions";
-            paths = exts;
+            paths = cfg.extensions;
           };
         in "${combinedExtensionsDrv}/${subDir}";
       }))
 
-      (mkIf (cfg.profiles.default.globalSnippets != { })
+      (mkIf (cfg.globalSnippets != { })
         (let globalSnippets = "${snippetDir}/global.code-snippets";
         in {
           "${globalSnippets}".source =
             jsonFormat.generate "user-snippet-global.code-snippets"
-            cfg.profiles.default.globalSnippets;
+            cfg.globalSnippets;
         }))
 
       (lib.mapAttrs' (language: snippet:
         lib.nameValuePair "${snippetDir}/${language}.json" {
           source = jsonFormat.generate "user-snippet-${language}.json" snippet;
-        }) cfg.profiles.default.languageSnippets)
+        }) cfg.languageSnippets)
     ];
   };
 }

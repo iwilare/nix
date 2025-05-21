@@ -10,12 +10,11 @@ let username = "andrea";
   services.ssh-agent.enable = !isDarwin;
   targets.genericLinux.enable = !isDarwin;
   programs.vscode.enable = isDarwin;
-  programs.vscode.wsl = !isDarwin;
+  programs.vscode.wsl = true;
   programs = {
     fish.shellInit =
       ''
-      ${if !isDarwin then
-     "source /home/andrea/.nix-profile/etc/profile.d/**.fish" else ""}
+      ${if !isDarwin then "source /home/andrea/.nix-profile/etc/profile.d/**.fish" else ""}
 
       if test -z "$(pgrep ssh-agent)"
         eval (ssh-agent -c) > /dev/null
@@ -23,7 +22,7 @@ let username = "andrea";
         set -Ux SSH_AGENT_PID $SSH_AGENT_PID
       end
       '';
-    # Add this to /etc/shells
-    #chsh -s /home/andrea/.nix-profile/bin/fish andrea
+      # Add this to /etc/shells
+      # chsh -s /home/andrea/.nix-profile/bin/fish andrea
   };
 }
