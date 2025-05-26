@@ -49,7 +49,6 @@
       ];
       host-home-modules = [
         ./host/home.nix
-        ./host/vscode-wsl.nix
       ];
       mkHomeConfig = system:
         let pkgs = import nixpkgs {

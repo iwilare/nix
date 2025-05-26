@@ -1,6 +1,6 @@
 { pkgs, inputs, ... }: {
   programs.vscode = {
-    userSettings = {
+    profiles.default.userSettings = {
       # "editor.letterSpacing" = -0.3;
       # "editor.fontSize" = 13.16;
       # "terminal.integrated.fontFamily" = "Fira Code";
@@ -124,7 +124,7 @@
         "mainThreadWebview-markdown.preview" = true;
       };
     };
-    keybindings = [
+    profiles.default.keybindings = [
 
       # Movement
 
@@ -268,7 +268,7 @@
       { "command" = "agda-mode.input-symbol[Activate]"; "key" = "<backspace>"; "when" = "config.agdaMode.inputMethod.enabled && editorTextFocus && variableLanguage && !agdaModeTyping && editorLangId =~ /.*(l?agda(-(markdown|typst|latex|tex|rst|org|forester))?).*/"; }
     ];
     # https://github.com/nix-community/nix-vscode-extensions/issues/99#issuecomment-2703326753
-    extensions = with pkgs.vscode-marketplace; [
+    profiles.default.extensions = with pkgs.vscode-marketplace; [
       ms-vscode-remote.remote-wsl
       banacorn.agda-mode
       adpyke.codesnap
