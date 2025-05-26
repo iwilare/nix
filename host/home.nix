@@ -60,6 +60,9 @@ let username = "andrea";
     cp -f "$HM_VSCODE_SETTINGS" "$WINDOWS_VSCODE_SETTINGS"
     cp -f "$HM_VSCODE_KEYBINDINGS" "$WINDOWS_VSCODE_KEYBINDINGS"
 
-    ${pkgs.rsync}/bin/rsync -r --copy-links --delete "$HM_VSCODE_EXTENSIONS"/ "$WINDOWS_VSCODE_EXTENSIONS"
+    for ext in $HM_VSCODE_EXTENSIONS; do
+      dest=$WINDOWS_VSCODE_EXTENSIONS/$(basename "$ext")
+      [ -e "$dest" ] || ${pkgs.rsync}/bin/rsync -aLv "$ext" "$dest"
+    done
   '';
 }
