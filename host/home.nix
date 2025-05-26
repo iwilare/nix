@@ -9,13 +9,13 @@ let username = "andrea";
   programs.home-manager.enable = true;
   services.ssh-agent.enable = !isDarwin;
   targets.genericLinux.enable = !isDarwin;
-  programs.vscode.enable = isDarwin;
-  programs.vscode.package = if isDarwin then pkgs.vscode else 
+  programs.vscode.enable = true;
+  programs.vscode.package = if isDarwin then pkgs.vscode else
     pkgs.emptyDirectory.overrideAttrs (old: {
       pname = "vscode";
       version = "1.1000.0"; # Placeholder version
     });
-  
+
   programs = {
     fish.shellInit =
       ''
@@ -34,19 +34,32 @@ let username = "andrea";
 
     WINDOWS_VSCODE_SETTINGS=/mnt/c/Users/Andrea/AppData/Roaming/Code/User/settings.json
     WINDOWS_VSCODE_KEYBINDINGS=/mnt/c/Users/Andrea/AppData/Roaming/Code/User/keybindings.json
+    WINDOWS_VSCODE_EXTENSIONS=/mnt/c/Users/Andrea/.vscode/extensions/
 
     HM_VSCODE_SETTINGS=.config/Code/User/settings.json
     HM_VSCODE_KEYBINDINGS=.config/Code/User/keybindings.json
+    HM_VSCODE_EXTENSIONS=.vscode/extensions
 
-    if [ -f "$WINDOWS_VSCODE_SETTINGS" ]; then
-      mv "$WINDOWS_VSCODE_SETTINGS" "$WINDOWS_VSCODE_SETTINGS"-backup
-    fi
-    if [ -f "$WINDOWS_VSCODE_KEYBINDINGS" ]; then
-      mv "$WINDOWS_VSCODE_KEYBINDINGS" "$WINDOWS_VSCODE_SETTINGS"-backup
-    fi
+    backup_file_if_exists() {
+      local file="$1"
+      if [ -f "$file" ]; then
+        cp "$file" "$file.backup-$(date +%Y%m%d-%H%M%S)"
+      fi
+    }
 
-    # Copy the new settings file from the Nix store to the Windows path
+    # Backup existing config files
+    backup_file_if_exists "$WINDOWS_VSCODE_SETTINGS"
+    backup_file_if_exists "$WINDOWS_VSCODE_KEYBINDINGS"
+
+    # Ensure target directories exist
+    mkdir -p "$(dirname "$WINDOWS_VSCODE_SETTINGS")"
+    mkdir -p "$(dirname "$WINDOWS_VSCODE_KEYBINDINGS")"
+    mkdir -p "$WINDOWS_VSCODE_EXTENSIONS"
+
+    # Copy config files
     cp -f "$HM_VSCODE_SETTINGS" "$WINDOWS_VSCODE_SETTINGS"
     cp -f "$HM_VSCODE_KEYBINDINGS" "$WINDOWS_VSCODE_KEYBINDINGS"
+
+    ${pkgs.rsync}/bin/rsync -r --copy-links --delete "$HM_VSCODE_EXTENSIONS"/ "$WINDOWS_VSCODE_EXTENSIONS"
   '';
 }
