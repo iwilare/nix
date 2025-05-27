@@ -9,12 +9,20 @@ let username = "andrea";
   programs.home-manager.enable = true;
   services.ssh-agent.enable = !isDarwin;
   targets.genericLinux.enable = !isDarwin;
+
   programs.vscode.enable = true;
+  programs.vscode.profiles.default.extensions = [];
   programs.vscode.package = if isDarwin then pkgs.vscode else
-    pkgs.emptyDirectory.overrideAttrs (old: {
+    pkgs.stdenv.mkDerivation {
+      name = "vscode-windows";
       pname = "vscode";
       version = "1.1000.0"; # Placeholder version
-    });
+      phases = [ "installPhase" ];
+      installPhase = ''
+        mkdir -p $out/bin
+        ln -s '/mnt/c/Users/Andrea/AppData/Local/Programs/Microsoft VS Code/bin/code' $out/bin/code
+      '';
+    };
 
   programs = {
     fish.shellInit =
@@ -27,8 +35,6 @@ let username = "andrea";
         set -Ux SSH_AGENT_PID $SSH_AGENT_PID
       end
       '';
-      # Add this to /etc/shells
-      # chsh -s /home/andrea/.nix-profile/bin/fish andrea
   };
   home.activation.sync-vscode = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "git" ] ''
 
@@ -54,15 +60,17 @@ let username = "andrea";
     # Ensure target directories exist
     mkdir -p "$(dirname "$WINDOWS_VSCODE_SETTINGS")"
     mkdir -p "$(dirname "$WINDOWS_VSCODE_KEYBINDINGS")"
-    mkdir -p "$WINDOWS_VSCODE_EXTENSIONS"
 
     # Copy config files
     cp -f "$HM_VSCODE_SETTINGS" "$WINDOWS_VSCODE_SETTINGS"
     cp -f "$HM_VSCODE_KEYBINDINGS" "$WINDOWS_VSCODE_KEYBINDINGS"
 
-    for ext in $HM_VSCODE_EXTENSIONS; do
-      dest=$WINDOWS_VSCODE_EXTENSIONS/$(basename "$ext")
-      [ -e "$dest" ] || ${pkgs.rsync}/bin/rsync -aLv "$ext" "$dest"
-    done
+    chmod 777 "$WINDOWS_VSCODE_SETTINGS" "$WINDOWS_VSCODE_KEYBINDINGS"
+
+    # mkdir -p "$WINDOWS_VSCODE_EXTENSIONS"
+    # for ext in $HM_VSCODE_EXTENSIONS; do
+    #   dest=$WINDOWS_VSCODE_EXTENSIONS/$(basename "$ext")
+    #   [ -e "$dest" ] || ${pkgs.rsync}/bin/rsync -aLv "$ext" "$dest"
+    # done
   '';
 }
