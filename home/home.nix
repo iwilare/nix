@@ -124,6 +124,7 @@
     };
     shellInit = ''
       set fish_greeting
+      set -U fish_color_command blue
 
       if not test -e ~/.ssh/id_ed25519
         mkdir -p ~/.ssh/repository
