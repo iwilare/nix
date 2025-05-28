@@ -265,7 +265,7 @@
       { "command" = "agda-mode.switch-agda-version";                               "key" = "ctrl+a ctrl+b";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-irrelevant-arguments";            "key" = "ctrl+a ctrl+n";     "when" = "editorLangId == 'agda'"; }
-      { "command" = "agda-mode.input-symbol[Activate]"; "key" = "<backspace>"; "when" = "config.agdaMode.inputMethod.enabled && editorTextFocus && variableLanguage && !agdaModeTyping && editorLangId =~ /.*(l?agda(-(markdown|typst|latex|tex|rst|org|forester))?).*/"; }
+      { "command" = "agda-mode.input-symbol[Activate]"; "key" = "oem_5"; "when" = "config.agdaMode.inputMethod.enabled && editorTextFocus && variableLanguage && !agdaModeTyping && editorLangId =~ /.*(l?agda(-(markdown|typst|latex|tex|rst|org|forester))?).*/"; }
     ];
     # https://github.com/nix-community/nix-vscode-extensions/issues/99#issuecomment-2703326753
     profiles.default.extensions = with pkgs.vscode-marketplace; [
