@@ -256,8 +256,8 @@
       { "command" = "agda-mode.goal-type-context-and-inferred-type[Normalised]";   "key" = "ctrl+a ctrl+s";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.load";                                              "key" = "ctrl+a ctrl+d";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.lookup-symbol";                                     "key" = "ctrl+a ctrl+l";     "when" = "editorLangId == 'agda'"; }
+      { "command" = "agda-mode.previous-goal";                                     "key" = "ctrl+a ctrl+w";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.next-goal";                                         "key" = "ctrl+a ctrl+z";     "when" = "editorLangId == 'agda'"; }
-      { "command" = "agda-mode.previous-goal";                                     "key" = "ctrl+a ctrl+e";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.refine";                                            "key" = "ctrl+a ctrl+r";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.restart";                                           "key" = "ctrl+a ctrl+t";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.solve-constraints[Normalised]";                     "key" = "ctrl+a ctrl+x";     "when" = "editorLangId == 'agda'"; }
@@ -265,7 +265,7 @@
       { "command" = "agda-mode.switch-agda-version";                               "key" = "ctrl+a ctrl+b";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-irrelevant-arguments";            "key" = "ctrl+a ctrl+n";     "when" = "editorLangId == 'agda'"; }
-      { "command" = "agda-mode.input-symbol[Activate]"; "key" = "oem_5"; "when" = "config.agdaMode.inputMethod.enabled && editorTextFocus && variableLanguage && !agdaModeTyping && editorLangId =~ /.*(l?agda(-(markdown|typst|latex|tex|rst|org|forester))?).*/"; }
+      { "command" = "agda-mode.input-symbol[Activate]";                            "key" = "oem_5";             "when" = "editorLangId == 'agda'"; }
     ];
     # https://github.com/nix-community/nix-vscode-extensions/issues/99#issuecomment-2703326753
     profiles.default.extensions = with pkgs.vscode-marketplace; [

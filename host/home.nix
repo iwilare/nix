@@ -16,6 +16,7 @@ let username = "andrea";
     pkgs.stdenv.mkDerivation {
       name = "vscode-windows";
       pname = "vscode";
+      meta.mainProgram = "code";
       version = "1.1000.0"; # Placeholder version
       phases = [ "installPhase" ];
       installPhase = ''
