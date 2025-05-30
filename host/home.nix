@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 let username = "andrea";
     isDarwin = pkgs.stdenv.isDarwin; in
 {
@@ -13,16 +13,18 @@ let username = "andrea";
   programs.vscode.enable = true;
   programs.vscode.profiles.default.extensions = [];
   programs.vscode.package = if isDarwin then pkgs.vscode else
-    pkgs.stdenv.mkDerivation {
+    pkgs.writeTextFile {
       name = "vscode-windows";
-      pname = "vscode";
-      meta.mainProgram = "code";
-      version = "1.1000.0"; # Placeholder version
-      phases = [ "installPhase" ];
-      installPhase = ''
-        mkdir -p $out/bin
-        printf "#!/bin/sh\n'/mnt/c/Users/Andrea/AppData/Local/Programs/Microsoft VS Code/bin/code'" > $out/bin/code
-        chmod +x $out/bin/code;
+      executable = true;
+      destination = "/bin/code";
+      derivationArgs = {
+        pname = "vscode";
+        version = "1.1000.0"; # Placeholder version
+        meta.mainProgram = "code";
+      };
+      text = ''
+        #!/bin/sh
+        '/mnt/c/Users/Andrea/AppData/Local/Programs/Microsoft VS Code/bin/code' "$@"
       '';
     };
 
@@ -30,7 +32,7 @@ let username = "andrea";
     fish.shellInit = ''
       ${if !isDarwin then "source /home/andrea/.nix-profile/etc/profile.d/**.fish" else ""}
       start_ssh_agent
-      '';
+    '';
   };
   home.activation.sync-vscode = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "git" ] ''
 
