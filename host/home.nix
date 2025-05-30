@@ -27,8 +27,7 @@ let username = "andrea";
     };
 
   programs = {
-    fish.shellInit =
-      ''
+    fish.shellInit = ''
       ${if !isDarwin then "source /home/andrea/.nix-profile/etc/profile.d/**.fish" else ""}
       start_ssh_agent
       '';
