@@ -78,9 +78,31 @@
       '';
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
       just-save = "git commit -am (date '+%Y-%m-%d %H:%M:%S'); git push"; # needs to be here for ssave
+      start_ssh_agent = ''
+        if test -z "$(pgrep ssh-agent)"
+          eval (ssh-agent -c) > /dev/null
+          set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
+          set -Ux SSH_AGENT_PID $SSH_AGENT_PID
+        end
+      '';
     };
+    shellInit = ''
+      set fish_greeting
+      set -U fish_color_command blue
+
+      if not test -e ~/.ssh/id_ed25519
+        mkdir -p ~/.ssh/repository
+        set temp_dir '~/.ssh/repository'
+        echo 'Adding ssh keys...'
+        ${pkgs.git}/bin/git clone https://github.com/iwilare/ssh $temp_dir
+        cp -r $temp_dir/. ~/.ssh/
+        chmod 600 ~/.ssh/id_ed25519
+        rm -rf $temp_dir
+      end
+    '';
     shellAbbrs = {
       ssave = { expansion = "git submodule foreach fish -c just-save"; };
+      sub = { expansion = "git submodule init && git submodule update --init --recursive"; };
       q   = { expansion = "git commit -am '%'"; setCursor = true; };
       pf  = { expansion = "git push --force"; setCursor = true; };
       ns  = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
@@ -122,20 +144,6 @@
 
       nv = "nix run ~/Dropbox/Repos/neovim";
     };
-    shellInit = ''
-      set fish_greeting
-      set -U fish_color_command blue
-
-      if not test -e ~/.ssh/id_ed25519
-        mkdir -p ~/.ssh/repository
-        set temp_dir '~/.ssh/repository'
-        echo 'Adding ssh keys...'
-        ${pkgs.git}/bin/git clone https://github.com/iwilare/ssh $temp_dir
-        cp -r $temp_dir/. ~/.ssh/
-        chmod 600 ~/.ssh/id_ed25519
-        rm -rf $temp_dir
-      end
-    '';
     plugins = [
       {
         name = "nix-env.fish";

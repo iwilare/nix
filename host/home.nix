@@ -21,7 +21,8 @@ let username = "andrea";
       phases = [ "installPhase" ];
       installPhase = ''
         mkdir -p $out/bin
-        ln -s '/mnt/c/Users/Andrea/AppData/Local/Programs/Microsoft VS Code/bin/code' $out/bin/code
+        printf "#!/bin/sh\n'/mnt/c/Users/Andrea/AppData/Local/Programs/Microsoft VS Code/bin/code'" > $out/bin/code
+        chmod +x $out/bin/code;
       '';
     };
 
@@ -29,12 +30,7 @@ let username = "andrea";
     fish.shellInit =
       ''
       ${if !isDarwin then "source /home/andrea/.nix-profile/etc/profile.d/**.fish" else ""}
-
-      if test -z "$(pgrep ssh-agent)"
-        eval (ssh-agent -c) > /dev/null
-        set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
-        set -Ux SSH_AGENT_PID $SSH_AGENT_PID
-      end
+      start_ssh_agent
       '';
   };
   home.activation.sync-vscode = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "git" ] ''
