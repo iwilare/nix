@@ -61,7 +61,7 @@
       "workbench.startupEditor" = "none";
       "workbench.tree.indent" = 16;
       "workbench.tree.renderIndentGuides" = "always";
-      "workbench.activityBar.location" = "hidden";
+      # "workbench.activityBar.location" = "hidden";
       "editor.suggest.showWords" = false;
       # Rust
       "rust-analyzer.inlayHints.typeHints.enable" = false;
@@ -201,13 +201,13 @@
       { "command" = "editor.action.joinLines";                   "key" = "ctrl+g";                "when" = "!editorHasSelection"; }
       { "command" = "editor.action.commentLine";                 "key" = "ctrl+b";                                                }
       { "command" = "editor.action.triggerSuggest";              "key" = "ctrl+y";                "when" = "!editorHasSelection"; }
-      { "command" = "editor.action.startFindReplaceAction";      "key" = "ctrl+space ctrl+f";     "when" = "!editorHasSelection"; }
       { "command" = "editor.action.triggerSuggest";              "key" = "ctrl+space ctrl+space"; "when" = "!editorHasSelection"; }
 
       { "command" = "removeSecondaryCursors";                    "key" = "ctrl+w";                "when" = "multiCursorModifier"; }
 
-      { "command" = "actions.find";                              "key" = "ctrl+f";                "when" = "!findWidgetVisible";  }
+      { "command" = "editor.action.startFindReplaceAction";      "key" = "ctrl+f";                "when" = "!findWidgetVisible";  }
       { "command" = "closeFindWidget";                           "key" = "ctrl+f";                "when" = "findWidgetVisible";   }
+      { "command" = "workbench.action.replaceInFiles";           "key" = "ctrl+shift+f";          "when" = "";                    }
 
       { "command" = "editor.action.indentLines";                 "key" = "tab";                   "when" = "editorHasSelection";  }
       { "command" = "editor.action.outdentLines";                "key" = "shift+tab";             "when" = "editorHasSelection";  }
