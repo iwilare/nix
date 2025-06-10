@@ -1,7 +1,7 @@
 { config, pkgs, inputs, system, ... }: {
 
   programs.vscode.enable = true;
-  programs.vscode.package = pkgs.vscode.overrideAttrs (oldAttrs: rec { version = "stable"; });
+  programs.vscode.package = pkgs.vscode;
 
   xsession.windowManager.i3 = {
     enable = true;
@@ -266,7 +266,7 @@
   gtk = {
     enable = true;
     font.name = "Sans 10";
-    cursorTheme = { name = "Breeze_Snow";     package = pkgs.kdePackages.breeze-gtk;     }; #size = 24; };
+    cursorTheme = { name = "Breeze";          package = pkgs.kdePackages.breeze-gtk;     }; #size = 24; };
     iconTheme   = { name = "elementary-xfce"; package = pkgs.elementary-xfce-icon-theme; };
     theme       = { name = "Adwaita-dark";    package = pkgs.adwaita-icon-theme;         };
   };
