@@ -148,7 +148,13 @@
         #   items = [{ display = "[Are you sure?]"; cmd = "google-chrome-stable"; }];
         # }
         separation
-        { block = "battery"; format = " $icon  $percentage $time $power "; missing_format = ""; }
+        { block = "battery";
+          format = " $icon  $percentage {$time_remaining.dur(hms:true, min_unit:m)|} ";
+          full_format = " $icon  $percentage {$time_remaining.dur(hms:true, min_unit:m)|} (✓) ";
+          charging_format = " $icon  $percentage {$time_remaining.dur(hms:true, min_unit:m)|} ($power ϟ) ";
+          empty_format = " empty ";
+          missing_format = "";
+        }
         { block = "net"; format = " $icon  {$ssid|$ip}"; }
         # {
         #   block = "net";
