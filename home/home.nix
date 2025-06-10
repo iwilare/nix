@@ -14,7 +14,6 @@
     gource    # SVC visualization
     hyperfine # Command-line benchmarking tool
     pv        # Monitor the progress of data through a pipe
-    nixfmt
     nix-tree
     lazygit
     gh

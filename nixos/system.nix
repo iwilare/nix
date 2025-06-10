@@ -1,5 +1,4 @@
 { config, pkgs, system, inputs, ... }: {
-  nixpkgs.config.allowUnfree = true;
   system.stateVersion = "23.05";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
 
@@ -48,6 +47,7 @@
     nemo-fileroller
     nemo-python
     nemo
+    nbfc-linux
   ];
 
   i18n.inputMethod = {

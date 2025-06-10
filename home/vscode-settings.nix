@@ -268,7 +268,7 @@
       { "command" = "agda-mode.input-symbol[Activate]";                            "key" = "oem_5";             "when" = "editorLangId == 'agda'"; }
     ];
     # https://github.com/nix-community/nix-vscode-extensions/issues/99#issuecomment-2703326753
-    profiles.default.extensions = with pkgs.vscode-marketplace; [
+    profiles.default.extensions = with pkgs.nix-vscode-extensions.vscode-marketplace; [
       ms-vscode-remote.remote-wsl
       banacorn.agda-mode
       adpyke.codesnap

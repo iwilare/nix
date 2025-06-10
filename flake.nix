@@ -50,19 +50,21 @@
       host-home-modules = [
         ./host/home.nix
       ];
+      mkPkgs = system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [ inputs.nix-vscode-extensions.overlays.default ];
+        };
       mkHomeConfig = system:
-        let pkgs = import nixpkgs {
-              inherit system;
-              config.allowUnfree = true;
-              overlays = [ inputs.nix-vscode-extensions.overlays.default ];
-            }; in
         home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+          pkgs = mkPkgs system;
           extraSpecialArgs = { inherit inputs system; };
           modules = home-modules ++ host-home-modules;
         };
       mkNixosConfig = system:
         nixpkgs.lib.nixosSystem {
+          pkgs = mkPkgs system;
           specialArgs = { inherit inputs system; };
           modules = nixos-modules ++ [
             home-manager.nixosModules.home-manager

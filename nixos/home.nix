@@ -260,7 +260,7 @@
   gtk = {
     enable = true;
     font.name = "Sans 10";
-    cursorTheme = { name = "Breeze_Snow";     package = pkgs.breeze-gtk;                 }; #size = 24; };
+    cursorTheme = { name = "Breeze_Snow";     package = pkgs.kdePackages.breeze-gtk;     }; #size = 24; };
     iconTheme   = { name = "elementary-xfce"; package = pkgs.elementary-xfce-icon-theme; };
     theme       = { name = "Adwaita-dark";    package = pkgs.adwaita-icon-theme;         };
   };
