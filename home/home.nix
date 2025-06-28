@@ -79,10 +79,13 @@
       just-save = "git commit -am (date '+%Y-%m-%d %H:%M:%S'); git push"; # needs to be here for ssave
       start_ssh_agent = ''
         if test -z "$(pgrep ssh-agent)"
-          eval (ssh-agent -c) > /dev/null
-          set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
-          set -Ux SSH_AGENT_PID $SSH_AGENT_PID
+          just_start_ssh_agent
         end
+      '';
+      just_start_ssh_agent = ''
+        eval (ssh-agent -c) > /dev/null
+        set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK > /dev/null
+        set -Ux SSH_AGENT_PID $SSH_AGENT_PID > /dev/null
       '';
     };
     shellInit = ''
