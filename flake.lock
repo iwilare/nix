@@ -1,23 +1,22 @@
 {
   "nodes": {
-    "fira-code": {
+    "flake-compat": {
       "flake": false,
       "locked": {
-        "lastModified": 1586972058,
-        "narHash": "sha256-rMhI9B3QR4IzJNukqoq7iRFIdrfEwMBD/UsNeNq4Q88=",
-        "owner": "tonsky",
-        "repo": "FiraCode",
-        "rev": "e9943d2d631a4558613d7a77c58ed1d3cb790992",
+        "lastModified": 1747046372,
+        "narHash": "sha256-CIVLLkVgvHYbgI2UpXvIIBJ12HWgX+fjA8Xf8PUmqCY=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "9100a0f413b0c601e0533d1d94ffd501ce2e7885",
         "type": "github"
       },
       "original": {
-        "owner": "tonsky",
-        "repo": "FiraCode",
-        "rev": "e9943d2d631a4558613d7a77c58ed1d3cb790992",
+        "owner": "edolstra",
+        "repo": "flake-compat",
         "type": "github"
       }
     },
-    "flake-compat": {
+    "flake-compat_2": {
       "flake": false,
       "locked": {
         "lastModified": 1673956053,
@@ -125,31 +124,8 @@
     },
     "iwi-consolas": {
       "inputs": {
-        "fira-code": "fira-code",
-        "flake-utils": "flake-utils",
-        "ligaturizer": "ligaturizer",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1732119695,
-        "narHash": "sha256-Aj5GLTkeLhwbHFC5D5/TxJi0mOuUTrKnr7dyISQksSc=",
-        "ref": "refs/heads/main",
-        "rev": "bfd5158ec52d9d24e6c4d3c06a10d6c157bd7852",
-        "revCount": 3,
-        "type": "git",
-        "url": "ssh://git@github.com/iwilare/iwi-consolas"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/iwilare/iwi-consolas"
-      }
-    },
-    "iwi-dejavu": {
-      "inputs": {
         "flake-compat": "flake-compat",
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -168,20 +144,25 @@
         "type": "github"
       }
     },
-    "ligaturizer": {
-      "flake": false,
+    "iwi-dejavu": {
+      "inputs": {
+        "flake-compat": "flake-compat_2",
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1630768095,
-        "narHash": "sha256-89/6xEBybIG9OfeOkwh8bwvQpp8+SOCbUxIlqbdkvqU=",
-        "owner": "ToxicFrog",
-        "repo": "Ligaturizer",
-        "rev": "c4065187a544a8fab40826fc91db1c6180a2d342",
+        "lastModified": 1732111478,
+        "narHash": "sha256-DsmZDcIm9OecRrjpb/gEtueVot5DEPdEdP5csfbr4NA=",
+        "owner": "iwilare",
+        "repo": "iwi-dejavu",
+        "rev": "09bb8ba7429fd658a2c7243081c6bf279bede9b5",
         "type": "github"
       },
       "original": {
-        "owner": "ToxicFrog",
-        "repo": "Ligaturizer",
-        "rev": "c4065187a544a8fab40826fc91db1c6180a2d342",
+        "owner": "iwilare",
+        "repo": "iwi-dejavu",
         "type": "github"
       }
     },

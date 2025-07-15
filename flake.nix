@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     iwi-consolas = {
-      url = "git+ssh://git@github.com/iwilare/iwi-consolas";
+      url = "github:iwilare/iwi-dejavu";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     yazi-plugins = {

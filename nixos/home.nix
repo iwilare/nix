@@ -191,7 +191,7 @@
     enable = true;
     settings = {
       env = {
-        WINIT_X11_SCALE_FACTOR = "1";
+        WINIT_X11_SCALE_FACTOR = "1.25";
       };
       font.normal.family = inputs.iwi-dejavu.name;
       font.size = 10;

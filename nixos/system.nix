@@ -1,5 +1,5 @@
 { config, pkgs, system, inputs, ... }: {
-  system.stateVersion = "23.05";
+  system.stateVersion = "25.11";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
 
   home-manager.backupFileExtension = "backup";
@@ -93,6 +93,7 @@
       shell = pkgs.fish;
     };
   };
+
   security.sudo.extraConfig = ''Defaults timestamp_timeout=7200'';
   services.autorandr.enable = true;
   services.avahi.enable = true;
@@ -121,7 +122,7 @@
     autoRepeatInterval = 25;
     desktopManager.wallpaper.mode = "fill";
     desktopManager.xterm.enable = false;
-    dpi = 96;
+    dpi = 120;
     enable = true;
     xkb.layout = "it";
     xkb.options = "caps:ctrl_modifier,eurosign:e"; #caps:super
@@ -143,9 +144,9 @@
       frame-opacity = 0;
     };
   };
-  services.dbus.packages = with pkgs; [
-    xfce.xfconf
-  ];
+  # services.dbus.packages = with pkgs; [
+  #   xfce.xfconf
+  # ];
 
   fonts.packages = [
     pkgs.ipafont
