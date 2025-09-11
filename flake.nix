@@ -17,6 +17,7 @@
     };
     iwi-consolas = {
       url = "github:iwilare/iwi-dejavu";
+      # url = "git+ssh://git@github.com/iwilare/iwi-consolas";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     yazi-plugins = {

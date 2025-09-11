@@ -59,7 +59,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.systemd-boot.enable = true;
-  boot.loader.timeout = 0;
+  boot.loader.timeout = 10;
   console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
   fonts.fontconfig.enable = true;

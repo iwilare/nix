@@ -110,7 +110,7 @@
           "${Mod}+Shift+w"       = "move up";
           "${Mod}+Shift+c"       = "reload; restart;";
           "${Mod}+Shift+p"       = "border toggle";
-          "${Win}+f"             = "exec ${filemanager}";
+          "${Win}+e"             = "exec ${filemanager}";
           "${Win}+s"             = "exec ${screenshooter}";
           "${Win}+c"             = "exec ${browser}";
           "${Win}+b"             = "exec ${audio}";
