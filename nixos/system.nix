@@ -50,11 +50,14 @@
     nbfc-linux
   ];
 
+  musnix.enable = true;
+
   i18n.inputMethod = {
     enable = true;
     type = "ibus";
     #ibus.engines = with pkgs.ibus-engines; [ mozc ];
   };
+
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.systemd-boot.configurationLimit = 3;
@@ -89,7 +92,7 @@
     };
     andrea = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "audio" ];
       shell = pkgs.fish;
     };
   };

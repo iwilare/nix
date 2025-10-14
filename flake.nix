@@ -32,9 +32,10 @@
       url = "https://github.com/edelvarden/material-fox-updated/releases/download/v2.0.0/chrome.zip";
       flake = false;
     };
+    musnix  = { url = "github:musnix/musnix"; };
   };
 
-  outputs = inputs @ { nixpkgs, home-manager, nix-vscode-extensions, iwi-dejavu, iwi-consolas, ... }:
+  outputs = inputs @ { nixpkgs, home-manager, nix-vscode-extensions, iwi-dejavu, iwi-consolas, musnix, ... }:
     let
       home-modules = [
         ./home/home.nix
@@ -55,6 +56,7 @@
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          allowUnfree = true;
           overlays = [ inputs.nix-vscode-extensions.overlays.default ];
         };
       mkHomeConfig = system:
@@ -69,6 +71,7 @@
           specialArgs = { inherit inputs system; };
           modules = nixos-modules ++ [
             home-manager.nixosModules.home-manager
+            musnix.nixosModules.musnix
             {
               home-manager.useGlobalPkgs = true;
               home-manager.extraSpecialArgs = { inherit inputs system; };

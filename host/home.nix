@@ -4,6 +4,7 @@ let username = "andrea";
 {
   home.username = username;
   nix.package = pkgs.nix;
+  nixpkgs.config.allowUnfree = true;
   home.homeDirectory = if isDarwin then /Users/${username} else /home/${username};
   home.stateVersion = "23.05";
   programs.home-manager.enable = true;
