@@ -21,31 +21,32 @@
   programs.direnv  = { enable = true; nix-direnv.enable = true; };
   #programs.atuin   = { enable = true; enableFishIntegration = true; };
   programs.zoxide  = { enable = true; enableFishIntegration = true; };
-  programs.ssh     = { enable = true; package = pkgs.openssh; addKeysToAgent = "yes"; };
   programs.ripgrep = { enable = true; };
   programs.btop    = { enable = true; };
   programs.bat     = { enable = true; };
   programs.eza     = { enable = true; };
+  programs.diff-so-fancy = {
+    enable = true;
+    enableGitIntegration = true;
+  };
   programs.git = {
     enable = true;
-    diff-so-fancy.enable = true;
-    userName  = "iwilare";
-    userEmail = "iwilare@gmail.com";
-
-    extraConfig.color.ui = true;
-    extraConfig.core.askPass = "";
-    extraConfig.core.fileMode = true;
-    extraConfig.core.editor = "code --wait";
-    extraConfig.credential.helper = "store";
-    extraConfig.github.user = "iwilare";
-    extraConfig.init.defaultBranch = "main";
-    extraConfig.push.autoSetupRemote = true;
-    extraConfig.pull.rebase = true;
-    #extraConfig.merge.autoStash = true;
-    extraConfig.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
-    extraConfig.commit.gpgsign = true;
-    extraConfig.gpg.format = "ssh";
-    extraConfig.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug iwilare@gmail.com";
+    settings.user.name  = "iwilare";
+    settings.user.email = "iwilare@gmail.com";
+    settings.color.ui = true;
+    settings.core.askPass = "";
+    settings.core.fileMode = true;
+    settings.core.editor = "code --wait";
+    settings.credential.helper = "store";
+    settings.github.user = "iwilare";
+    settings.init.defaultBranch = "main";
+    settings.push.autoSetupRemote = true;
+    settings.pull.rebase = true;
+    #settings.merge.autoStash = true;
+    settings.url."https://github.com/".insteadOf = [ "gh:" "github:" ];
+    settings.commit.gpgsign = true;
+    settings.gpg.format = "ssh";
+    settings.user.signingKey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC070EeFAV0Uj5OSrIeSzPn7oj/Vr3Rj5eXAA13c/iug iwilare@gmail.com";
   };
   # programs.emacs = {
   #   enable = true;
@@ -119,8 +120,8 @@
       t  = "eza --icons --tree -s=type --all";
       ta = "eza --icons --tree -s=type";
 
-      d  = "git diff";
-      ds = "git diff --stat";
+      d  = "nix develop";
+      gd = "git diff";
       s  = "git status --show-stash";
       p  = "git push";
       ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";

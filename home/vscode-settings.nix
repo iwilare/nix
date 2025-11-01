@@ -11,6 +11,10 @@
       "editor.fontLigatures" = true;
       "editor.glyphMargin" = false;
 
+      "github.copilot.chat.followUps" = "never";
+      "github.copilot.chat.summarizeAgentConversationHistory.enabled" = false;
+      "github.copilot.nextEditSuggestions.enabled" = true;
+
       "editor.bracketPairColorization.enabled" = true;
       "editor.guides.bracketPairs" = true;
       "editor.hover.delay" = 250;
