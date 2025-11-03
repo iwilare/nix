@@ -3,8 +3,7 @@
 wsl --install -d Debian
 sudo apt update
 sudo apt install wget git -y
-code .
-cd ~
+code ~
 explorer.exe .
 # at this point: unzip in .ssh the files from https://github.com/iwilare/.ssh/archive/refs/heads/main.zip
 sudo chown -R andrea .ssh
@@ -20,3 +19,4 @@ nix run nixpkgs#home-manager -- switch -b backup
 echo '/home/andrea/.nix-profile/bin/fish' | sudo tee -a /etc/shells > /dev/null
 chsh -s /home/andrea/.nix-profile/bin/fish
 ln -s /mnt/c/Dropbox ~
+
