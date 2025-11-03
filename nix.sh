@@ -19,5 +19,3 @@ nix run nixpkgs#home-manager -- switch -b backup
 echo '/home/andrea/.nix-profile/bin/fish' | sudo tee -a /etc/shells > /dev/null
 chsh -s /home/andrea/.nix-profile/bin/fish
 ln -s /mnt/c/Dropbox ~
-
-
