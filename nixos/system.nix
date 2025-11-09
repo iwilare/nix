@@ -20,7 +20,7 @@
   environment.systemPackages = with pkgs; [
     dropbox
     spotify
-    tdesktop
+    telegram-desktop
 
     discord
     google-chrome
@@ -32,7 +32,7 @@
     rofi
     pavucontrol
 
-    lxde.lxrandr
+    lxrandr
     arandr
 
     #obsidian
@@ -102,7 +102,7 @@
   services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
   services.blueman.enable = true;
-  services.gnome.gnome-keyring.enable = true;
+  # services.gnome.gnome-keyring.enable = true;
   services.gvfs.enable = true;
   services.illum.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
