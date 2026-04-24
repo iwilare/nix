@@ -3,15 +3,12 @@
     profiles.default.userSettings = {
       # "editor.letterSpacing" = -0.3;
       # "editor.fontSize" = 13.16;
-      # "terminal.integrated.fontFamily" = "Fira Code";
-      "editor.fontFamily" = inputs.iwi-consolas.name;
-      "terminal.integrated.fontFamily" = inputs.iwi-dejavu.name;
-      "terminal.integrated.fontSize" = 13;
+
+      # "terminal.integrated.fontFamily" = inputs.iwi-dejavu.name;
+      # "terminal.integrated.fontSize" = 13;
 
       "editor.fontLigatures" = true;
-      "editor.glyphMargin" = false;
 
-      "github.copilot.chat.followUps" = "never";
       "github.copilot.chat.summarizeAgentConversationHistory.enabled" = false;
       "github.copilot.nextEditSuggestions.enabled" = true;
 
@@ -20,7 +17,7 @@
       "editor.hover.delay" = 250;
       "editor.inlineSuggest.enabled" = true;
       "editor.insertSpaces" = true;
-      "editor.lineHeight" = 1.30;
+      "editor.lineHeight" = 1.25;
       "editor.linkedEditing" = true;
       "editor.minimap.maxColumn" = 60;
       "editor.minimap.scale" = 2;
@@ -219,7 +216,6 @@
       # Windows
 
       { "command" = "workbench.action.closeActiveEditor";        "key" = "ctrl+w";                "when" = "!editorHasSelection"; }
-      { "command" = "workbench.action.files.newUntitledFile";    "key" = "ctrl+space ctrl+s";     "when" = "!editorHasSelection"; }
       { "command" = "workbench.action.files.openFile";           "key" = "ctrl+o";                                                }
       { "command" = "workbench.action.files.openFileFolder";     "key" = "ctrl+space ctrl+o";                                     }
       { "command" = "workbench.action.previousEditor";           "key" = "ctrl+space ctrl+1";                                     }
@@ -270,6 +266,10 @@
       { "command" = "agda-mode.toggle-display-of-implicit-arguments";              "key" = "ctrl+a ctrl+m";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.toggle-display-of-irrelevant-arguments";            "key" = "ctrl+a ctrl+n";     "when" = "editorLangId == 'agda'"; }
       { "command" = "agda-mode.input-symbol[Activate]";                            "key" = "oem_5";             "when" = "editorLangId == 'agda'"; }
+
+      # LaTeX
+
+      { "command" = "latex-workshop.synctex";                                      "key" = "ctrl+space ctrl+s"; "when" = "editorTextFocus && editorLangId =~ /^latex$|^latex-expl3$|^doctex$/"; }
     ];
     # https://github.com/nix-community/nix-vscode-extensions/issues/99#issuecomment-2703326753
     profiles.default.extensions = with pkgs.nix-vscode-extensions.vscode-marketplace; [
