@@ -8,7 +8,7 @@ let username = "andrea";
   home.homeDirectory = if isDarwin then /Users/${username} else /home/${username};
   home.stateVersion = "23.05";
   programs.home-manager.enable = true;
-  # services.ssh-agent.enable = !isDarwin;
+  services.ssh-agent.enable = !isDarwin;
   targets.genericLinux.enable = !isDarwin;
 
   programs.vscode.enable = true;
@@ -32,7 +32,6 @@ let username = "andrea";
   programs = {
     fish.shellInit = ''
       ${if !isDarwin then "source /home/andrea/.nix-profile/etc/profile.d/**.fish" else ""}
-      just_start_ssh_agent
     '';
   };
   home.activation.sync-vscode = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "git" ] ''
