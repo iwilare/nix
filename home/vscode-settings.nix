@@ -95,6 +95,7 @@
         "editor.tabCompletion" = "onlySnippets";
       };
       # LaTeX
+      "latex-workshop.synctex.afterBuild.enabled" = true;
       "[latex]" = {
         "editor.wordWrap" = "bounded";
         "editor.wordWrapColumn" = 80;
