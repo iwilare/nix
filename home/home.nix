@@ -1,5 +1,5 @@
 { pkgs, inputs, ... }: {
-  home.stateVersion = "23.05";
+  home.stateVersion = "26.05";
   nix = {
     settings.experimental-features = [ "flakes" "nix-command" ];
   };
@@ -8,7 +8,7 @@
     #(agda.withPackages [ agdaPackages.standard-library agdaPackages.agda-categories ])
     zip
     unzip
-    neofetch
+    fastfetch
     ack
     dua       # Disk usage analyzer
     gource    # SVC visualization
