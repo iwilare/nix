@@ -4,14 +4,14 @@
 
   home-manager.backupFileExtension = "backup";
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-    hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    powerManagement.finegrained = false;
-    open = true;
-    nvidiaSettings = true;
-  };
+  # services.xserver.videoDrivers = [ "nvidia" ];
+  #   hardware.nvidia = {
+  #   modesetting.enable = true;
+  #   powerManagement.enable = true;
+  #   powerManagement.finegrained = false;
+  #   open = true;
+  #   nvidiaSettings = true;
+  # };
 
   environment.systemPackages = with pkgs; [
     dropbox

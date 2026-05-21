@@ -64,7 +64,7 @@
           extraSpecialArgs = { inherit inputs system; };
           modules = home-modules ++ host-home-modules;
         };
-      mkNixosConfig = system:
+      mkNixosConfig = system: configName: nixos-modules:
         nixpkgs.lib.nixosSystem {
           pkgs = mkPkgs system;
           specialArgs = { inherit inputs system; };
@@ -79,7 +79,16 @@
           ];
         };
     in {
-      nixosConfigurations."iwilare" = mkNixosConfig "x86_64-linux";
+      nixosConfigurations."iwilare-desktop" = mkNixosConfig "x86_64-linux" "iwilare-desktop"
+        [
+          ./nixos/system.nix
+          ./nixos/desktop-hardware-configuration.nix
+        ];
+      nixosConfigurations."iwilare-laptop" = mkNixosConfig "x86_64-linux" "iwilare-laptop"
+        [
+          ./nixos/system.nix
+          ./nixos/laptop-hardware-configuration.nix
+        ];
       homeConfigurations."andrea" = mkHomeConfig "x86_64-linux";
       homeConfigurations."andrea-macos" = mkHomeConfig "x86_64-darwin";
     };
