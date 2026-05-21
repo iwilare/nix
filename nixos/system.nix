@@ -30,6 +30,8 @@
     lxrandr
     arandr
 
+    lxappearance
+
     #obsidian
 
     #mate.engrampa

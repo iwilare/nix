@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, configName, ... }: {
   home.stateVersion = "26.05";
   nix = {
     settings.experimental-features = [ "flakes" "nix-command" ];
@@ -117,7 +117,7 @@
 
       no  = "code /etc/nixos/";
       nod = "cd /etc/nixos/";
-      nos = "sudo nixos-rebuild switch";
+      nos = "sudo nixos-rebuild switch --flake /etc/nixos/#${configName}";
       hm  = "code ~/.config/home-manager";
       hmd = "cd ~/.config/home-manager";
       hms = "home-manager switch -b backup --flake ~/.config/home-manager#${if !pkgs.stdenv.isDarwin then "andrea" else "andrea-macos"}";

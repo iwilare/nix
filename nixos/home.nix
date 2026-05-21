@@ -2,7 +2,6 @@
 
   programs.vscode.enable = true;
   programs.vscode.package = pkgs.vscode;
-
   xsession.windowManager.i3 = {
     enable = true;
     config = let
@@ -187,6 +186,7 @@
       ];
     };
   };
+
   programs.alacritty = {
     enable = true;
     settings = {
@@ -262,11 +262,18 @@
   };
 
   # Environment
-
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    package = pkgs.kdePackages.breeze;
+    name = "Breeze_Light";
+    size = 30;
+  };
   gtk = {
     enable = true;
     font.name = "Sans 10";
-    cursorTheme = { name = "Breeze";          package = pkgs.kdePackages.breeze-gtk;     }; #size = 24; };
+    # does not work on all applications/on the raw desktop
+    cursorTheme = { name = "Breeze_Light"; package = pkgs.kdePackages.breeze; size = 30; };
     iconTheme   = { name = "elementary-xfce"; package = pkgs.elementary-xfce-icon-theme; };
     theme       = { name = "Adwaita-dark";    package = pkgs.adwaita-icon-theme;         };
   };
@@ -274,11 +281,6 @@
     url = "https://github.com/iwilare/backgrounds/raw/main/iss.png";
     sha256 = "/r/R1tTzvbivSepmYa2nA4Otq3CSuvqjr3J4sY0Sqxg=";
   });
-  home.file.".icons/default/index.theme".text = ''
-    [Icon Theme]
-    Name=Default
-    Inherits=Breeze_Snow
-  '';
   xdg.configFile."noisetorch/config.toml".text = ''
     Threshold = 95
     DisplayMonitorSources = false

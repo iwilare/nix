@@ -73,7 +73,7 @@
             musnix.nixosModules.musnix
             {
               home-manager.useGlobalPkgs = true;
-              home-manager.extraSpecialArgs = { inherit inputs system; };
+              home-manager.extraSpecialArgs = { inherit inputs system configName; };
               home-manager.users."andrea".imports = home-modules ++ nixos-home-modules;
             }
           ];
