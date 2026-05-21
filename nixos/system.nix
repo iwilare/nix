@@ -4,18 +4,14 @@
 
   home-manager.backupFileExtension = "backup";
 
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  #hardware.nvidia.nvidiaSettings = true;
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  #hardware.nvidia.modesetting.enable = true;
-  #hardware.nvidia.prime = {
-  #  offload = {
-  #    enable = true;
-  #    enableOffloadCmd = true;
-  #  };
-  #  intelBusId = "PCI:0:2:0";
-  #  nvidiaBusId = "PCI:1:0:0";
-  #};
+  services.xserver.videoDrivers = [ "nvidia" ];
+    hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
+    open = true;
+    nvidiaSettings = true;
+  };
 
   environment.systemPackages = with pkgs; [
     dropbox
@@ -27,7 +23,6 @@
     teamviewer
 
     pcmanfm
-    xfce.xfce4-terminal
 
     rofi
     pavucontrol
@@ -60,10 +55,12 @@
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
-  boot.loader.systemd-boot.configurationLimit = 3;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.timeout = 10;
-  console.font = "Lat2-Terminus16";
+  boot.loader.timeout = 1;
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 2;
+  };
+  #console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
   fonts.fontconfig.enable = true;
   hardware.bluetooth.enable = true;
@@ -125,14 +122,14 @@
     autoRepeatInterval = 25;
     desktopManager.wallpaper.mode = "fill";
     desktopManager.xterm.enable = false;
-    dpi = 120;
+    dpi = 96;
     enable = true;
     xkb.layout = "it";
     xkb.options = "caps:ctrl_modifier,eurosign:e"; #caps:super
     windowManager.i3.enable = true;
-    #screenSection = ''
-    #  Option "metamodes" "DP-2: 1920x1080_144 +0+0 {rotation=left}, HDMI-0: 2560x1440_144 +1080+240, DP-0: 1920x1080_144 +3640+420"
-    #'';
+    screenSection = ''
+      Option "metamodes" "DP-2: 2560x1440_144 +0+0, HDMI-0: 2560x1440_144 +2560+0, DP-0: 2560x1440_144 +5120+0"
+    '';
   };
   services.picom = {
     enable = true;

@@ -28,8 +28,8 @@
           }
         ];
         workspaceOutputAssign = [
-          { workspace = "1"; output = "HDMI-0"; }
-          { workspace = "2"; output = "DP-2"; }
+          { workspace = "1"; output = "DP-2"; }
+          { workspace = "2"; output = "HDMI-0"; }
           { workspace = "3"; output = "DP-0"; }
         ];
         fonts = { names = [ inputs.iwi-dejavu.name ]; size = 9.0; };
@@ -194,7 +194,7 @@
         WINIT_X11_SCALE_FACTOR = "1.25";
       };
       font.normal.family = inputs.iwi-dejavu.name;
-      font.size = 10;
+      font.size = 9;
       cursor.blink_interval = 650;
       cursor.style.shape = "beam";
       cursor.style.blinking = "always";

@@ -1,22 +1,23 @@
 {
   "nodes": {
-    "flake-compat": {
+    "fira-code": {
       "flake": false,
       "locked": {
-        "lastModified": 1673956053,
-        "narHash": "sha256-4gtG9iQuiKITOjNQQeQIpoIB6b16fm+504Ch3sNKLd8=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "35bb57c0c8d8b62bbfd284272c928ceb64ddbde9",
+        "lastModified": 1586972058,
+        "narHash": "sha256-rMhI9B3QR4IzJNukqoq7iRFIdrfEwMBD/UsNeNq4Q88=",
+        "owner": "tonsky",
+        "repo": "FiraCode",
+        "rev": "e9943d2d631a4558613d7a77c58ed1d3cb790992",
         "type": "github"
       },
       "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
+        "owner": "tonsky",
+        "repo": "FiraCode",
+        "rev": "e9943d2d631a4558613d7a77c58ed1d3cb790992",
         "type": "github"
       }
     },
-    "flake-compat_2": {
+    "flake-compat": {
       "flake": false,
       "locked": {
         "lastModified": 1673956053,
@@ -37,11 +38,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1689068808,
-        "narHash": "sha256-6ixXo3wt24N/melDWjq70UuHQLxGV8jZvooRanIHXw0=",
+        "lastModified": 1710146030,
+        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "919d646de7be200f3bf08cb76ae1f09402b6f9b4",
+        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
         "type": "github"
       },
       "original": {
@@ -106,8 +107,28 @@
     },
     "iwi-consolas": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "fira-code": "fira-code",
         "flake-utils": "flake-utils",
+        "ligaturizer": "ligaturizer",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779290632,
+        "narHash": "sha256-IGXyZfgvhzIjZU4xMIpwTS2gamO252U1aKq+mUd7pRo=",
+        "path": "/home/andrea/iwi-consolas",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/andrea/iwi-consolas",
+        "type": "path"
+      }
+    },
+    "iwi-dejavu": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -126,25 +147,20 @@
         "type": "github"
       }
     },
-    "iwi-dejavu": {
-      "inputs": {
-        "flake-compat": "flake-compat_2",
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
+    "ligaturizer": {
+      "flake": false,
       "locked": {
-        "lastModified": 1732111478,
-        "narHash": "sha256-DsmZDcIm9OecRrjpb/gEtueVot5DEPdEdP5csfbr4NA=",
-        "owner": "iwilare",
-        "repo": "iwi-dejavu",
-        "rev": "09bb8ba7429fd658a2c7243081c6bf279bede9b5",
+        "lastModified": 1630768095,
+        "narHash": "sha256-89/6xEBybIG9OfeOkwh8bwvQpp8+SOCbUxIlqbdkvqU=",
+        "owner": "ToxicFrog",
+        "repo": "Ligaturizer",
+        "rev": "c4065187a544a8fab40826fc91db1c6180a2d342",
         "type": "github"
       },
       "original": {
-        "owner": "iwilare",
-        "repo": "iwi-dejavu",
+        "owner": "ToxicFrog",
+        "repo": "Ligaturizer",
+        "rev": "c4065187a544a8fab40826fc91db1c6180a2d342",
         "type": "github"
       }
     },

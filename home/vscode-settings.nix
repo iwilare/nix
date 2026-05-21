@@ -1,13 +1,15 @@
 { pkgs, inputs, ... }: {
   programs.vscode = {
     profiles.default.userSettings = {
-      # "editor.letterSpacing" = -0.3;
-      # "editor.fontSize" = 13.16;
-
-      # "terminal.integrated.fontFamily" = inputs.iwi-dejavu.name;
-      # "terminal.integrated.fontSize" = 13;
-
+      "editor.fontFamily" = inputs.iwi-consolas.name;
+      "editor.letterSpacing" = -0.3;
+      "editor.fontSize" = 13.16;
       "editor.fontLigatures" = true;
+
+      "workbench.colorTheme" = "Dark Modern";
+
+      "terminal.integrated.fontFamily" = inputs.iwi-consolas.name;
+      "terminal.integrated.fontSize" = 13;
 
       "github.copilot.chat.summarizeAgentConversationHistory.enabled" = false;
       "github.copilot.nextEditSuggestions.enabled" = true;
