@@ -28,6 +28,7 @@
   };
   programs.git = {
     enable = true;
+    signing.format = "openpgp";
     settings.user.name  = "iwilare";
     settings.user.email = "iwilare@gmail.com";
     settings.color.ui = true;
