@@ -4,15 +4,6 @@
 
   home-manager.backupFileExtension = "backup";
 
-  # services.xserver.videoDrivers = [ "nvidia" ];
-  #   hardware.nvidia = {
-  #   modesetting.enable = true;
-  #   powerManagement.enable = true;
-  #   powerManagement.finegrained = false;
-  #   open = true;
-  #   nvidiaSettings = true;
-  # };
-
   environment.systemPackages = with pkgs; [
     dropbox
     spotify
@@ -58,9 +49,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.timeout = 1;
-  boot.loader.systemd-boot = {
+  boot.loader.grub = {
     enable = true;
+    efiSupport = true;
+    devices = [ "nodev" ];
     configurationLimit = 2;
+    useOSProber = true;
   };
   #console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
