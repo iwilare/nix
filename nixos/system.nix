@@ -36,7 +36,10 @@
     nemo-python
     nemo
     nbfc-linux
+
+    gnomeExtensions.appindicator
   ];
+  services.udev.packages = [ pkgs.gnome-settings-daemon ];
 
   musnix.enable = true;
 
@@ -55,6 +58,9 @@
     devices = [ "nodev" ];
     configurationLimit = 2;
     useOSProber = true;
+    gfxmodeEfi = "text";
+    gfxmodeBios = "text";
+    default = "saved";
   };
   #console.font = "Lat2-Terminus16";
   console.useXkbConfig = true;
