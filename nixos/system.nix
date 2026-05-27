@@ -1,4 +1,4 @@
-{ config, pkgs, system, inputs, ... }: {
+{ config, pkgs, system, inputs, configName, ... }: {
   system.stateVersion = "25.11";
   system.autoUpgrade.channel = "https://nixos.org/channels/nixos-unstable/";
 
@@ -39,7 +39,6 @@
 
     gnomeExtensions.appindicator
   ];
-  services.udev.packages = [ pkgs.gnome-settings-daemon ];
 
   musnix.enable = true;
 
@@ -59,7 +58,10 @@
     configurationLimit = 2;
     useOSProber = true;
     gfxmodeEfi = "text";
-    gfxmodeBios = "text";
+    extraConfig = ''
+      terminal_output console
+    '';
+    splashImage = null;
     default = "saved";
   };
   #console.font = "Lat2-Terminus16";
@@ -124,7 +126,7 @@
     autoRepeatInterval = 25;
     desktopManager.wallpaper.mode = "fill";
     desktopManager.xterm.enable = false;
-    dpi = 96;
+    dpi = if configName == "iwilare-laptop" then 110 else 96;
     enable = true;
     xkb.layout = "it";
     xkb.options = "caps:ctrl_modifier,eurosign:e"; #caps:super
@@ -187,6 +189,7 @@
 
   # ------------ services ------------
 
+  services.udev.packages = [ pkgs.gnome-settings-daemon ];
   networking.firewall = {
     allowedTCPPorts = [ 17500 ];
     allowedUDPPorts = [ 17500 ];

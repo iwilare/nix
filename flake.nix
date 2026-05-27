@@ -41,10 +41,6 @@
         ./home/vscode-settings.nix
         ./home/firefox.nix
       ];
-      nixos-modules = [
-        ./nixos/system.nix
-        ./nixos/hardware-configuration.nix
-      ];
       nixos-home-modules = [
         ./nixos/home.nix
       ];
@@ -67,7 +63,7 @@
       mkNixosConfig = system: configName: nixos-modules:
         nixpkgs.lib.nixosSystem {
           pkgs = mkPkgs system;
-          specialArgs = { inherit inputs system; };
+          specialArgs = { inherit inputs system configName; };
           modules = nixos-modules ++ [
             home-manager.nixosModules.home-manager
             musnix.nixosModules.musnix
