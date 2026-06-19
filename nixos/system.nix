@@ -69,6 +69,8 @@
   #  enable = true;
   #  volumeStep = "5%";
   #};
+  hardware.fancontrol.enable = false;
+
   i18n.defaultLocale = "en_US.UTF-8";
   networking.hostName = "iwilare";
   networking.networkmanager.enable = true;
