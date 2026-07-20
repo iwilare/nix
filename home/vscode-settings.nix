@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, configName, ... }: {
   programs.vscode = {
     profiles.default.userSettings = {
       "editor.fontFamily" = inputs.iwi-consolas.name;
@@ -97,7 +97,6 @@
         "editor.tabCompletion" = "onlySnippets";
       };
       # LaTeX
-      "latex-workshop.synctex.afterBuild.enabled" = true;
       "[latex]" = {
         "editor.wordWrap" = "bounded";
         "editor.wordWrapColumn" = 80;
@@ -106,27 +105,23 @@
         "*.tikz" = "latex";
         "*.tikzstyles" = "latex";
       };
+      "latex-workshop.synctex.afterBuild.enabled" = true;
       "latex-workshop.latex.autoBuild.run" = "onSave";
-      "latex-workshop.latex.autoClean.run" = "onBuilt";
       "latex-workshop.latex.recipe.default" = "lastUsed";
       "latex-workshop.view.pdf.viewer" = "tab";
-      "latex-workshop.latex.recipes" = [
-        { "name" = "latexmk";           "tools" = [ "latexmk"   ]; }
-        { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
-        { "name" = "pdflatex";          "tools" = [ "pdflatex"  ]; }
-        { "name" = "xelatex";           "tools" = [ "xelatex"   ]; }
-      ];
-      "latex-workshop.latex.tools" = [
-        { "command" = "latexmk";  "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "%DOC%" ]; }
-        { "command" = "latexmk";  "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "%DOC%" ]; }
-        { "command" = "pdflatex"; "env" = {}; "name" = "pdflatex";  "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "%DOC%" ]; }
-        { "command" = "xelatex";  "env" = {}; "name" = "xelatex";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "%DOC%" ]; }
-      ];
+      # "latex-workshop.latex.recipes" = [
+      #   { "name" = "latexmk";           "tools" = [ "latexmk"   ]; }
+      #   { "name" = "latexmk (xelatex)"; "tools" = [ "xelatexmk" ]; }
+      #   { "name" = "pdflatex";          "tools" = [ "pdflatex"  ]; }
+      #   { "name" = "xelatex";           "tools" = [ "xelatex"   ]; }
+      # ];
+      # "latex-workshop.latex.tools" = [
+      #   { "command" = "latexmk";  "env" = {}; "name" = "latexmk";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-pdf" "-f" "%DOC%" ]; }
+      #   { "command" = "latexmk";  "env" = {}; "name" = "xelatexmk"; "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "-xelatex"  "%DOC%" ]; }
+      #   { "command" = "pdflatex"; "env" = {}; "name" = "pdflatex";  "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "%DOC%" ]; }
+      #   { "command" = "xelatex";  "env" = {}; "name" = "xelatex";   "args" = [ "-synctex=1" "-interaction=nonstopmode" "-file-line-error" "-outdir=%OUTDIR%" "%DOC%" ]; }
+      # ];
       "workbench.editor.empty.hint" = "hidden";
-      "workbench.editor.autoLockGroups" = {
-        "latex-workshop-pdf-hook" = true;
-        "mainThreadWebview-markdown.preview" = true;
-      };
     };
     profiles.default.keybindings = [
 
@@ -282,7 +277,6 @@
       bbenoist.nix
       jnoortheen.nix-ide
       haskell.haskell
-      justusadam.language-haskell
       dart-code.dart-code
       denoland.vscode-deno
       #eamodio.gitlens

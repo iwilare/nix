@@ -54,10 +54,10 @@
           allowUnfree = true;
           overlays = [ inputs.nix-vscode-extensions.overlays.default ];
         };
-      mkHomeConfig = system:
+      mkHomeConfig = system: configName:
         home-manager.lib.homeManagerConfiguration {
           pkgs = mkPkgs system;
-          extraSpecialArgs = { inherit inputs system; };
+          extraSpecialArgs = { inherit inputs system configName; };
           modules = home-modules ++ host-home-modules;
         };
       mkNixosConfig = system: configName: nixos-modules:
@@ -85,7 +85,7 @@
           ./nixos/system.nix
           ./nixos/laptop-hardware-configuration.nix
         ];
-      homeConfigurations."andrea" = mkHomeConfig "x86_64-linux";
-      homeConfigurations."andrea-macos" = mkHomeConfig "x86_64-darwin";
+      homeConfigurations."andrea" = mkHomeConfig "x86_64-linux" "iwilare-desktop";
+      homeConfigurations."andrea-macos" = mkHomeConfig "x86_64-darwin" "iwilare-macos";
     };
 }
