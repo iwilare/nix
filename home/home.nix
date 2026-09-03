@@ -88,7 +88,7 @@
       q   = { expansion = "git commit -am '%'"; setCursor = true; };
       pf  = { expansion = "git push --force"; setCursor = true; };
       ns  = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
-      gg  = { expansion = "git clone git@github.com:iwilare/%"; setCursor = true; };
+      gg  = { expansion = "git clone git@github.com:iwilare/% --filter=blob:none --recurse-submodules --shallow-submodules"; setCursor = true; };
       yt  = { expansion = "nix-run youtube-dl -x --audio-format mp3 --audio-quality 0 -o 'C:\\Dropbox\\Music\\%%(title)s.%%(ext)s' '|'"; setCursor = "|"; };
     };
     shellAliases = {
