@@ -84,6 +84,11 @@
       "[agda]" = {
         "editor.unicodeHighlight.ambiguousCharacters" = false;
       };
+      # Markdown
+      "[markdown]" = {
+        "editor.wordWrap" = "bounded";
+        "editor.wordWrapColumn" = 80;
+      };
       # Dart
       "[dart]" = {
         "editor.formatOnSave" = true;
