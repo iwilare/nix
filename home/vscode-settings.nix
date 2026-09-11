@@ -151,7 +151,7 @@
 
       { "command" = "cursorRightSelect";         "key" = "ctrl+shift+l";           }
       { "command" = "cursorUpSelect";            "key" = "ctrl+shift+i";           }
-      { "command" = "cursorWordPartDownSelect";  "key" = "ctrl+shift+k";           }
+      { "command" = "cursorWordPartRightSelect"; "key" = "ctrl+shift+k";           }
       { "command" = "cursorWordPartLeftSelect";  "key" = "ctrl+shift+j";           }
 
       { "command" = "deleteWordLeft";            "key" = "ctrl+h";                 }
