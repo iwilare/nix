@@ -62,6 +62,11 @@
     functions = {
       nix-run = "nix run nixpkgs#$argv[1] -- $argv[2..]";
       proj = "z $argv[1] && c";
+      spawn-and-quit = ''
+        nohup fish -c "$argv" >/dev/null 2>&1 </dev/null &
+        disown
+        exit
+      '';
       fix = ''
         test (count $argv) -eq 0;
         and git commit -a --amend --no-edit;
@@ -112,17 +117,17 @@
       dp = "prevd";
 
       sd = "nix develop --command fish";
-      c  = "nohup fish -c 'nix develop --command code .' >/dev/null 2>&1 </dev/null &; exit";
+      c  = "spawn-and-quit 'nix develop --command code .'";
       b  = "nix build && cd result";
       nr = "nix-run";
       nl = "nix log";
 
       nod = "cd /etc/nixos/";
-      no  = "nohup fish -c 'code /etc/nixos/' >/dev/null 2>&1 </dev/null &; exit";
+      no  = "spawn-and-quit 'code /etc/nixos/'";
       nos = "sudo nixos-rebuild switch --flake /etc/nixos/#${configName}";
 
       hmd = "cd ~/.config/home-manager";
-      hm  = "nohup fish -c'code ~/.config/home-manager' >/dev/null 2>&1 </dev/null &; exit";
+      hm  = "spawn-and-quit 'code ~/.config/home-manager'";
       hms = "home-manager switch -b backup --flake ~/.config/home-manager#${if !pkgs.stdenv.isDarwin then "andrea" else "andrea-macos"}";
       hmss = "save && hms";
 
