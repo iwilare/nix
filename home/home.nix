@@ -86,6 +86,7 @@
       ssave = { expansion = "git submodule foreach fish -c just-save"; };
       sub = { expansion = "git submodule init && git submodule update --init --recursive"; };
       q   = { expansion = "git commit -am '%'"; setCursor = true; };
+      qq  = { expansion = "git commit -m '%'"; setCursor = true; };
       pf  = { expansion = "git push --force"; setCursor = true; };
       ns  = { expansion = "nix shell nixpkgs#%"; setCursor = true; };
       gg  = { expansion = "git clone git@github.com:iwilare/% --filter=blob:none --recurse-submodules --shallow-submodules"; setCursor = true; };
@@ -111,16 +112,17 @@
       dp = "prevd";
 
       sd = "nix develop --command fish";
-      c  = "nix develop --command code .";
+      c  = "nohup fish -c 'nix develop --command code .' >/dev/null 2>&1 </dev/null &; exit";
       b  = "nix build && cd result";
       nr = "nix-run";
       nl = "nix log";
 
-      no  = "code /etc/nixos/";
       nod = "cd /etc/nixos/";
+      no  = "nohup fish -c 'code /etc/nixos/' >/dev/null 2>&1 </dev/null &; exit";
       nos = "sudo nixos-rebuild switch --flake /etc/nixos/#${configName}";
-      hm  = "code ~/.config/home-manager";
+
       hmd = "cd ~/.config/home-manager";
+      hm  = "nohup fish -c'code ~/.config/home-manager' >/dev/null 2>&1 </dev/null &; exit";
       hms = "home-manager switch -b backup --flake ~/.config/home-manager#${if !pkgs.stdenv.isDarwin then "andrea" else "andrea-macos"}";
       hmss = "save && hms";
 
