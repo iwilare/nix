@@ -37,7 +37,7 @@
         #focus.wrapping = "workspace";
         startup = [
           { command = browser; }
-          { command = editor;  }
+          { command = terminal;  }
           { command = "noisetorch -i"; }
           { command = "telegram-desktop"; }
         ];
