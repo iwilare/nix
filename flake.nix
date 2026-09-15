@@ -54,38 +54,44 @@
           allowUnfree = true;
           overlays = [ inputs.nix-vscode-extensions.overlays.default ];
         };
-      mkHomeConfig = system: configName:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = mkPkgs system;
-          extraSpecialArgs = { inherit inputs system configName; };
-          modules = home-modules ++ host-home-modules;
-        };
-      mkNixosConfig = system: configName: nixos-modules:
+      mkNixosConfig = { system, configName, nixos-modules }:
         nixpkgs.lib.nixosSystem {
           pkgs = mkPkgs system;
-          specialArgs = { inherit inputs system configName; };
+          specialArgs = { inherit inputs system configName; isHomeManagerManaged = false; };
           modules = nixos-modules ++ [
             home-manager.nixosModules.home-manager
             musnix.nixosModules.musnix
             {
               home-manager.useGlobalPkgs = true;
-              home-manager.extraSpecialArgs = { inherit inputs system configName; };
+              home-manager.extraSpecialArgs = { inherit inputs system configName; isHomeManagerManaged = false; };
               home-manager.users."andrea".imports = home-modules ++ nixos-home-modules;
             }
           ];
         };
+      mkHomeConfig = { system, configName }:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs system;
+          extraSpecialArgs = { inherit inputs system configName; isHomeManagerManaged = true; };
+          modules = home-modules ++ host-home-modules;
+        };
     in {
-      nixosConfigurations."iwilare-desktop" = mkNixosConfig "x86_64-linux" "iwilare-desktop"
-        [
-          ./nixos/system.nix
-          ./nixos/desktop-hardware-configuration.nix
-        ];
-      nixosConfigurations."iwilare-laptop" = mkNixosConfig "x86_64-linux" "iwilare-laptop"
-        [
-          ./nixos/system.nix
-          ./nixos/laptop-hardware-configuration.nix
-        ];
-      homeConfigurations."andrea" = mkHomeConfig "x86_64-linux" "iwilare-desktop";
-      homeConfigurations."andrea-macos" = mkHomeConfig "x86_64-darwin" "iwilare-macos";
+      nixosConfigurations."iwilare-desktop" = mkNixosConfig {
+        system = "x86_64-linux";
+        configName = "iwilare-desktop";
+        nixos-modules = [ ./nixos/system.nix ./nixos/desktop-hardware-configuration.nix ];
+      };
+      nixosConfigurations."iwilare-laptop" = mkNixosConfig {
+        system = "x86_64-linux";
+        configName = "iwilare-laptop";
+        nixos-modules = [ ./nixos/system.nix ./nixos/laptop-hardware-configuration.nix ];
+      };
+      homeConfigurations."andrea" = mkHomeConfig {
+        system = "x86_64-linux";
+        configName = "andrea";
+      };
+      homeConfigurations."andrea-macos" = mkHomeConfig {
+        system = "x86_64-darwin";
+        configName = "andrea-macos";
+      };
     };
 }

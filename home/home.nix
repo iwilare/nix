@@ -1,4 +1,4 @@
-{ pkgs, inputs, configName, ... }: {
+{ pkgs, inputs, configName, isHomeManagerManaged, ... }: {
   home.stateVersion = "26.05";
   nix = {
     settings.experimental-features = [ "flakes" "nix-command" ];
@@ -75,6 +75,13 @@
         gh repo create --private iwilare/$REPO
         git remote add origin git@github.com:iwilare/$REPO
       '';
+      c = ''
+        if test (count $argv) -gt 0
+            cd $argv[1]; or return
+        end
+        nix develop --command code .
+        and exit
+      '';
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
       just-save = "git commit -am (date '+%Y-%m-%d %H:%M:%S'); git push"; # needs to be here for ssave
     };
@@ -100,30 +107,32 @@
       t  = "eza --icons --tree -s=type --all";
       ta = "eza --icons --tree -s=type";
 
+      p   = "git push";
+      pp  = "git pull";
+
       d  = "nix develop";
       gd = "git diff";
       s  = "git status --show-stash";
-      p  = "git push";
       ll = "git log --pretty=format:'%C(auto) %h %ci [%an] %s%d' -n 10 --graph";
-      g  = "nr lazygit";
+      g  = "nix-run lazygit";
 
       RM = "rm -rfd";
       dn = "nextd";
       dp = "prevd";
 
-      sd = "nix develop --command fish";
-      c  = "nix develop --command code .; and exit";
-      b  = "nix build && cd result";
-      nr = "nix-run";
-      nl = "nix log";
+      b   = "nix build && cd result";
+      run = "nix-run";
+      nl  = "nix log";
 
-      nod = "cd /etc/nixos/";
-      no  = "code /etc/nixos/; and exit";
-      nos = "sudo nixos-rebuild switch --flake /etc/nixos/#${configName}";
+      n  = "code ${if isHomeManagerManaged then "~/.config/home-manager" else "/etc/nixos"}; and exit";
+      nd = "cd ${if isHomeManagerManaged then "~/.config/home-manager" else "/etc/nixos"}";
+      r  = if isHomeManagerManaged then
+             "home-manager switch -b backup --flake ~/.config/home-manager#${configName}"
+           else
+             "sudo nixos-rebuild switch --flake /etc/nixos/#${configName}";
 
       hmd = "cd ~/.config/home-manager";
       hm  = "code ~/.config/home-manager; and exit";
-      hms = "home-manager switch -b backup --flake ~/.config/home-manager#${if !pkgs.stdenv.isDarwin then "andrea" else "andrea-macos"}";
       hmss = "save && hms";
 
       nv = "nix run ~/Dropbox/Repos/neovim";
@@ -143,6 +152,7 @@
   programs.starship = {
     enable = true;
     settings = {
+      scan_timeout = 100;
       add_newline = false;
       format = pkgs.lib.concatStrings [
         "[](#3060B0)"
@@ -178,13 +188,13 @@
         format = "[](#C06060)[$symbol($version)]($style)[](#C06060) ";
         style = "fg:#E0E0E0 bg:#C06060";
       };
-      # hostname = {
-      #   ssh_only = true;
-      #   format = "$ssh_symbol$hostname ";
-      # };
-      # status = {
-
-      # };
+      status = {
+        disabled = false;
+        format = "[](#D91C34)[$symbol$status]($style)[](#D91C34) ";
+        style = "fg:#E0E0E0 bg:#D91C34";
+        symbol = "";
+        success_symbol = "";
+      };
     };
   };
   programs.yazi = {
