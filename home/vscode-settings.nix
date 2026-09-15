@@ -132,37 +132,47 @@
 
       # Movement
 
-      { "command" = "cursorDown";                "key" = "ctrl+alt+s";             }
-      { "command" = "cursorDown";                "key" = "ctrl+k";                 }
-      { "command" = "cursorDownSelect";          "key" = "ctrl+shift+k";           }
-      { "command" = "cursorLeft";                "key" = "ctrl+alt+j";             }
-      { "command" = "cursorLeft";                "key" = "ctrl+alt+a";             }
-      { "command" = "cursorWordLeftSelect";      "key" = "ctrl+shift+j";           }
-      { "command" = "cursorRight";               "key" = "ctrl+alt+l";             }
-      { "command" = "cursorRight";               "key" = "ctrl+alt+d";             }
-      { "command" = "cursorWordRightSelect";     "key" = "ctrl+shift+l";           }
-      { "command" = "cursorUp";                  "key" = "ctrl+alt+w";             }
-      { "command" = "cursorUp";                  "key" = "ctrl+i";                 }
-      { "command" = "cursorDown";                "key" = "ctrl+k";                 }
-      { "command" = "cursorWordPartLeft";        "key" = "ctrl+j";                 }
-      { "command" = "cursorLeftSelect";          "key" = "ctrl+alt+shift+j";       }
-      { "command" = "cursorWordPartRight";       "key" = "ctrl+l";                 }
-      { "command" = "cursorRightSelect";         "key" = "ctrl+alt+shift+l";       }
+      # Special
 
-      { "command" = "cursorRightSelect";         "key" = "ctrl+shift+l";           }
+      { "command" = "deleteLeft";                    "key" = "mouse4"; "when" = "editorTextFocus"; }
+      { "command" = "editor.action.insertLineAfter"; "key" = "mouse5"; "when" = "editorTextFocus"; }
+
+      { "command" = "-workbench.action.navigateBack";    "key" = "mouse4"; }
+      { "command" = "-workbench.action.navigateForward"; "key" = "mouse5"; }
+
+      # WASD
+
+      { "command" = "cursorUp";                  "key" = "ctrl+alt+w";             }
+      { "command" = "cursorWordLeft";            "key" = "ctrl+alt+a";             }
+      { "command" = "cursorDown";                "key" = "ctrl+alt+s";             }
+      { "command" = "cursorWordRight";           "key" = "ctrl+alt+d";             }
+
+      { "command" = "cursorUpSelect";            "key" = "ctrl+alt+shift+w";       }
+      { "command" = "cursorWordLeftSelect";      "key" = "ctrl+alt+shift+a";       }
+      { "command" = "cursorDownSelect";          "key" = "ctrl+alt+shift+s";       }
+      { "command" = "cursorWordRightSelect";     "key" = "ctrl+alt+shift+d";       }
+
+      # IJKL
+
+      { "command" = "cursorUp";                  "key" = "ctrl+i";                 }
+      { "command" = "cursorPartLeft";            "key" = "ctrl+j";                 }
+      { "command" = "cursorDown";                "key" = "ctrl+k";                 }
+      { "command" = "cursorPartRight";           "key" = "ctrl+l";                 }
+
       { "command" = "cursorUpSelect";            "key" = "ctrl+shift+i";           }
-      { "command" = "cursorWordPartRightSelect"; "key" = "ctrl+shift+k";           }
-      { "command" = "cursorWordPartLeftSelect";  "key" = "ctrl+shift+j";           }
+      { "command" = "cursorLeftSelect";          "key" = "ctrl+shift+j";           }
+      { "command" = "cursorDownSelect";          "key" = "ctrl+shift+k";           }
+      { "command" = "cursorRightSelect";         "key" = "ctrl+shift+l";           }
+
+      { "command" = "cursorWordPartLeftSelect";  "key" = "ctrl+alt+shift+j";       }
+      { "command" = "cursorWordPartRightSelect"; "key" = "ctrl+alt+shift+l";       }
+
+      # IJKL + H delete
 
       { "command" = "deleteWordLeft";            "key" = "ctrl+h";                 }
       { "command" = "deleteWordPartLeft";        "key" = "ctrl+shift+h";           }
       { "command" = "deleteWordPartRight";       "key" = "ctrl+shift+[semicolon]"; }
       { "command" = "deleteWordRight";           "key" = "ctrl+[semicolon]";       }
-
-      { "command" = "cursorLeft";                "key" = "ctrl+alt+j";             }
-      { "command" = "cursorRight";               "key" = "ctrl+alt+l";             }
-      { "command" = "cursorWordPartLeftSelect";  "key" = "ctrl+alt+shift+j";       }
-      { "command" = "cursorWordPartRightSelect"; "key" = "ctrl+alt+shift+l";       }
 
       { "command" = "deleteLeft";                "key" = "ctrl+alt+h";             }
       { "command" = "deleteRight";               "key" = "ctrl+alt+[semicolon]";   }
