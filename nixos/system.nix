@@ -145,6 +145,15 @@
       frame-opacity = 0;
     };
   };
+
+  # For Flameshot
+  xdg.portal = {
+    enable = true;
+    config.common.default = "*";
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+  };
   # services.dbus.packages = with pkgs; [
   #   xfce.xfconf
   # ];
