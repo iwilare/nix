@@ -65,8 +65,8 @@
           "${Mod}+7"             = "workspace 7";
           "${Mod}+8"             = "workspace 8";
           "${Mod}+9"             = "workspace 9";
-          "${Mod}+v"             = "split v";
-          "${Mod}+c"             = "split h";
+          "${Mod}+v"             = "split h";
+          "${Mod}+c"             = "split v";
           "${Mod}+z"             = "exec ${terminal}";
           "${Mod}+r"             = "exec ${browser}";
           "${Mod}+b"             = "exec ${audio}";
@@ -121,6 +121,7 @@
       };
       extraConfig = ''
         popup_during_fullscreen smart
+        default_orientation horizontal
       '';
   };
   programs.i3status-rust = {
