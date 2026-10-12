@@ -254,10 +254,16 @@
       General = {
         disabledTrayIcon = true;
         showStartupLaunchMessage = false;
-        uiColor = "#e0e0e0";
-        showHelp = false;
-        showSidePanelButton = false;
-        autoCloseIdleDaemon = false;
+        saveAsFileExtension = ".png";
+        showDesktopNotification = true;
+        showAbortNotification = false;
+        showHelp = true;
+        showSidePanelButton = true;
+        useX11LegacyScreenshot = true;
+        captureActiveMonitor = true;
+        uiColor = "#740096";
+        contrastUiColor = "#270032";
+        drawColor = "#ff0000";
       };
     };
   };
