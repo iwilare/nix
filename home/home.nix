@@ -82,6 +82,10 @@
         nix develop --command code .
         and exit
       '';
+      mergeold = ''
+        set -l c (git commit-tree "$argv[1]"'^{tree}' -m ""); or return 1
+        git merge --allow-unrelated-histories --no-commit $c
+      '';
       save = "git commit -am (date '+%Y-%m-%d %H:%M:%S') && git push";
       just-save = "git commit -am (date '+%Y-%m-%d %H:%M:%S'); git push"; # needs to be here for ssave
     };
